@@ -1,6 +1,4 @@
-<<<<<<< HEAD
 make some changes.
-=======
 ddaldjaljdalala
 ;k;lkl;kl;;lk;lk;l
->>>>>>> origin/master
+
