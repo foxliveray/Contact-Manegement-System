@@ -1,0 +1,22 @@
+INDEX VERSION 1.129+E:\数据库\期末实践作业\Contact Management System\.metadata\.plugins\org.eclipse.jdt.core
+179621376.index
+457023480.index
+2401133544.index
+1013083106.index
+1744088005.index
+522675470.index
+1202360757.index
+3644650344.index
+4091212821.index
+4274147836.index
+2519825219.index
+678952465.index
+339517794.index
+2083017971.index
+1304110172.index
+1612398607.index
+1445991503.index
+2835912563.index
+1357387153.index
+3629446293.index
+3816219087.index
