@@ -1,0 +1,196 @@
+02-Jun-2017 15:29:13.975 ��Ϣ [localhost-startStop-1] org.apache.catalina.core.ApplicationContext.log ContextListener: contextInitialized()
+02-Jun-2017 15:29:13.975 ��Ϣ [localhost-startStop-1] org.apache.catalina.core.ApplicationContext.log SessionListener: contextInitialized()
+02-Jun-2017 23:04:57.527 ���� [http-nio-8080-exec-16] org.apache.catalina.core.StandardWrapperValve.invoke Servlet.service() for servlet [jsp] in context with path [/test] threw exception [Unable to compile class for JSP: 
+
+An error occurred at line: 162 in the jsp file: /Login.jsp
+StatusCode.ERROR_NOUSERNAME cannot be resolved to a type
+159: 		        	out.println("<div class=\"col-xs-offset-2 col-xs-8 col-sm-offset-4 col-sm-4\">");
+160: 		        	out.println("<div class=\"alert alert-warning alert-dismissable\" style=\"background-color:rgba(255,255,255,0.1); border:0px\">");
+161: 		        	out.println("<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>");
+162: 		        	if(result==StatusCode.ERROR_NOUSERNAME){
+163: 		    			out.println("<strong>错误�?&nbsp;&nbsp;</strong>用户名不存在!");
+164: 		    		}else if(result==StatusCode.ERROR_WRONGPASSWORD){
+165: 		    			out.println("<strong>错误�?&nbsp;&nbsp;</strong>密码错误!");
+
+
+An error occurred at line: 164 in the jsp file: /Login.jsp
+StatusCode.ERROR_WRONGPASSWORD cannot be resolved to a type
+161: 		        	out.println("<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>");
+162: 		        	if(result==StatusCode.ERROR_NOUSERNAME){
+163: 		    			out.println("<strong>错误�?&nbsp;&nbsp;</strong>用户名不存在!");
+164: 		    		}else if(result==StatusCode.ERROR_WRONGPASSWORD){
+165: 		    			out.println("<strong>错误�?&nbsp;&nbsp;</strong>密码错误!");
+166: 		    		}else if(result==StatusCode.ERROR_NORIGHT){
+167: 		    			out.println("<strong>提示�?&nbsp;&nbsp;</strong>你还没有权限，等管理员给你分配权限吧!");
+
+
+An error occurred at line: 166 in the jsp file: /Login.jsp
+StatusCode.ERROR_NORIGHT cannot be resolved to a type
+163: 		    			out.println("<strong>错误�?&nbsp;&nbsp;</strong>用户名不存在!");
+164: 		    		}else if(result==StatusCode.ERROR_WRONGPASSWORD){
+165: 		    			out.println("<strong>错误�?&nbsp;&nbsp;</strong>密码错误!");
+166: 		    		}else if(result==StatusCode.ERROR_NORIGHT){
+167: 		    			out.println("<strong>提示�?&nbsp;&nbsp;</strong>你还没有权限，等管理员给你分配权限吧!");
+168: 		    		}else if(result==StatusCode.PROMPT_LOGIN_OUT){
+169: 		    			out.println("<strong>提示�?&nbsp;&nbsp;</strong>注销成功!");
+
+
+An error occurred at line: 168 in the jsp file: /Login.jsp
+StatusCode.PROMPT_LOGIN_OUT cannot be resolved to a type
+165: 		    			out.println("<strong>错误�?&nbsp;&nbsp;</strong>密码错误!");
+166: 		    		}else if(result==StatusCode.ERROR_NORIGHT){
+167: 		    			out.println("<strong>提示�?&nbsp;&nbsp;</strong>你还没有权限，等管理员给你分配权限吧!");
+168: 		    		}else if(result==StatusCode.PROMPT_LOGIN_OUT){
+169: 		    			out.println("<strong>提示�?&nbsp;&nbsp;</strong>注销成功!");
+170: 		    		}else if(result==StatusCode.ERROR_LOGIN_OUT){
+171: 		    			out.println("<strong>警告�?&nbsp;&nbsp;</strong>您已经注�?登录或�?�登陆超时，请重新登�?!");
+
+
+An error occurred at line: 170 in the jsp file: /Login.jsp
+StatusCode.ERROR_LOGIN_OUT cannot be resolved to a type
+167: 		    			out.println("<strong>提示�?&nbsp;&nbsp;</strong>你还没有权限，等管理员给你分配权限吧!");
+168: 		    		}else if(result==StatusCode.PROMPT_LOGIN_OUT){
+169: 		    			out.println("<strong>提示�?&nbsp;&nbsp;</strong>注销成功!");
+170: 		    		}else if(result==StatusCode.ERROR_LOGIN_OUT){
+171: 		    			out.println("<strong>警告�?&nbsp;&nbsp;</strong>您已经注�?登录或�?�登陆超时，请重新登�?!");
+172: 		    		}else if(result==StatusCode.PROMPT_REGISTER_SUCCESS){
+173: 		    			out.println("<strong>提示�?&nbsp;&nbsp;</strong>您已经注册成功，但是还不能登录哦，静待管理员分配权限�?!");
+
+
+An error occurred at line: 172 in the jsp file: /Login.jsp
+StatusCode.PROMPT_REGISTER_SUCCESS cannot be resolved to a type
+169: 		    			out.println("<strong>提示�?&nbsp;&nbsp;</strong>注销成功!");
+170: 		    		}else if(result==StatusCode.ERROR_LOGIN_OUT){
+171: 		    			out.println("<strong>警告�?&nbsp;&nbsp;</strong>您已经注�?登录或�?�登陆超时，请重新登�?!");
+172: 		    		}else if(result==StatusCode.PROMPT_REGISTER_SUCCESS){
+173: 		    			out.println("<strong>提示�?&nbsp;&nbsp;</strong>您已经注册成功，但是还不能登录哦，静待管理员分配权限�?!");
+174: 		    		}else if(result==StatusCode.ERROR_LOGIN_OUT){
+175: 		    			out.println("<strong>错误�?&nbsp;&nbsp;</strong>抱歉，注册失�?!");
+
+
+An error occurred at line: 174 in the jsp file: /Login.jsp
+StatusCode.ERROR_LOGIN_OUT cannot be resolved to a type
+171: 		    			out.println("<strong>警告�?&nbsp;&nbsp;</strong>您已经注�?登录或�?�登陆超时，请重新登�?!");
+172: 		    		}else if(result==StatusCode.PROMPT_REGISTER_SUCCESS){
+173: 		    			out.println("<strong>提示�?&nbsp;&nbsp;</strong>您已经注册成功，但是还不能登录哦，静待管理员分配权限�?!");
+174: 		    		}else if(result==StatusCode.ERROR_LOGIN_OUT){
+175: 		    			out.println("<strong>错误�?&nbsp;&nbsp;</strong>抱歉，注册失�?!");
+176: 		    		}
+177: 		        	//out.println(result);
+
+
+Stacktrace:] with root cause
+ org.apache.jasper.JasperException: Unable to compile class for JSP: 
+
+An error occurred at line: 162 in the jsp file: /Login.jsp
+StatusCode.ERROR_NOUSERNAME cannot be resolved to a type
+159: 		        	out.println("<div class=\"col-xs-offset-2 col-xs-8 col-sm-offset-4 col-sm-4\">");
+160: 		        	out.println("<div class=\"alert alert-warning alert-dismissable\" style=\"background-color:rgba(255,255,255,0.1); border:0px\">");
+161: 		        	out.println("<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>");
+162: 		        	if(result==StatusCode.ERROR_NOUSERNAME){
+163: 		    			out.println("<strong>错误�?&nbsp;&nbsp;</strong>用户名不存在!");
+164: 		    		}else if(result==StatusCode.ERROR_WRONGPASSWORD){
+165: 		    			out.println("<strong>错误�?&nbsp;&nbsp;</strong>密码错误!");
+
+
+An error occurred at line: 164 in the jsp file: /Login.jsp
+StatusCode.ERROR_WRONGPASSWORD cannot be resolved to a type
+161: 		        	out.println("<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>");
+162: 		        	if(result==StatusCode.ERROR_NOUSERNAME){
+163: 		    			out.println("<strong>错误�?&nbsp;&nbsp;</strong>用户名不存在!");
+164: 		    		}else if(result==StatusCode.ERROR_WRONGPASSWORD){
+165: 		    			out.println("<strong>错误�?&nbsp;&nbsp;</strong>密码错误!");
+166: 		    		}else if(result==StatusCode.ERROR_NORIGHT){
+167: 		    			out.println("<strong>提示�?&nbsp;&nbsp;</strong>你还没有权限，等管理员给你分配权限吧!");
+
+
+An error occurred at line: 166 in the jsp file: /Login.jsp
+StatusCode.ERROR_NORIGHT cannot be resolved to a type
+163: 		    			out.println("<strong>错误�?&nbsp;&nbsp;</strong>用户名不存在!");
+164: 		    		}else if(result==StatusCode.ERROR_WRONGPASSWORD){
+165: 		    			out.println("<strong>错误�?&nbsp;&nbsp;</strong>密码错误!");
+166: 		    		}else if(result==StatusCode.ERROR_NORIGHT){
+167: 		    			out.println("<strong>提示�?&nbsp;&nbsp;</strong>你还没有权限，等管理员给你分配权限吧!");
+168: 		    		}else if(result==StatusCode.PROMPT_LOGIN_OUT){
+169: 		    			out.println("<strong>提示�?&nbsp;&nbsp;</strong>注销成功!");
+
+
+An error occurred at line: 168 in the jsp file: /Login.jsp
+StatusCode.PROMPT_LOGIN_OUT cannot be resolved to a type
+165: 		    			out.println("<strong>错误�?&nbsp;&nbsp;</strong>密码错误!");
+166: 		    		}else if(result==StatusCode.ERROR_NORIGHT){
+167: 		    			out.println("<strong>提示�?&nbsp;&nbsp;</strong>你还没有权限，等管理员给你分配权限吧!");
+168: 		    		}else if(result==StatusCode.PROMPT_LOGIN_OUT){
+169: 		    			out.println("<strong>提示�?&nbsp;&nbsp;</strong>注销成功!");
+170: 		    		}else if(result==StatusCode.ERROR_LOGIN_OUT){
+171: 		    			out.println("<strong>警告�?&nbsp;&nbsp;</strong>您已经注�?登录或�?�登陆超时，请重新登�?!");
+
+
+An error occurred at line: 170 in the jsp file: /Login.jsp
+StatusCode.ERROR_LOGIN_OUT cannot be resolved to a type
+167: 		    			out.println("<strong>提示�?&nbsp;&nbsp;</strong>你还没有权限，等管理员给你分配权限吧!");
+168: 		    		}else if(result==StatusCode.PROMPT_LOGIN_OUT){
+169: 		    			out.println("<strong>提示�?&nbsp;&nbsp;</strong>注销成功!");
+170: 		    		}else if(result==StatusCode.ERROR_LOGIN_OUT){
+171: 		    			out.println("<strong>警告�?&nbsp;&nbsp;</strong>您已经注�?登录或�?�登陆超时，请重新登�?!");
+172: 		    		}else if(result==StatusCode.PROMPT_REGISTER_SUCCESS){
+173: 		    			out.println("<strong>提示�?&nbsp;&nbsp;</strong>您已经注册成功，但是还不能登录哦，静待管理员分配权限�?!");
+
+
+An error occurred at line: 172 in the jsp file: /Login.jsp
+StatusCode.PROMPT_REGISTER_SUCCESS cannot be resolved to a type
+169: 		    			out.println("<strong>提示�?&nbsp;&nbsp;</strong>注销成功!");
+170: 		    		}else if(result==StatusCode.ERROR_LOGIN_OUT){
+171: 		    			out.println("<strong>警告�?&nbsp;&nbsp;</strong>您已经注�?登录或�?�登陆超时，请重新登�?!");
+172: 		    		}else if(result==StatusCode.PROMPT_REGISTER_SUCCESS){
+173: 		    			out.println("<strong>提示�?&nbsp;&nbsp;</strong>您已经注册成功，但是还不能登录哦，静待管理员分配权限�?!");
+174: 		    		}else if(result==StatusCode.ERROR_LOGIN_OUT){
+175: 		    			out.println("<strong>错误�?&nbsp;&nbsp;</strong>抱歉，注册失�?!");
+
+
+An error occurred at line: 174 in the jsp file: /Login.jsp
+StatusCode.ERROR_LOGIN_OUT cannot be resolved to a type
+171: 		    			out.println("<strong>警告�?&nbsp;&nbsp;</strong>您已经注�?登录或�?�登陆超时，请重新登�?!");
+172: 		    		}else if(result==StatusCode.PROMPT_REGISTER_SUCCESS){
+173: 		    			out.println("<strong>提示�?&nbsp;&nbsp;</strong>您已经注册成功，但是还不能登录哦，静待管理员分配权限�?!");
+174: 		    		}else if(result==StatusCode.ERROR_LOGIN_OUT){
+175: 		    			out.println("<strong>错误�?&nbsp;&nbsp;</strong>抱歉，注册失�?!");
+176: 		    		}
+177: 		        	//out.println(result);
+
+
+Stacktrace:
+	at org.apache.jasper.compiler.DefaultErrorHandler.javacError(DefaultErrorHandler.java:102)
+	at org.apache.jasper.compiler.ErrorDispatcher.javacError(ErrorDispatcher.java:212)
+	at org.apache.jasper.compiler.JDTCompiler.generateClass(JDTCompiler.java:457)
+	at org.apache.jasper.compiler.Compiler.compile(Compiler.java:377)
+	at org.apache.jasper.compiler.Compiler.compile(Compiler.java:349)
+	at org.apache.jasper.compiler.Compiler.compile(Compiler.java:333)
+	at org.apache.jasper.JspCompilationContext.compile(JspCompilationContext.java:600)
+	at org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:368)
+	at org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:385)
+	at org.apache.jasper.servlet.JspServlet.service(JspServlet.java:329)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:729)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:230)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:165)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:192)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:165)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:198)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:474)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:140)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:79)
+	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:624)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:87)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:349)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:783)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:789)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1437)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:745)
+
