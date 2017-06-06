@@ -1,0 +1,161 @@
+/*---------- base ---------*/
+*{
+	padding:0px;
+	margin:0px;
+}
+html{
+	background:#FFF;
+}
+body{
+	font:12px Verdana,Arial,Tahoma;
+}
+img{
+	border:none;
+}
+a{
+	color:#256EB1;
+	text-decoration:none;
+}
+a:hover{
+	color:#ff3300;
+	text-decoration:underline;
+}
+
+input,select,button{
+	font:12px Verdana,Arial,Tahoma;
+	vertical-align:middle;
+}
+
+ul {
+	list-style-type: none;
+}
+
+ul li {
+	display: inline;
+}
+
+table {
+	width:100%;
+	border:none;
+	text-align:center;
+}
+table tr td{
+	border:#E4E8EB solid 1px; 
+}
+input.button {
+	width:108px;
+	height:28px;
+	background:url("../images/blue_skin.png") -42px -222px;
+}
+/*---------- frame : header ---------*/
+.header{
+	width:100%;
+	height: 100px;
+	background-image: url(../images/banner2.png);
+	margin:0 auto;
+	overflow:hidden;
+	border-bottom:1px solid #DBDBDB;
+}
+.header .toplinks{
+	float:right;
+	margin:10px 25px;
+}
+.header .toplinks a{
+	margin:0 5px;
+}
+.header .toplinks span{
+	margin-left:15px;
+}
+.header .toplinks span a{
+	margin:0 2px;
+}
+
+.header h1{
+	/*float:left;
+	font-family: SimHei, serif;
+	font-size: 32px;
+	margin:20 20px;
+	padding-left:10px;*/
+	float: left;
+	margin-top: 0px;
+	padding-left: 25px;
+}
+
+.header h1 a {
+	text-decoration: none;
+}
+
+/*------------- frame:menu -------------*/
+
+.menu {
+	margin:0 auto;
+	float:left;
+	width:100%;
+	height:100%;
+	font-size:14px;
+	background: #f8f8f8;
+	padding-left:20px;
+}
+.menu dl dt {
+	color: #666666;
+	font-weight:bold;
+	margin-top: 10px;
+}
+
+.menu dl dd {
+	height: 20px;
+	padding:10px 0px 0px 20px;
+}
+
+/*---------- frame:content ---------*/
+.content{
+	height: 450;
+	width: 98%;
+	margin: 5px auto;
+	background: url(../images/welcome.jpg) no-repeat center;
+}
+
+.content p {
+	float: right;
+	margin: 0px 50px;
+	padding-top:10px;
+	line-height: 30px;
+	font-size:14px;
+	text-align: right;
+	color: #0000FF;
+	white-space: normal;
+}
+
+/*---------- error ---------*/
+.error {
+	height: 450;
+	width: 98%;
+	margin: 5px auto;
+	background: url(../images/welcome.jpg) no-repeat center;
+}
+
+.error p {
+	position:relative;
+	left:36%;
+	top:45%;
+	line-height: 30px;
+	font-size:18px;
+	text-align: center;
+	width: 400px;
+	color: #0000FF;
+	white-space: normal;
+	border:1px solid #DBDBDB;
+}
+
+/*---------- frame:footer ---------*/
+.footer{
+	width:100%;
+	color:#999;
+	text-align:center;
+	margin:0px auto;
+	padding-bottom:10px;
+	border-top:1px solid #DBDBDB;
+	padding-top:10px;
+	overflow:hidden;
+	line-height:25px;
+}

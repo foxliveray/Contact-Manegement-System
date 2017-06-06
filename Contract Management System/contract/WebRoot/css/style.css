@@ -1,0 +1,341 @@
+/*---------- base ---------*/
+* {
+	padding: 0px;
+	margin: 0px auto;
+}
+
+html {
+	background: #FFF;
+}
+
+body {
+	width: 960px;
+	font: 12px Verdana, Arial, Tahoma;
+	background: url(../images/default1.jpg);
+	margin-left:auto;
+    margin-right:auto;
+}
+
+img {
+	border: none;
+}
+
+a {
+	color: #256EB1;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #ba2636;
+	text-decoration: underline;
+}
+
+ul {
+	list-style-type: none;
+}
+
+ul li {
+	display: inline;
+}
+
+input,select,button {
+	vertical-align: middle;
+}
+
+.search-submit {
+	cursor: pointer;
+	width: 68px;
+	height: 22px;
+	font-size: 0px;
+	color: #fafafa;
+	border: 0px;
+	background: url(../images/search-bt.gif) no-repeat;
+}
+
+.mtitle {
+	/*	width: 180px;
+	height: 100px;
+	margin: 0 5px;	
+	text-align:center;*/
+	font: 20px Verdana, Arial, Tahoma;
+	padding: 5px 0px;
+	border-top: 1px solid #EEE;
+	border-bottom: 1px solid #EEE;
+	background-color: #006699;
+	padding-left: 10px;
+	color: #FFFFFF;
+	font-weight: bold;	
+}
+
+/*---------- header ---------*/
+.header {
+	width: 960px;
+	height: 180px;
+	background-image: url(../images/banner.jpg);
+	margin: 10px auto;
+	overflow: hidden;
+	border-bottom: 1px solid #DBDBDB;
+}
+
+.header a {
+	color: #777;
+}
+
+.header a:hover {
+	color: #ff3333;
+	text-decoration: none;
+}
+
+.header .toplinks {
+	width: 960px;
+	height: 25px;
+	line-height: 25px;
+	color: #676767;
+}
+
+.header .toplinks span {
+	float: right;
+	margin-left: 15px;
+}
+
+.header .toplinks span a {
+	margin: 15px 5px;
+}
+
+.header h1 {
+	float: left;
+	margin-top: 20px;
+	padding-left: 25px;
+}
+
+/*---------- main ---------*/
+.main {
+	width: 960px;
+	margin: 60px auto;
+	overflow: hidden;
+}
+
+.title {
+	font-size: 24px;
+	color: #2b2b2b;
+}
+
+/*---------- main:register&login ---------*/
+.register_main {
+	border: 2px solid #9DBCC9;
+	width: 600px;
+	margin: 10px auto 0;
+	position: relative;
+	color: #ECE9D8;
+}
+
+.register_main table {
+	/*border-collapse: separate;
+	width: 600px;*/
+	font: 12px Verdana, Arial, Tahoma;	
+	margin: 10px 20px;
+	vertical-align:middle;
+}
+
+.register_main table tr td {
+	border: 1px none;
+	height: 40px;
+	line-height: 30px;
+	padding-bottom: 6px;
+	vertical-align: middle;	
+}
+
+.register_main .info {
+	color: #999999;
+}
+.register_main .title {
+	color: #003366;
+	font: 20px Verdana, Arial, Tahoma;
+	height: 40px;
+}
+.register_main input {
+	height: 30px;
+	width: 200px;
+}
+
+input.button {
+	width: 100px;
+	height: 30px;
+	background: url("../images/blue_skin.png") -42px -112px;
+	font-size:14px;
+}
+
+/*---------- search ---------*/
+.search {
+	font: 14px Tahoma;
+	line-height: 17px;
+	margin: 15px 5px;
+	width: 800px;
+}
+
+/*---------- list ---------*/
+.list {
+	margin: 0px auto;
+	clear:both;
+}
+
+.list table {
+	width: 700px;
+	margin: 0px 10px;
+	border-top: 3px solid #EEE;
+	font: 14px Verdana, Arial, Tahoma;
+}
+
+.list table .th1 {
+	width: 100px;
+}
+
+.list table .th2 {
+	width: 180px;
+}
+
+.list table tr td {
+	padding: 5px 0px;
+	border-bottom: 1px solid #EEE;
+	text-align: center;
+}
+
+.list .tdname {
+	text-align: left;
+}
+
+.list table tr th {
+	padding: 5px 0px;
+	border-top: 1px solid #EEE;
+	border-bottom: 1px solid #EEE;
+	background-color: #ddd;
+}
+
+/*--------- contract detail --------*/
+.preview {
+	min-width:200px;
+}
+
+.preview .viewbox {
+	padding: 8px auto;
+	width:100%;
+	height:90%;
+}
+
+.preview .viewbox .title {
+	height: 55px;
+	line-height: 56px;
+	text-align: center;
+	overflow: hidden;
+}
+
+.preview .viewbox .title h2 {
+	font-size: 24px;
+	color: #2b2b2b;
+}
+
+.preview .viewbox .info {
+	height: 24px;
+	line-height: 17px;
+	text-align: center;
+	overflow: hidden;
+	color: #666;
+}
+
+.preview .viewbox .info small {
+	margin-left: 8px;
+	margin-right: 3px;
+	color: #999;
+	font-size: 12px;
+}
+
+.preview .viewbox .content {
+	font-size: 14px;
+	padding: 0px 0px 0px 16px;
+	min-width:400px;
+	max-height:80%;
+	line-height: 25px;
+	color: #333;
+	overflow:auto;
+	
+}
+
+.preview .pfooter {
+	width: 100%;
+	height:45px;
+	color: #999;
+	text-align: center;
+	margin: 0px auto;
+	padding-bottom: 5px;
+	border-top: 1px solid #DBDBDB;
+	line-height: 25px;
+}
+
+/*---------- pagelist ---------*/
+.pagelist {
+	font: 14px Tahoma;
+	line-height: 17px;
+	margin-right: 6px;
+	width: 700px;
+	float:left;
+	border-bottom: #E4E8EB solid 1px;
+	text-align:right;
+}
+
+.pageinfo {
+	margin: 0 15px;
+	color: #444;
+
+}
+
+/*---------- add&update---------*/
+.update {
+	width: 500px;
+	border: none;
+	margin: 8px;
+}
+
+.update tr td {
+	border: #E4E8EB solid 1px;
+}
+
+/*---------- showHQOpinion---------*/
+.name {
+	height: 56px;
+	width: 500px;
+	line-height: 56px;
+	text-align: center;
+	overflow: hidden;
+	padding-top: 10px;
+	font: 18px Verdana, Arial, Tahoma;
+}
+
+.listOpinion table {
+	margin: 10px;
+	border-top: 3px solid #EEE;
+}
+
+.listOpinion table tr td {
+	padding: 5px 0px;
+	border-bottom: 3px solid #EEE;
+}
+
+.listOpinion table tr th {
+	padding: 5px 0px;
+	border-top: 3px solid #EEE;
+	border-bottom: 3px solid #EEE;
+	background-color: #ddd;
+}
+
+/*---------- footer ---------*/
+.footer {
+	width: 960px;
+	color: #999;
+	text-align: center;
+	margin: 8px auto;
+	padding-bottom: 10px;
+	border-top: 1px solid #DBDBDB;
+	padding-top: 10px;
+	overflow: hidden;
+	line-height: 25px;
+}
