@@ -5,9 +5,6 @@ import java.util.List;
 import model.Role;
 import util.AppException;
 
-/**
- * Role Data Access Layer Interface
- */
 public interface RoleDao {
 
 	/**
@@ -26,4 +23,5 @@ public interface RoleDao {
 	 * @throws AppException
 	 */
 	public List<Role> getAll() throws AppException;
+	
 }

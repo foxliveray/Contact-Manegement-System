@@ -1,4 +1,4 @@
-package dao.impl;
+package dao.Impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,12 +10,12 @@ import java.util.List;
 import dao.RoleDao;
 import model.Role;
 import util.AppException;
-import util.DBUtil;
+import util.JDBCUtil;
 
 /**
  * Role data access layer implementation class
  */
-public class RoleDaoImpl implements RoleDao{
+public class RoleDaoImpl implements RoleDao {
 
 	/**
 	 * Query role's information according to id
@@ -27,17 +27,16 @@ public class RoleDaoImpl implements RoleDao{
 	public Role getById(int id) throws AppException {
 		// Declare role object
 		Role role = null;
-		
 		//Declare Connection object,PreparedStatement object and ResultSet object
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		try {
 			// Create database connection
-			conn = DBUtil.getConnection();
+			conn = JDBCUtil.getConnection();
 			// Declare operation statement,query role's information based on role id, "?" is a placeholder
 			String sql = "select id,name,description,function_ids "
-					+"from t_role "
+					+"from role "
 					+"where id = ? and del = 0";
 			// Pre-compiled sql
 			psmt = conn.prepareStatement(sql);
@@ -60,14 +59,13 @@ public class RoleDaoImpl implements RoleDao{
 			throw new AppException("dao.impl.RoleDaoImpl.getById");
 		} finally {
 			// Close the database operation object, release resources
-			DBUtil.closeResultSet(rs);
-			DBUtil.closeStatement(psmt);
-			DBUtil.closeConnection(conn);
+			JDBCUtil.closeResultSet(rs);
+			JDBCUtil.CloseStatement(psmt);
+			JDBCUtil.closeConnection(conn);
 		}
-		
 		return role;
 	}
-
+	
 	/**
 	 * Query all role object set
 	 * 
@@ -85,9 +83,9 @@ public class RoleDaoImpl implements RoleDao{
 		
 		try {
 			// Create database connection
-			conn = DBUtil.getConnection();
+			conn = JDBCUtil.getConnection();
 			// Declare operation statement:query all role object set,"?" is a placeholder
-			String sql = "select id,name,description,function_ids from t_role where del = 0";
+			String sql = "select id,name,description,function_ids from role where del = 0";
 			
 			psmt = conn.prepareStatement(sql);
 			
@@ -106,16 +104,14 @@ public class RoleDaoImpl implements RoleDao{
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException(
-					"dao.impl.RoleDaoImpl.getAll");
+					"impl.RoleDaoImpl.getAll");
 		} finally {
 			// Close the database operation object, release resources
-			DBUtil.closeResultSet(rs);
-			DBUtil.closeStatement(psmt);
-			DBUtil.closeConnection(conn);
+			JDBCUtil.closeResultSet(rs);
+			JDBCUtil.CloseStatement(psmt);
+			JDBCUtil.closeConnection(conn);
 		}
-		
 		return roleList;
 	}
 
-	
 }

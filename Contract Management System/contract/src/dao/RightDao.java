@@ -39,7 +39,7 @@ public interface RightDao {
 	
 	/**
 	 * Update contract content according to permission id,
-	 * pass parameter through entity object
+	 * pass parameter though entity object
 	 * 
 	 * @param id permission id
 	 * @return boolean Return true if successful , otherwise false
@@ -55,4 +55,5 @@ public interface RightDao {
 	 * @throws AppException
 	 */
 	public boolean add(Right right) throws AppException;
+	
 }

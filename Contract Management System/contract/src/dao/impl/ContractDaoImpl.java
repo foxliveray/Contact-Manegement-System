@@ -1,5 +1,8 @@
-package dao.impl;
-
+package dao.Impl;
+import util.AppException;
+import util.JDBCUtil;
+import model.Contract;
+import dao.ContractDao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,36 +10,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import dao.ContractDao;
-import model.Contract;
-import util.AppException;
-import util.DBUtil;
 
-/**
- * Contract data access layer implementation class
- */
 public class ContractDaoImpl implements ContractDao{
-
-	/**
-	 * Add contract information
-	 * 
-	 * @param contract 
-	 * @return boolean Return true if successful , otherwise false
-	 * @throws AppException
-	 */
-	public boolean add(Contract contract) throws AppException {
-		boolean flag = false;// Operation flag
-		
-		// Declare database connection object, pre-compiled object and results set object
+	public boolean add(Contract contract) throws AppException{
+		boolean flag = false;// Operation flag 
+		//Declare Connection object,PreparedStatement object and ResultSet object
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		
 		try {
 			// Create database connection
-			conn = DBUtil.getConnection();
+			conn = JDBCUtil.getConnection();
 			//Declare operation statement,save contract information, "?" is a placeholder
-			String sql = "insert into t_contract" 
+			String sql = "insert into contract" 
 				+"(user_id,customer,num,name,beginTime,endTime,content) "
 				+"values(?,?,?,?,?,?,?)";
 				
@@ -66,24 +53,16 @@ public class ContractDaoImpl implements ContractDao{
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException(
-			"dao.impl.ContractDaoImpl.add");
+			"ContractDao.add");
 		} finally {
-			// Close database object operation, release resources
-			DBUtil.closeResultSet(rs);
-			DBUtil.closeStatement(psmt);
-			DBUtil.closeConnection(conn);
+			// Close the database operation object, release resources
+			JDBCUtil.closeResultSet(rs);
+			JDBCUtil.CloseStatement(psmt);
+			JDBCUtil.closeConnection(conn);
 		}
-		
 		return flag;
 	}
 
-	/**
-	 * Query contract object according to contract id
-	 * 
-	 * @param id Contract id
-	 * @return Contract object
-	 * @throws AppException
-	 */
 	public Contract getById(int id) throws AppException {
 		// Declare contract
 		Contract contract = null;
@@ -95,10 +74,10 @@ public class ContractDaoImpl implements ContractDao{
 		
 		try {
 			// Create database connection
-			conn = DBUtil.getConnection();
+			conn = JDBCUtil.getConnection();
 			//Define SQL statement: query contract information according to the contract id 
 			String sql = "select id,name,user_id,customer,num,beginTime,endTime,content "
-					+"from t_contract "
+					+"from contract "
 					+"where id = ? and del = 0";
 
 			// Pre-compiled sql, and set the parameter values
@@ -127,36 +106,27 @@ public class ContractDaoImpl implements ContractDao{
 					"dao.impl.ContractDaoImpl.getById");
 		} finally {
 			//  Close the database operation object
-			DBUtil.closeResultSet(rs);
-			DBUtil.closeStatement(psmt);
-			DBUtil.closeConnection(conn);
+			JDBCUtil.closeResultSet(rs);
+			JDBCUtil.CloseStatement(psmt);
+			JDBCUtil.closeConnection(conn);
 		}
-		
 		return contract;
 	}
+	
 
-	/**
-	 * Query contract id set according to user id
-	 * 
-	 * @param id Contract id
-	 * @return Contract id set
-	 * @throws AppException
-	 */
 	public List<Integer> getIdsByUserId(int userId) throws AppException {
 		// Initialize id set
 		List<Integer> ids = new ArrayList<Integer>();
-		
 		// Declare database connection object, pre-compiled object and result set object
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
-		
 		try {
 			// Create database connection
-			conn = DBUtil.getConnection();
+			conn = JDBCUtil.getConnection();
 			// Declare operation statement,query contract id according to user id, "?" is a Placeholder
 			String sql = "select id "
-					+"from t_contract "
+					+"from contract "
 					+"where user_id = ? and del = 0";
 			// Pre-compiled sql
 			psmt = conn.prepareStatement(sql);
@@ -174,33 +144,24 @@ public class ContractDaoImpl implements ContractDao{
 			throw new AppException("dao.impl.ContractDaoImpl.getIdsByUserId");
 		} finally {
 			// Close database object operation, release resources
-			DBUtil.closeResultSet(rs);
-			DBUtil.closeStatement(psmt);
-			DBUtil.closeConnection(conn);
+			JDBCUtil.closeResultSet(rs);
+			JDBCUtil.CloseStatement(psmt);
+			JDBCUtil.closeConnection(conn);
 		}
-		
 		return ids;
 	}
+	
 
-	/**
-	 * Update contract's content according to contract id,passing parameters through entity object 
-	 * 
-	 * @param conId Contract id
-	 * @return boolean Return true if successful , otherwise false
-	 * @throws AppException
-	 */
 	public boolean updateById(Contract contract) throws AppException {
 		boolean flag = false;// Operation flag
-		
 		// Declare database connection object, pre-compiled object
 		Connection conn = null;
 		PreparedStatement psmt = null;
-		
 		try {
 			// Create database connection
-			conn = DBUtil.getConnection();
+			conn = JDBCUtil.getConnection();
 			// Declare sql:update contract information according to contract id
-			String sql = "update t_contract set name = ?, customer = ?, beginTime = ?, endTime = ?, content = ? " 
+			String sql = "update contract set name = ?, customer = ?, beginTime = ?, endTime = ?, content = ? " 
 					+"where id = ? and del = 0";
 
 			// Pre-compiled sql, and set the parameter values
@@ -226,11 +187,10 @@ public class ContractDaoImpl implements ContractDao{
 			throw new AppException("dao.impl.ContractDaoImpl.updateById");
 		} finally {
 			// Close database operation object
-			DBUtil.closeStatement(psmt);
-			DBUtil.closeConnection(conn);
+			JDBCUtil.CloseStatement(psmt);
+			JDBCUtil.closeConnection(conn);
 		}
-		
 		return flag;
 	}
-
+	
 }

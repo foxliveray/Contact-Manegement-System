@@ -1,49 +1,43 @@
 package dao;
+import util.AppException;
 
 import java.util.List;
 
 import model.Contract;
-import util.AppException;
 
-/**
- *	Contract Data Access Layer Interface
- */
 public interface ContractDao {
 
 	/**
-	 * Add contract information
+	 * 添加合同信息
 	 * 
-	 * @param contract  Contract object
-	 * @return boolean  Return true if successful , otherwise false
+	 * @param  合同信息
+	 * @return 是否添加成功
 	 * @throws AppException
 	 */
 	public boolean add(Contract contract) throws AppException;
 	
+	
 	/**
-	 * Query contract information according to contract id
-	 * 
-	 * @param id Contract id
-	 * @return Contract object
+	 * 查找符合id的合同
+	 * @param 合同id
+	 * @return 合同信息
 	 * @throws AppException
 	 */
 	public Contract getById(int id) throws AppException;
 	
 	/**
-	 * Query contract id set according to user id
-	 * 
-	 * @param id User id
-	 * @return Contract id set
+	 * 查找符合用户id的合同
+	 * @param 用户id
+	 * @return 该用户所有合同id的集合
 	 * @throws AppException
 	 */
 	public List<Integer> getIdsByUserId(int userId) throws AppException;
 	
 	/**
-	 * Update contract's content according to contract id,passing parameters through entity object 
-	 * 
-	 * @param conId Contract id
-	 * @return boolean Return true if successful , otherwise false
+	 * 更新用户合同信息
+	 * @param 用户id
+	 * @return 是否成功
 	 * @throws AppException
 	 */
 	public boolean updateById(Contract contract) throws AppException;
-	
 }
