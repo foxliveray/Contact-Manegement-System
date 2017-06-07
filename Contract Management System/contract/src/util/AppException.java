@@ -1,30 +1,38 @@
 package util;
 
-public class AppException extends Exception{
+/**
+ * 用户定义的Exception类
+ * 
+ * @author 钱洋
+ * @date 2017年6月6日 下午3:48:32
+ */
+public class AppException extends Exception {
+	private int exceptionCode; // 异常代码
+	private String message; // 异常信息
 
-	private int exceptionCode;		//Exception code
-	private String message;			//Exception message
-	
 	/**
-	 * Constructor,set the exception message
-	 * @param message 
+	 * 构造函数，设置异常信息
+	 * 
+	 * @param message
 	 */
 	public AppException(String message) {
 		this.message = message;
 	}
-	
+
 	/**
-	 * Constructor,set the exception message and exception code
+	 * 构造函数，设置异常信息和异常代码
+	 * 
 	 * @param message
 	 * @param exceptionCode
 	 */
-	public AppException(String message,int exceptionCode) {
+	public AppException(String message, int exceptionCode) {
 		this.message = message;
 		this.exceptionCode = exceptionCode;
 	}
-	
+
 	/**
-	 * Get exception code
+	 * 获取异常代码
+	 * 
 	 * @return exceptionCode
 	 */
 	public int getExceptionCode() {
@@ -32,12 +40,13 @@ public class AppException extends Exception{
 	}
 
 	/**
-	 * Get detailed exception message
-	 * @return detailMessage 
+	 * 获取详细异常信息
+	 * 
+	 * @return detailMessage
 	 */
 	public String getMessage() {
-		String detailMessage = "Detail message:"
-			+ exceptionCode + " " + message;
+		String detailMessage = "Detail Message:" + exceptionCode + " " + message;
 		return detailMessage;
 	}
+
 }
