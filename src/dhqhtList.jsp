@@ -1,20 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    import="java.util.*" 
+import="java.util.*,model.ConBusiModel"
     pageEncoding="UTF-8"%>
-<%@page import="model.ConBusiModel;" %>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<body>
 <head>
 <style type="text/css">
-
 .btn{
     width:100%;
     height:100%;
 }
-
 </style>
+
+<!-- Use JavaScript script to open a new window display information when preview-->
+		<script>
+			function preview(url) {
+				window.open(url,'Preview','resizable=no,toolbar=no,width=620,height=500,top=50,left=200');
+			}
+		</script>
+		
 </head>
+
+<body>
 
 <!-- 标题 -->
   <h1 style="font-family:arial;color:white;font-size:60px;background-color:black;">待会签合同</h1>
@@ -33,35 +43,40 @@
      <td align="center" width="200">操作</td>
   </tr>
   
-  <%
-	List<ConBusiModel> contractList = (List<ConBusiModel>)request.getAttribute("contractList");  
-    for (ConBusiModel cbm : contractList) {
-  %>
+          <%
+                List<ConBusiModel> contractList = (List<ConBusiModel>)request.getAttribute("contractList");
+                for(int i=0;  i<contractList.size(); i++){
+                ConBusiModel cbm = contractList.get(i);
+          %>
   
 <!-- 表中的行 -->
   <tr>
     <td>
-    <%=cbm.getConName()%>
+    <a href="javascript:preview('contractDetail?conId=<%=cbm.getConId()%>')"><%=cbm.getConName()%></a>
     </td>
-    <td><%=cbm.getDrafTime()%></td>
+    <td>
+    <%=cbm.getDrafTime()%>
+    </td>
     <!-- 添加按钮，点击即可会签 -->
-    <td><a href="toAddHQOpinion?conId=<%=cbm.getConId()%>"></td>
+    <td style="color:black">
+    <a href="ToAddHQOpinionServlet?conId=<%=cbm.getConId()%>">会签
+    </a>
+    </td>
   </tr>
-
-   <%
-        }  
-   %>
+  
+  <%} %>
+   
   
 </table>
 
-<!-- 最下栏的翻页按钮 -->
-<p style = "text-align:right">
-<input type="button" id="first" value="first" style="padding-right:30px;" />
-<input type="button" id="<pre" value="<pre" style="padding-right:30px;" />
-<input type="button" id="next>" value="next>" style="padding-right:30px;" />
-<input type="button" id="last" value="last" style="padding-right:30px;" />
-<!-- 标注第几页，共多少项 -->
-<input type="text" readOnly value="第1页共1条" />
-</p>
+<div style="height:px;margin:px ;">
+<span id="spanFirst">第一页</span>
+<span id="spanPre">上一页</span>
+<span id="spanNext">下一页</span>
+<span id="spanLast">最后一页</span>
+第<span id="spanPageNum"></span>页/共
+<span id="spanTotalPage"></span>页
+</div>
+
 </body>
 </html>

@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="model.Contract;" %>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -29,18 +27,17 @@ position:absolute;
 </head>
 
 <body>
-<form action="DhqhtListServlet" method="POST">
+<form action="AddHQOpinionServlet" method="POST"> 
 
 <script>
 //提交点击事件
 function OnTurnIn()
 {
 var x=document.getElementById("text").value;
-var content = document.getElementById('content');
-if(content.value == ""){
+if(x == ""){
 	alert("Countersign opinion can not be empty!");
-	content.focus();
-	return false;
+}else{
+	document.forms[0].submit();
 }
 }
 //重置点击事件
@@ -51,12 +48,15 @@ x.innerHTML="";    // 改变内容
 }
 
 </script>
-			<%
-				Contract contract = (Contract)request.getAttribute("contract");
-			%>
+			
 <h1 style="font-family:arial;color:white;font-size:60px;background-color:black;">会签合同</h1>
+
+     <%
+				String contract = (String)request.getAttribute("contract");
+     %>
 <p >合同名称:
-<%=contract.getName()%></p>
+<%=contract%>
+</p>
 
 <div align="center">会签意见：
 <br> 
@@ -68,7 +68,7 @@ x.innerHTML="";    // 改变内容
 <input type="button" id="reset" value="重置" class="btn2" onclick="OnReset()"/>
 </p>
 
-</form>
+ </form>
 
 </body>
 </html>
