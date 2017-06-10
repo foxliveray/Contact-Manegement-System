@@ -14,25 +14,41 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     height:100%;
 }
 </style>
+		
+</head>
+
+<body>
 
 <!-- Use JavaScript script to open a new window display information when preview-->
 		<script>
 			function preview(url) {
 				window.open(url,'Preview','resizable=no,toolbar=no,width=620,height=500,top=50,left=200');
 			}
+			
+			function Check(){   
+	            var x=document.getElementById("tbl");
+	            var z=document.getElementById("select").value;
+	            var y=x.rows.length;
+	            //x.style.visibility='hidden';
+	            for(var i = 1; i <y; i++){  
+	            	var temp=x.rows[i].cells[0].lang;
+	            	if(temp.indexOf(z)==-1){
+	            		x.rows[i].style.display='none'; 
+	            		}else{
+	            	    x.rows[i].style.display='table-row';
+	            		}
+	            }
+	            //x.style.display='none';  
+	        }  
 		</script>
-		
-</head>
-
-<body>
 
 <!-- 标题 -->
   <h1 style="font-family:arial;color:white;font-size:60px;background-color:black;">待会签合同</h1>
 
 <!-- 查找栏 -->
 <p >查找待会签合同:
-<input type="text"/>
-<input type="button" id="search" value="search" style="padding-right:30px;" />
+<input type="text" id="select" name="select"/>
+<input type="button" id="search" value="search" style="padding-right:30px" onclick="Check()" />
 </p>
 
 <!-- 合同列表 -->
@@ -51,7 +67,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
 <!-- 表中的行 -->
   <tr>
-    <td>
+    <td lang="<%=cbm.getConName()%>">
     <a href="javascript:preview('contractDetail?conId=<%=cbm.getConId()%>')"><%=cbm.getConName()%></a>
     </td>
     <td>

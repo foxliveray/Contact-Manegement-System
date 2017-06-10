@@ -41,16 +41,19 @@ public class AddHQOpinionServlet extends HttpServlet {
 		// Get session by using request
 		session = request.getSession();
 		Integer userId = (Integer)session.getAttribute("userId");
+		**/
 		
+		Integer userId=1;
 		// If user is not login, jump to login page
 		if (userId == null) {
 			response.sendRedirect("toLogin");
 		} else {
 			
 			// Get contract id
-			int conId = Integer.parseInt(request.getParameter("conId"));
+			//int conId = Integer.parseInt(request.getParameter("conId"));
+			int conId=1;
 			// Get countersign opinion 
-			String content = request.getParameter("content");
+			String content = request.getParameter("text");
 			
 			
 			// Instantiate conProcess object for  encapsulates countersign information
@@ -65,15 +68,17 @@ public class AddHQOpinionServlet extends HttpServlet {
 				// Call business logic layer to do contract countersign
 				contractService.counterSign(conProcess);
 				
+				
 				// After countersigned,redirect to page of contract to be countersigned
-				response.sendRedirect("DhqhtList");
-
+				//request.getRequestDispatcher("/DhqhtListServlet").forward(request,response);
+				response.sendRedirect("DhqhtListServlet");
+				
 			} catch (AppException e) {
 				e.printStackTrace();
 				// Redirect to the exception page
 				response.sendRedirect("toError");
 			}
-		}**/
+		}
 	}
 
 	/**
@@ -82,5 +87,6 @@ public class AddHQOpinionServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// Call doPost() to process request
+		
 	}
 }
