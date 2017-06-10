@@ -33,7 +33,15 @@
     <servlet-name>ApproveDoneServlet</servlet-name>
     <url-pattern>/approveDone</url-pattern>
   </servlet-mapping>
-   <servlet>
+  <servlet>
+    <servlet-name>ApprovedListServlet</servlet-name>
+    <servlet-class>web.ApprovedConListServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ApprovedListServlet</servlet-name>
+    <url-pattern>/showApprovedConList</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>ConDetailsServlet</servlet-name>
     <servlet-class>web.ContractDetailsServlet</servlet-class>
   </servlet>

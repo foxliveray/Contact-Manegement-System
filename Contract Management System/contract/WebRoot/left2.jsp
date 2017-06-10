@@ -39,7 +39,7 @@
 				<a href="toApproved" target="_self">待审批合同</a>
 			</dd>
 			<dd>
-				<a href="yshphtList.htm" target="_self">已审批合同</a>
+				<a href="showApprovedConList" target="_self">已审批合同</a>
 			</dd>
 		</dl>
 		<dl>
