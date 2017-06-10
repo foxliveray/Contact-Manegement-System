@@ -39,8 +39,8 @@ public class AddApprovedOpinionServlet extends HttpServlet {
 		
 		HttpSession session=null;
 		session=request.getSession();
-		Integer userId=(Integer)session.getAttribute("userId");
-		
+//		Integer userId=(Integer)session.getAttribute("userId");
+		Integer userId=1;
 		if(userId==null){
 			response.sendRedirect("toLogin");
 		}
@@ -66,7 +66,7 @@ public class AddApprovedOpinionServlet extends HttpServlet {
 				
 				conService.approve(conProcess);
 				
-				response.sendRedirect("toApproved");
+				response.sendRedirect("ToBeApprovedServlet");
 			}
 			catch(AppException e){
 				e.printStackTrace();

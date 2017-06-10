@@ -46,59 +46,71 @@ public class DraftServelt extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		//HttpSession session = null;
-		String name = request.getParameter("name1");
-		String customer = request.getParameter("customer");
-		String content = request.getParameter("content");
-		String beginTime = request.getParameter("beginTime");
-		String endTime = request.getParameter("endTime");
-		response.getWriter().append("Served at: ").append(name+" "+customer+" "+content+" "+beginTime);
-		// Instantiate begin and end of java.util.Date type,for accepting transformed beginTime and endTime
-		Date begin = new Date();
-		Date end = new Date();
+		HttpSession session = null;
+		// Get session by using request object
+		session = request.getSession();
+		Integer userId = 123;
+
+		if (userId == null){
+			//zhuce
+		}else{
+			String name = request.getParameter("name1");
+			String customer = request.getParameter("customer");
+			String content = request.getParameter("content");
+			String beginTime = request.getParameter("beginTime");
+			String endTime = request.getParameter("endTime");
+			response.getWriter().append("Served at: ").append(name+" "+customer+" "+content+" "+beginTime);
+			// Instantiate begin and end of java.util.Date type,for accepting transformed beginTime and endTime
+			Date begin = new Date();
+			Date end = new Date();
+			
+			// Define a date format object, transform the time of String type into java.util.Date data type 
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		
-		// Define a date format object, transform the time of String type into java.util.Date data type 
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-	
-		// Initialize prompt message
-		String message = "";
-		
-		try {
-			begin = dateFormat.parse(beginTime);
-			end = dateFormat.parse(endTime);
+			// Initialize prompt message
+			String message = "";
 			
-			// Build a Contract object and assign value for the object's attribute
-			Contract contract = new Contract();
-			contract.setName(name);
-			contract.setCustomer(customer);
-			contract.setBeginTime(begin);
-			contract.setEndTime(end);
-			contract.setContent(content);
-			
-			// Initialize contractService
-			ContractService contractService = new ContractService();
-			
-			// Operation success or failure, return draft page, giving prompt message
-			if (contractService.draft(contract)) {
-				message = "Drafting succeeded!";
-				// Transform the information created now to page for display
-				request.setAttribute("contract", contract);
-			} else {
-				message = "Drafting failure!";
+			try {
+				begin = dateFormat.parse(beginTime);
+				end = dateFormat.parse(endTime);
+				
+				// Build a Contract object and assign value for the object's attribute
+				Contract contract = new Contract();
+				contract.setId(userId);
+				contract.setName(name);
+				contract.setCustomer(customer);
+				contract.setBeginTime(begin);
+				contract.setEndTime(end);
+				contract.setContent(content);
+				
+				// Initialize contractService
+				ContractService contractService = new ContractService();
+				
+				// Operation success or failure, return draft page, giving prompt message
+				if (contractService.draft(contract)) {
+					message = "Drafting succeeded!";
+					// Transform the information created now to page for display
+					request.setAttribute("contract", contract);
+				} else {
+					message = "Drafting failure!";
+				}
+				
+			} catch (ParseException e) {
+				e.printStackTrace();
+				message = "Contract data is required. Incorrect date format";
+			} catch (AppException e) {
+				e.printStackTrace();
+				//Redirect to the exception page
+				response.sendRedirect("toError");
+				return;
 			}
+			// Save message to request
+			request.setAttribute("message", message);
+			// Forward to draft page 
+			request.getRequestDispatcher("draft.jsp").forward(request, response);
 			
-		} catch (ParseException e) {
-			e.printStackTrace();
-			message = "Contract data is required. Incorrect date format";
-		} catch (AppException e) {
-			e.printStackTrace();
-			//Redirect to the exception page
-			response.sendRedirect("toError");
-			return;
 		}
-		// Save message to request
-		request.setAttribute("message", message);
-		// Forward to draft page 
-		//request.getRequestDispatcher("/addContract.jsp").forward(request, response);
+		
 	}
 
 }

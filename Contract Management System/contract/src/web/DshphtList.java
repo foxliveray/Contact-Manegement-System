@@ -1,27 +1,30 @@
 package web;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.Contract;
+import model.ConBusiModel;
 import service.ContractService;
 import util.AppException;
 
 /**
- * Servlet implementation class ToSeeContract2Servlet
+ * Servlet implementation class DshphtList
  */
-@WebServlet("/ToSeeContract2Servlet")
-public class ToSeeContract2Servlet extends HttpServlet {
+@WebServlet("/DshphtList")
+public class DshphtList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ToSeeContract2Servlet() {
+    public DshphtList() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,22 +35,23 @@ public class ToSeeContract2Servlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
-		Integer contractId = Integer.parseInt(request.getParameter("conId"));
+		//Integer userId = Integer.parseInt(request.getParameter("conId"));
+		Integer userId=1;
 		try {
+			// Initialize contractService
 			ContractService contractService = new ContractService();
-			Contract contract = contractService.getContract(contractId);
-			Integer id=contract.getId();
-			String s=String.valueOf(id);
-			request.setAttribute("conId", s);
-			request.setAttribute("name1", contract.getName());
-			request.setAttribute("customer", contract.getCustomer());
-			request.setAttribute("beginTime", contract.getBeginTime().toString());
-			request.setAttribute("endTime", contract.getEndTime().toString());
-			request.setAttribute("content", contract.getContent());
-			request.getRequestDispatcher("/SeeContract2.jsp").forward(request, response);
+			// Initialize contractList
+			List<ConBusiModel> contractList = new ArrayList<ConBusiModel>();
+			// Call business logic layer to get list of contract to be approved
+			contractList = contractService.getDshphtList(userId);
+
+			// Save contractList to request
+			request.setAttribute("contractList", contractList);
+			// Forward to page of contract to be approved
+			request.getRequestDispatcher("/dshphtList.jsp").forward(request, response);
 		} catch (AppException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			//Redirect to the exception page
 			response.sendRedirect("toError");
 		}
 	}
@@ -57,7 +61,7 @@ public class ToSeeContract2Servlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		//doGet(request, response);
 	}
 
 }

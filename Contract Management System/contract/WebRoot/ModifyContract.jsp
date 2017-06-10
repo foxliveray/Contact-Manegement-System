@@ -62,7 +62,8 @@ function onOk()
 	}
 	else{
 		document.getElementById("state").value="合同修改成功";	
-		document.forms[0].submit();
+		alert("合同修改成功");
+		window.close();
 	}
 
 }

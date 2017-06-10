@@ -11,8 +11,24 @@
 		<!-- Use JavaScript script to open a new window display information when preview-->
 		<script>
 			function preview(url) {
-				window.open(url,'Preview','toolbar=no,scrollbars=yes,width=720,height=560,top=50,left=100');
+				window.open(url,'Preview','toolbar=no,scrollbars=yes,width=720,height=800,top=50,left=100');
 			}
+			
+			function Check(){   
+	            var x=document.getElementById("tbl");
+	            var z=document.getElementById("select").value;
+	            var y=x.rows.length;
+	            //x.style.visibility='hidden';
+	            for(var i = 1; i <y; i++){  
+	            	var temp=x.rows[i].cells[0].lang;
+	            	if(temp.indexOf(z)==-1){
+	            		x.rows[i].style.display='none'; 
+	            		}else{
+	            	    x.rows[i].style.display='table-row';
+	            		}
+	            }
+	            //x.style.display='none';  
+	        }  
 		</script>
 	</head>
 
@@ -24,14 +40,14 @@
 		<div class="search">
 			<form>
 				在待审批合同中搜索：
-				<input value="请输入相关搜索条件..." />
+				<input type="text" id="select" value="请输入相关搜索条件..." />
 				&nbsp;&nbsp;
 				<input type="submit" value="search" class="search-submit"/> <br />
 			</form>
 		</div>
 		
 		<div class="list">
-		  <table>
+		  <table id="tbl">
 			<tr>
 				<th>
 					合同名称
@@ -48,14 +64,14 @@
 		        for (ConBusiModel cbm : contractList) {
        	 	%>
 			<tr>
-				<td class="tdname">
-					<a href="javascript:preview('showConDetails?conId=<%=cbm.getConId()%>')"><%=cbm.getConName()%></a>
+				<td class="tdname" lang="<%=cbm.getConName()%>">
+					<a href="javascript:preview('ToSeeContract2Servlet?conId=<%=cbm.getConId()%>')"><%=cbm.getConName()%></a>
 				</td>
 				<td>
 					<%=cbm.getDrafTime()%>
 				</td>
 				<td>
-					<a href="approving?conId=<%=cbm.getConId()%>">
+					<a href="ToAddApprovedOpinionServlet?conId=<%=cbm.getConId()%>">
 						<img src="images/icon-edit.png"  alt="Approve" />
 						审批
 					</a>

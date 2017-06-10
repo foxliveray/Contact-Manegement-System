@@ -33,11 +33,6 @@ String Content=(String)request.getAttribute("content");%>
 
 </style>
 <script type="text/javascript">
-function onOk()
-{
-	document.forms[0].action="IndexServlet";
-	document.forms[0].submit();
-}
 function onModify()
 {
 	document.forms[0].action="ToModifyServlet";
@@ -77,7 +72,7 @@ function onModify()
 <%=Content%>
 </textarea>
 <hr/>
-<input type="button" value="确认"onClick="onOk()"/>
+<input type="button" value="确认"onClick="window.close()"/>
 <input type="button" value="修改"onClick="onModify()"/>
 </form>
 </body>

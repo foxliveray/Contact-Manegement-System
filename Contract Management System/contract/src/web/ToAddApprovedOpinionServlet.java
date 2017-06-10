@@ -38,8 +38,8 @@ public class ToAddApprovedOpinionServlet extends HttpServlet {
 
 		HttpSession session = null;
 		session = request.getSession();
-		Integer userId = (Integer) session.getAttribute("userId");
-
+//		Integer userId = (Integer) session.getAttribute("userId");
+		Integer userId=1;
 		if (userId == null) {
 			response.sendRedirect("toLogin");
 		} else {
