@@ -1,8 +1,6 @@
 package web;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -43,19 +41,18 @@ public class ToModifyServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
-		Integer conId=Integer.parseInt(request.getParameter("conId"));
-		
+//		Integer conId=Integer.parseInt(request.getParameter("conId"));
+		Integer conId=2;
 		ContractService contractService = new ContractService();
 		try {
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
 			Contract contract = contractService.getContract(conId);
-			String begin=dateFormat.format(contract.getBeginTime());
-			String end=dateFormat.format(contract.getEndTime());
-			request.setAttribute("conId", contract.getId());
+			String s=String.valueOf(conId);
+			request.setAttribute("conId", s);
 			request.setAttribute("name1", contract.getName());
 			request.setAttribute("customer", contract.getCustomer());
-			request.setAttribute("beginTime", begin);
-			request.setAttribute("endTime", end);
+			request.setAttribute("beginTime", contract.getBeginTime().toString());
+			request.setAttribute("endTime", contract.getEndTime().toString());
 			request.setAttribute("content", contract.getContent());
 			request.getRequestDispatcher("/ModifyContract.jsp").forward(request, response);
 		} catch (AppException e) {
