@@ -24,4 +24,13 @@ public interface UserDao {
 	 * @throws AppException
 	 */
 	public boolean add(User user) throws AppException;
+	
+	/**
+	 * 根据用户id获取用户信息
+	 * 
+	 * @param id  User id
+	 * @return User 
+	 * @throws AppException
+	 */
+	public User getById(int id) throws AppException;
 }

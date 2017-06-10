@@ -83,4 +83,54 @@ public class UserDaoImpl implements UserDao {
 		return flag;
 	}
 
+	/**
+	 * 根据用户id获取用户信息
+	 * 
+	 * @param id User id
+	 * @return User User object
+	 * @throws AppException
+	 */
+	public User getById(int id) throws AppException {
+		// Declare user object
+		User user = null;
+		
+		//Declare database connection object, pre-compiled object and result set object
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		try {
+			// Create database connection
+			conn = JDBCUtil.getConnection();
+			// Declare operation statement:query user information according to the user id , "?" is a placeholder
+			String sql = "select id,name,password "
+					+"from t_user "
+					+"where id = ? and del = 0";
+			// pre-compiled sql
+			psmt = conn.prepareStatement(sql);
+			// Set values for the placeholder
+			psmt.setInt(1, id);
+			// Query resultSet
+			rs = psmt.executeQuery();
+			
+			// Save user information in Pole entity object when queried out resultSet
+			if (rs.next()) {
+				user = new User(); // Instantiate user objects
+				// Set value to user object
+				user.setId(rs.getInt("id"));
+				user.setName(rs.getString("name"));
+				user.setPassword(rs.getString("password"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException("dao.impl.UserDaoImpl.getById");
+		} finally {
+			// Close database object operation, release resources
+			JDBCUtil.CloseStatement(psmt);
+			JDBCUtil.closeConnection(conn);
+		}
+		
+		return user;
+	}
+
 }
