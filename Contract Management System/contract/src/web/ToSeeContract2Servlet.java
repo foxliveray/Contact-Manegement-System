@@ -12,16 +12,16 @@ import service.ContractService;
 import util.AppException;
 
 /**
- * Servlet implementation class ToSeeContract2
+ * Servlet implementation class ToSeeContract2Servlet
  */
-@WebServlet("/ToSeeContract2")
-public class ToSeeContract2 extends HttpServlet {
+@WebServlet("/ToSeeContract2Servlet")
+public class ToSeeContract2Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ToSeeContract2() {
+    public ToSeeContract2Servlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,7 +31,26 @@ public class ToSeeContract2 extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doPost(request, response);
+		request.setCharacterEncoding("UTF-8");
+		Integer contractId =2;
+//		Integer contractId = Integer.parseInt(request.getParameter("conId"));
+		try {
+			ContractService contractService = new ContractService();
+			Contract contract = contractService.getContract(contractId);
+			Integer id=contract.getId();
+			String s=String.valueOf(id);
+			request.setAttribute("conId", s);
+			request.setAttribute("name1", contract.getName());
+			request.setAttribute("customer", contract.getCustomer());
+			request.setAttribute("beginTime", contract.getBeginTime().toString());
+			request.setAttribute("endTime", contract.getEndTime().toString());
+			request.setAttribute("content", contract.getContent());
+			request.getRequestDispatcher("/SeeContract2.jsp").forward(request, response);
+		} catch (AppException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			response.sendRedirect("toError");
+		}
 	}
 
 	/**
@@ -39,24 +58,7 @@ public class ToSeeContract2 extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.setCharacterEncoding("UTF-8");
-		Integer contractId = Integer.parseInt(request.getParameter("conId"));
-	
-		try {
-			ContractService contractService = new ContractService();
-			Contract contract = contractService.getContract(contractId);
-			request.setAttribute("conId", contract.getId());
-			request.setAttribute("name1", contract.getName());
-			request.setAttribute("customer", contract.getCustomer());
-			request.setAttribute("beginTime", contract.getBeginTime());
-			request.setAttribute("endTime", contract.getBeginTime());
-			request.setAttribute("content", contract.getContent());
-			request.getRequestDispatcher("/SeeContract.jsp").forward(request, response);
-		} catch (AppException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			response.sendRedirect("toError");
-		}
+		doGet(request, response);
 	}
 
 }

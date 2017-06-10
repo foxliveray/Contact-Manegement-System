@@ -47,7 +47,9 @@ public class ToSeeContract1Servlet extends HttpServlet {
 		try {
 			ContractService contractService = new ContractService();
 			Contract contract = contractService.getContract(contractId);
-			request.setAttribute("conId", contract.getId());
+			Integer id=contract.getId();
+			String s=String.valueOf(id);
+			request.setAttribute("conId", s);
 			request.setAttribute("name1", contract.getName());
 			request.setAttribute("customer", contract.getCustomer());
 			request.setAttribute("beginTime", contract.getBeginTime().toString());
