@@ -94,5 +94,130 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <span id="spanTotalPage"></span>页
 </div>
 
+<script type="text/javascript">
+//关于界面翻页的function控制
+
+var theTable = document.getElementById("tbl");
+var totalPage = document.getElementById("spanTotalPage");
+var pageNum = document.getElementById("spanPageNum");
+var spanPre = document.getElementById("spanPre");
+var spanNext = document.getElementById("spanNext");
+var spanFirst = document.getElementById("spanFirst");
+var spanLast = document.getElementById("spanLast");
+var numberRowsInTable = theTable.rows.length;
+var pageSize = 3;//每页的显示数据条数
+var page = pageCount();//页数
+var pageNow=1;//现在的页码 初始化为1
+var currentRow=1;//现在的起始行 由于表头是第一行 初始化起始行为1
+//下一页
+function next() {
+hideTable();
+currentRow = currentRow+pageSize;
+pageNow++;
+maxRow = currentRow + pageSize;
+if ( maxRow > numberRowsInTable )
+maxRow = numberRowsInTable;
+theTable.rows[0].style.display = 'table-row';
+for ( var i = currentRow; i< maxRow; i++ ) {
+theTable.rows[i].style.display = 'table-row';
+}
+if ( maxRow == numberRowsInTable ){
+nextText();
+lastText();
+}
+showPage();
+preLink();
+firstLink();
+}
+//上一页
+function pre() {
+hideTable();
+pageNow--;
+currentRow = currentRow-pageSize;
+maxRow = currentRow + pageSize;
+if ( currentRow > numberRowsInTable )
+currentRow = numberRowsInTable;
+if(pageNow!="1") {
+theTable.rows[0].style.display = 'table-row';
+for ( var i = currentRow; i< maxRow; i++ ) {
+theTable.rows[i].style.display = 'table-row';
+ }
+}else first();
+
+if ( pageNow == 1) {
+preText();
+firstText();
+}
+showPage();
+nextLink();
+lastLink();
+}
+//第一页
+function first() {
+hideTable();
+pageNow = 1;
+for ( var i = 0; i<pageSize+1; i++ ) {
+theTable.rows[i].style.display = 'table-row';
+}
+currentRow=1;
+showPage();
+preText();
+nextLink();
+lastLink();
+}
+//最后一页
+function last() {
+hideTable();
+pageNow = pageCount();
+currentRow = pageSize * (page - 1);
+theTable.rows[0].style.display = 'table-row';
+for ( var i = currentRow+1; i<numberRowsInTable; i++ ) {
+theTable.rows[i].style.display = 'table-row';
+}
+showPage();
+preLink();
+nextText();
+firstLink();
+}
+
+//隐藏不必要的部分表格
+function hideTable() {
+for ( var i = 0; i<numberRowsInTable; i++ ) {
+theTable.rows[i].style.display = 'none';
+}
+}
+
+//修改并显示现在的页码
+function showPage() {
+pageNum.innerHTML = pageNow;
+}
+//总共页数
+function pageCount() {
+var count = 0;
+if ( numberRowsInTable%pageSize != 0) count = 1; 
+return parseInt(numberRowsInTable/pageSize) + count;
+}
+//显示链接
+function preLink() { spanPre.innerHTML = "<a href='javascript:pre();'>上一页</a>"; }
+function preText() { spanPre.innerHTML = "上一页"; }
+function nextLink() { spanNext.innerHTML = "<a href='javascript:next();'>下一页</a>"; }
+function nextText() { spanNext.innerHTML = "下一页"; }
+function firstLink() { spanFirst.innerHTML = "<a href='javascript:first();'>第一页</a>"; }
+function firstText() { spanFirst.innerHTML = "第一页"; }
+function lastLink() { spanLast.innerHTML = "<a href='javascript:last();'>最后一页</a>"; }
+function lastText() { spanLast.innerHTML = "最后一页"; }
+//开始隐藏表格
+function hide() {
+for ( var i = pageSize+1; i<numberRowsInTable; i++ ) {
+theTable.rows[i].style.display = 'none';
+}
+totalPage.innerHTML = pageCount();
+pageNum.innerHTML = 1;
+nextLink();
+lastLink();
+}
+hide();//初始化
+</script>
+
 </body>
 </html>
