@@ -14,7 +14,7 @@
 
         <meta charset="utf-8">
 
-        <title>Login</title>
+        <title>Error</title>
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -49,45 +49,14 @@
 
 
     <body>
-
-
-
-        <div class="page-container">
-
-            <h1>Login</h1>
-
-            <form action="Login" method="post">
-
-                <input type="text" name="username" class="username" placeholder="Username">
-
-                <input type="password" name="password" class="password" placeholder="Password">
-
-                <button type="submit">Sign in</button>
-				
-                <div class="error"><span>+</span></div>
-		
-            </form>
-            
-            <a href="Register.jsp" style="color:#fff; text-decoration:none "><button type="submit">Register</button></a>
-            <div class="connect">
-
-                <p>Contract Management System</p>
-                <!--
-                <p>
-
-                    <a class="facebook" href=""></a>
-
-                    <a class="twitter" href=""></a>
-
-                </p>
-                -->
-            
-                
-
+            <div class="page-container">
+            <h1>Error</h1>
+             <h3>你的操作导致了一个系统异常</h3>
             </div>
             
             <div class="info">
-            <p>Copyright © 疯狂的拖延症  Copyright Reserved</p>
+            	<p>Contract Management System</p>
+            	<p>Copyright © 疯狂的拖延症  Copyright Reserved</p>
         </div>
 
       

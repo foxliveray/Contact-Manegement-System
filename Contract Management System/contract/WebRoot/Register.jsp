@@ -14,7 +14,7 @@
 
         <meta charset="utf-8">
 
-        <title>Login</title>
+        <title>Register</title>
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -41,7 +41,28 @@
             <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 
         <![endif]-->
-
+		<script type="text/javascript">
+        function check(){
+          var name = document.getElementById('username');
+          var password = document.getElementById('password');
+          var password2 = document.getElementById('password2');
+          if (name.value == ""){
+            alert("用户名不能为空！");
+            name.focus();
+            return false;
+          }
+          if (password.value == ""){
+            alert("密码不能为空！");
+            password.focus();
+            return false;
+          }
+          if (password2.value != password.value){
+            alert("重复输入的密码需要保持一致！");
+            password2.focus();
+            return false;
+          }
+        }
+    </script>
 
 
     </head>
@@ -54,21 +75,23 @@
 
         <div class="page-container">
 
-            <h1>Login</h1>
+            <h1>Register</h1>
 
-            <form action="Login" method="post">
+            <form action="Register" method="post">
 
-                <input type="text" name="username" class="username" placeholder="Username">
+                <input type="text" name="username" class="username" id="username" placeholder="Username">
 
-                <input type="password" name="password" class="password" placeholder="Password">
+                <input type="password" name="password" class="password" id="password" placeholder="Password">
 
-                <button type="submit">Sign in</button>
-				
+                <input type="password" name="password2" class="password" id="password2" placeholder="Repeat password">
+
+                <button type="submit" onclick="check()">Submit</button>
+
                 <div class="error"><span>+</span></div>
-		
+
             </form>
-            
-            <a href="Register.jsp" style="color:#fff; text-decoration:none "><button type="submit">Register</button></a>
+			<a href="Login.jsp" style="color:#fff; text-decoration:none "><button type="submit">Back to login</button></a>
+
             <div class="connect">
 
                 <p>Contract Management System</p>
@@ -81,16 +104,16 @@
 
                 </p>
                 -->
-            
-                
+
+
 
             </div>
-            
+
             <div class="info">
             <p>Copyright © 疯狂的拖延症  Copyright Reserved</p>
         </div>
 
-      
+
 
 
 
@@ -111,6 +134,3 @@
 
 
 </html>
-
-
-
