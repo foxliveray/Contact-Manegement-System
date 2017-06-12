@@ -11,24 +11,14 @@
 		<!-- Use JavaScript script to open a new window display information when preview-->
 		<script>
 			function preview(url) {
-				window.open(url,'Preview','toolbar=no,scrollbars=yes,width=720,height=800,top=50,left=100');
+				window.open(url,'Preview','toolbar=no,scrollbars=yes,width=720,height=560,top=50,left=100');
 			}
 			
-			function Check(){   
-	            var x=document.getElementById("tbl");
-	            var z=document.getElementById("select").value;
-	            var y=x.rows.length;
-	            //x.style.visibility='hidden';
-	            for(var i = 1; i <y; i++){  
-	            	var temp=x.rows[i].cells[0].lang;
-	            	if(temp.indexOf(z)==-1){
-	            		x.rows[i].style.display='none'; 
-	            		}else{
-	            	    x.rows[i].style.display='table-row';
-	            		}
-	            }
-	            //x.style.display='none';  
-	        }  
+			function pageTurning(toPage,trPerPage,maxPage){
+				if(toPage>=0&&toPage<maxPage){
+					window.location.assign("toApproved?toPage="+toPage+"&trPerPage="+trPerPage);	
+				}
+			}
 		</script>
 	</head>
 
@@ -40,14 +30,14 @@
 		<div class="search">
 			<form>
 				在待审批合同中搜索：
-				<input type="text" id="select" value="请输入相关搜索条件..." />
+				<input value="请输入相关搜索条件..." />
 				&nbsp;&nbsp;
 				<input type="submit" value="search" class="search-submit"/> <br />
 			</form>
 		</div>
 		
 		<div class="list">
-		  <table id="tbl">
+		  <table id="table1">
 			<tr>
 				<th>
 					合同名称
@@ -60,18 +50,26 @@
 				</th>
 			</tr>
 			<%
+			    int toPage=(int)request.getAttribute("toPage");
+			    int trPerPage=(int)request.getAttribute("trPerPage");
 				List<ConBusiModel> contractList = (List<ConBusiModel>)request.getAttribute("contractList");  
-		        for (ConBusiModel cbm : contractList) {
+				int maxPage;
+				if((contractList.size()%trPerPage)==0)
+					maxPage=contractList.size()/trPerPage;
+				else
+					maxPage=contractList.size()/trPerPage+1;
+		        for (int trNo=(toPage*trPerPage);trNo<(trPerPage*(toPage+1));trNo++) {
+		        	ConBusiModel cbm=contractList.get(trNo);
        	 	%>
 			<tr>
-				<td class="tdname" lang="<%=cbm.getConName()%>">
-					<a href="javascript:preview('ToSeeContract2Servlet?conId=<%=cbm.getConId()%>')"><%=cbm.getConName()%></a>
+				<td class="tdname">
+					<a href="javascript:preview('showConDetails?conId=<%=cbm.getConId()%>')"><%=cbm.getConName()%></a>
 				</td>
 				<td>
 					<%=cbm.getDrafTime()%>
 				</td>
 				<td>
-					<a href="ToAddApprovedOpinionServlet?conId=<%=cbm.getConId()%>">
+					<a href="approving?conId=<%=cbm.getConId()%>">
 						<img src="images/icon-edit.png"  alt="Approve" />
 						审批
 					</a>
@@ -86,13 +84,12 @@
 		</div>
 
 		<div align="right" class="pagelist">					
-			<a href="#"><img src="images/page/first.png"  alt="" /></a> &nbsp;
-			<a href="#"><img src="images/page/pre.png"  alt="" /></a>&nbsp;
-			<a href="#"><img src="images/page/next.png"  alt="" /></a>&nbsp;
-			<a href="#"><img src="images/page/last.png"  alt="" /></a>&nbsp;
-					
+			<a href="javascript:pageTurning(0,<%=trPerPage%>,<%=maxPage %>)"><img src="images/page/first.png"  alt="" /></a> &nbsp;
+			<a href="javascript:pageTurning(<%=toPage-1%>,<%=trPerPage%>,<%=maxPage %>)"><img src="images/page/pre.png"  alt="" /></a>&nbsp;
+			<a href="javascript:pageTurning(<%=toPage+1%>,<%=trPerPage%>,<%=maxPage %>)"><img src="images/page/next.png"  alt="" /></a>&nbsp;
+			<a href="javascript:pageTurning(<%=maxPage-1 %>,<%=trPerPage%>,<%=maxPage %>)"><img src="images/page/last.png"  alt="" /></a>&nbsp;
 			<span class="pageinfo">
-				总计&nbsp;<strong>2</strong>&nbsp;页&nbsp;<strong>13</strong>&nbsp;条记录
+				总计&nbsp;<strong><%=maxPage %></strong>&nbsp;页&nbsp;<strong><%=contractList.size() %></strong>&nbsp;条记录
 			</span>	
 		</div>
 	</body>

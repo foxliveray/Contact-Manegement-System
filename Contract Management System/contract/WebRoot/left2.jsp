@@ -36,7 +36,7 @@
 		<dl>
 			<dt>合同审批</dt>
 			<dd>
-				<a href="toApproved" target="_self">待审批合同</a>
+				<a href="toApproved?toPage=0&trPerPage=1" target="_self">待审批合同</a>
 			</dd>
 			<dd>
 				<a href="showApprovedConList" target="_self">已审批合同</a>
