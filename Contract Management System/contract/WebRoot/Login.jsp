@@ -32,7 +32,7 @@
 
         <link rel="stylesheet" href="assets/css/style.css">
 
-
+		
 
         <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 
@@ -41,9 +41,26 @@
             <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 
         <![endif]-->
+		
+		<script type="text/javascript">
+			function check(){
+				var name = document.getElementById("username");
+				var password = document.getElementById("password");
+				if (name.value == ""){
+					alert("用户名不能为空！");
+					name.focus();
+					return false;
+				}
+				
+				if (password.value == "") {
+					alert("密码不能为空！");
+					password.focus();
+					return false;
+				}
+			}
+		</script>
 
-
-
+		
     </head>
 
 
@@ -62,7 +79,7 @@
 
                 <input type="password" name="password" class="password" placeholder="Password">
 
-                <button type="submit">Sign in</button>
+                <button type="submit" onClick="check()">Sign in</button>
 				
                 <div class="error"><span>+</span></div>
 		

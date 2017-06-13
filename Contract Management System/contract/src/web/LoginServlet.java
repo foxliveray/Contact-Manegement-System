@@ -14,7 +14,7 @@ import util.AppException;
 /**
  * Servlet implementation class LoginServlet
  */
-@WebServlet("/LoginServlet")
+@WebServlet("/Login")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -49,7 +49,7 @@ public class LoginServlet extends HttpServlet {
 			System.out.println("User name and password can not be empty!");
 			message = "User name and password can not be empty!";
 			request.setAttribute("message", message);
-			request.getRequestDispatcher("ToLogin").forward(request, response);
+			request.getRequestDispatcher("/ToLogin").forward(request, response);
 		} else{
 			int userID = -1;
 			try {
@@ -61,12 +61,12 @@ public class LoginServlet extends HttpServlet {
 					session = request.getSession();
 					session.setAttribute("userId", userID);
 					session.setAttribute("userName", name);
-					response.sendRedirect("toNewUser");
+					response.sendRedirect("ToNewUser");
 				} else {
 					message = "用户名或密码不正确！";
 					request.setAttribute("message", message);
-					request.setAttribute("userName", name);
-					request.getRequestDispatcher("ToLogin").forward(request, response);
+					//request.setAttribute("userName", name);
+					request.getRequestDispatcher("/ToLogin").forward(request, response);
 				}
 			} catch (AppException e) {
 				e.printStackTrace();

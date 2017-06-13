@@ -68,9 +68,13 @@ public class RegisterServlet extends HttpServlet {
 				if (flag) {
 					message = "Registration Successful!";
 					System.out.println("Registration Successful!");
+					response.sendRedirect("ToLogin");
 				} else {
 					message = "Registration failed!";
 					System.out.println("Registration failed!");
+					request.setAttribute("message", message);
+					request.getRequestDispatcher("/Register.jsp").forward(request, response);
+					
 				}
 			} catch (AppException e) {
 				e.printStackTrace();
@@ -78,8 +82,7 @@ public class RegisterServlet extends HttpServlet {
 				response.sendRedirect("/ToError");
 			}
 		}
-		request.setAttribute("message", message);
-		request.getRequestDispatcher("/Login.jsp").forward(request, response);
+
 	}
 
 }
