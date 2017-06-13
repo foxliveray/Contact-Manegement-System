@@ -40,4 +40,5 @@ public interface ContractDao {
 	 * @throws AppException
 	 */
 	public boolean updateById(Contract contract) throws AppException;
+	public List<Integer> getIds() throws AppException;
 }

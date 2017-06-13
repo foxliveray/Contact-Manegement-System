@@ -50,8 +50,8 @@ public class AddHQOpinionServlet extends HttpServlet {
 		} else {
 			
 			// Get contract id
-			//int conId = Integer.parseInt(request.getParameter("conId"));
-			int conId=1;
+			int conId = Integer.parseInt(request.getParameter("conId"));
+
 			// Get countersign opinion 
 			String content = request.getParameter("text");
 			

@@ -3,7 +3,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 <style>
 <!--
@@ -31,7 +30,7 @@ text-decoration:none; /*去掉下划线*/
 width:78px;
 height:26px;
 line-height:28px;
-border:1px solid red;
+border:1px solid blue;
 color:blue;
 background:#FFF;
 }
@@ -43,9 +42,21 @@ background:#FFF;
     <ul> 
         <li><a href="">首页</a></li> 
         <li><a href="http://localhost:8080/contract/darft.jsp">起草合同</a></li> 
-        <li><a href="http://localhost:8080/contract/DhqhtListServlet">会签合同</a></li> 
-        <li><a href="http://localhost:8080/contract/DshphtList">定稿合同</a></li> 
-        <li><a href="http://www.divcss5.com/cssrumen/">签订合同</a></li> 
+		<li><a href="http://localhost:8080/contract/DstributeContract">待分配合同</a></li> 
+        <li><a href="http://localhost:8080/contract/DhqhtListServlet">待会签合同</a></li> 
+        <li><a href="http://localhost:8080/contract/DhqhtDoneListServlet">已会签合同</a></li>  
+        <li><a href="http://localhost:8080/contract/AllDhqhtDoneListServlet">所有已会签合同</a></li>  
+        
+        <li><a href="ToBeApprovedServlet?toPage=0&trPerPage=1" target="_self">待审批合同</a></li> 
+        <li><a href="http://localhost:8080/contract/DshphtList">已审批合同</a></li> 
+        <li><a href="http://localhost:8080/contract/Sign">待签订合同</a></li> 
+        <li><a href="http://localhost:8080/contract/Signed">已签订合同</a></li>
+        <li><a href="http://localhost:8080/contract/LogServlet">日志管理</a></li>
+        <li><a href="http://localhost:8080/contract/ConSateQuery">合同管理</a></li>
+        <li><a href="">权限分配</a></li>
+        <li><a href="http://www.divcss5.com/cssrumen/">客户管理</a></li>
+        <li><a href="http://localhost:8080/contract/ToUserListServlet">用户管理</a></li>
+         
 </ul> 
 </div> 
 </body>

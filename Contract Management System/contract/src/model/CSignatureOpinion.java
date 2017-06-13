@@ -1,8 +1,5 @@
 package model;
 
-/**
- * Countersign opinion entity class
- */
 public class CSignatureOpinion {
 
 	private int conId; 			// Contract id
@@ -45,4 +42,5 @@ public class CSignatureOpinion {
 	public void setOpinion(String opinion) {
 		this.opinion = opinion;
 	}
+	
 }

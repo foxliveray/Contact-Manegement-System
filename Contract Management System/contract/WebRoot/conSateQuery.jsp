@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-import="java.util.*,model.ConBusiModel"
+import="java.util.*,model.ConProModel"
     pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
@@ -22,61 +22,99 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- Use JavaScript script to open a new window display information when preview-->
 		<script>
 			function preview(url) {
-				window.open(url,'Preview','resizable=no,toolbar=no,width=620,height=700,top=50,left=200');
+				window.open(url,'Preview','resizable=no,toolbar=no,width=620,height=500,top=50,left=200');
 			}
 			
 			function Check(){   
 	            var x=document.getElementById("tbl");
 	            var z=document.getElementById("select").value;
 	            var y=x.rows.length;
-	            //x.style.visibility='hidden';
+	            if(z==0){
+	            	 for(var i = 1; i <y; i++){  
+	 	            	x.rows[i].style.display='table-row';
+	 	            }
+	            	 hide();
+	            }else{
 	            for(var i = 1; i <y; i++){  
-	            	var temp=x.rows[i].cells[0].lang;
+	            	var temp=x.rows[i].cells[4].lang;
 	            	if(temp.indexOf(z)==-1){
 	            		x.rows[i].style.display='none'; 
 	            		}else{
 	            	    x.rows[i].style.display='table-row';
 	            		}
 	            }
-	            //x.style.display='none';  
+	            } 
 	        }  
 		</script>
 
 <!-- 标题 -->
-  <h1 style="font-family:arial;color:white;font-size:60px;background-color:black;">待会签合同</h1>
+  <h1 style="font-family:arial;color:white;font-size:60px;background-color:black;">已会签合同</h1>
 
 <!-- 查找栏 -->
-<p >查找待会签合同:
-<input type="text" id="select" name="select"/>
-<input type="button" id="search" value="search" style="padding-right:30px" onclick="Check()" />
+<p >查找合同流程:
+<select id="select" > 
+        <option value="0" onclick="Check()">全部合同</option> 
+        <option value="1" onclick="Check()">起草</option> 
+        <option value="2" onclick="Check()">会签完成</option>
+        <option value="3" onclick="Check()">定稿完成</option>
+        <option value="4" onclick="Check()">审批完成</option>
+        <option value="5" onclick="Check()">签订完成</option>
+</select> 
 </p>
 
 <!-- 合同列表 -->
 <table width="980" border="1" id="tbl">
  <tr bgcolor="gray">
-   <td align="center" width="580">合同名称</td>
-    <td align="center" width="200">起草时间</td>
-     <td align="center" width="200">操作</td>
+   <td align="center" width="400">合同名称</td>
+   <td align="center" width="100">合同编号</td>
+    <td align="center" width="100">起草用户</td>
+    <td align="center" width="180">起草时间</td>
+     <td align="center" width="200">合同状态</td>
   </tr>
   
           <%
-                List<ConBusiModel> contractList = (List<ConBusiModel>)request.getAttribute("contractList");
+                List<ConProModel> contractList = (List<ConProModel>)request.getAttribute("contractList");
+                Integer userId=(Integer)request.getAttribute("userId");
                 for(int i=0;  i<contractList.size(); i++){
-                ConBusiModel cbm = contractList.get(i);
+                	String type="";
+                	ConProModel cbm = contractList.get(i);
+                    switch(cbm.getType())
+                    {
+                    case 1:
+                    	type="起草";
+                    	break;
+                    case 2:
+                    	type="会签完成";
+                    	break;
+                    case 3:
+                    	type="定稿完成";
+                    	break;
+                    case 4:
+                    	type="审批完成";
+                    	break;
+                    case 5:
+                    	type="签订完成";
+                    	break;
+                    }
           %>
   
 <!-- 表中的行 -->
   <tr>
     <td lang="<%=cbm.getConName()%>">
-    <a href="javascript:preview('ToSeeContract1Servlet?conId=<%=cbm.getConId()%>')"><%=cbm.getConName()%></a>
+    <a href="javascript:preview('contractDetail?conId=<%=cbm.getConId()%>')"><%=cbm.getConName()%></a>
+    </td>
+    <td>
+    <%=cbm.getConId()%>
+    </td>
+    <td>
+    <%=cbm.getUserId()%>
     </td>
     <td>
     <%=cbm.getDrafTime()%>
     </td>
-    <!-- 添加按钮，点击即可会签 -->
-    <td style="color:black">
-    <a href="ToAddHQOpinionServlet?conId=<%=cbm.getConId()%>">会签
-    </a>
+    <!-- 添加标签，显示合同状态 -->
+    <td style="color:black" lang="<%=cbm.getType()%>">
+    <%=type%>
     </td>
   </tr>
   
@@ -195,7 +233,7 @@ pageNum.innerHTML = pageNow;
 function pageCount() {
 var count = 0;
 if ( numberRowsInTable%pageSize != 0) count = 1; 
-return parseInt(numberRowsInTable-1/pageSize) + count;
+return parseInt(numberRowsInTable/pageSize) + count;
 }
 //显示链接
 function preLink() { spanPre.innerHTML = "<a href='javascript:pre();'>上一页</a>"; }

@@ -176,5 +176,47 @@ public class ConStateDaoImpl implements ConStateDao{
 		}
 		return flag;
 	}
+	public ConState getConStateById(int conId) throws AppException{
+		// Declare conState
+				ConState conState = null;
 
+				// Declare Connection object,PreparedStatement object and ResultSet object
+				Connection conn = null;
+				PreparedStatement psmt = null;
+				ResultSet rs = null;
+				try {
+					// Create database connection
+					conn = JDBCUtil.getConnection();
+					// Define SQL statement: query contract state information according to the contract id and type
+					String sql = "select id,con_id,type,time " + "from contract_state "
+							+ "where con_id = ? and del = 0";
+
+					// Pre-compiled sql, and set the parameter values
+					psmt = conn.prepareStatement(sql);
+					psmt.setInt(1, conId); // Set contract id
+
+					// Query result set
+					rs = psmt.executeQuery();
+
+					// Get information in result set by loop,and encapsulated into conState object
+					if (rs.next()) {
+						conState = new ConState();
+						conState.setId(rs.getInt("id"));
+						conState.setConId(rs.getInt("con_id"));
+						conState.setType(rs.getInt("type"));
+						conState.setTime(rs.getDate("time"));
+					}
+
+				} catch (SQLException e) {
+					e.printStackTrace();
+					throw new AppException("dao.impl.ConStateDaoImpl.getByConId");
+				} finally {
+					// Close the database operation object, release resources
+					JDBCUtil.closeResultSet(rs);
+					JDBCUtil.CloseStatement(psmt);
+					JDBCUtil.closeConnection(conn);
+				}
+				
+				return conState;
+	}
 }

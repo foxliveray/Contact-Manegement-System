@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-import="java.util.*,model.ConBusiModel"
+import="java.util.*,model.ConProModel"
     pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
@@ -43,10 +43,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</script>
 
 <!-- 标题 -->
-  <h1 style="font-family:arial;color:white;font-size:60px;background-color:black;">待会签合同</h1>
+  <h1 style="font-family:arial;color:white;font-size:60px;background-color:black;">已会签合同</h1>
 
 <!-- 查找栏 -->
-<p >查找待会签合同:
+<p >查找已会签合同:
 <input type="text" id="select" name="select"/>
 <input type="button" id="search" value="search" style="padding-right:30px" onclick="Check()" />
 </p>
@@ -60,9 +60,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </tr>
   
           <%
-                List<ConBusiModel> contractList = (List<ConBusiModel>)request.getAttribute("contractList");
+                List<ConProModel> contractList = (List<ConProModel>)request.getAttribute("contractList");
                 for(int i=0;  i<contractList.size(); i++){
-                ConBusiModel cbm = contractList.get(i);
+                	ConProModel cbm = contractList.get(i);
           %>
   
 <!-- 表中的行 -->
@@ -75,7 +75,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </td>
     <!-- 添加按钮，点击即可会签 -->
     <td style="color:black">
-    <a href="ToAddHQOpinionServlet?conId=<%=cbm.getConId()%>">会签
+    <a href="javascript:preview('NewFile?conId=<%=cbm.getConId()%>&userId=<%=cbm.getUserId()%>')">会签意见</a>
     </a>
     </td>
   </tr>
@@ -195,7 +195,7 @@ pageNum.innerHTML = pageNow;
 function pageCount() {
 var count = 0;
 if ( numberRowsInTable%pageSize != 0) count = 1; 
-return parseInt(numberRowsInTable-1/pageSize) + count;
+return parseInt(numberRowsInTable/pageSize) + count;
 }
 //显示链接
 function preLink() { spanPre.innerHTML = "<a href='javascript:pre();'>上一页</a>"; }

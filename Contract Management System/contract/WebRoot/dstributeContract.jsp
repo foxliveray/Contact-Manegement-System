@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-import="java.util.*,model.ConBusiModel"
+import="java.util.*,model.ConProModel"
     pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
@@ -22,7 +22,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- Use JavaScript script to open a new window display information when preview-->
 		<script>
 			function preview(url) {
-				window.open(url,'Preview','resizable=no,toolbar=no,width=620,height=700,top=50,left=200');
+				window.open(url,'Preview','resizable=no,toolbar=no,width=620,height=500,top=50,left=200');
 			}
 			
 			function Check(){   
@@ -43,10 +43,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</script>
 
 <!-- 标题 -->
-  <h1 style="font-family:arial;color:white;font-size:60px;background-color:black;">待会签合同</h1>
+  <h1 style="font-family:arial;color:white;font-size:60px;background-color:black;">待分配合同</h1>
 
 <!-- 查找栏 -->
-<p >查找待会签合同:
+<p >查找待分配合同:
 <input type="text" id="select" name="select"/>
 <input type="button" id="search" value="search" style="padding-right:30px" onclick="Check()" />
 </p>
@@ -54,28 +54,36 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- 合同列表 -->
 <table width="980" border="1" id="tbl">
  <tr bgcolor="gray">
-   <td align="center" width="580">合同名称</td>
-    <td align="center" width="200">起草时间</td>
-     <td align="center" width="200">操作</td>
+   <td align="center" width="400">合同名称</td>
+   <td align="center" width="100">合同编号</td>
+    <td align="center" width="100">起草用户</td>
+    <td align="center" width="180">起草时间</td>
+     <td align="center" width="200">分配合同</td>
   </tr>
   
           <%
-                List<ConBusiModel> contractList = (List<ConBusiModel>)request.getAttribute("contractList");
+                List<ConProModel> contractList = (List<ConProModel>)request.getAttribute("contractList");
                 for(int i=0;  i<contractList.size(); i++){
-                ConBusiModel cbm = contractList.get(i);
+                	ConProModel cbm = contractList.get(i);
           %>
   
 <!-- 表中的行 -->
   <tr>
     <td lang="<%=cbm.getConName()%>">
-    <a href="javascript:preview('ToSeeContract1Servlet?conId=<%=cbm.getConId()%>')"><%=cbm.getConName()%></a>
+   <a href="javascript:preview('ToSeeContract1Servlet?conId=<%=cbm.getConId()%>')"><%=cbm.getConName()%></a>
+    </td>
+    <td>
+    <%=cbm.getConId()%>
+    </td>
+    <td>
+    <%=cbm.getUserId()%>
     </td>
     <td>
     <%=cbm.getDrafTime()%>
     </td>
-    <!-- 添加按钮，点击即可会签 -->
-    <td style="color:black">
-    <a href="ToAddHQOpinionServlet?conId=<%=cbm.getConId()%>">会签
+    <!-- 添加标签，显示合同状态 -->
+    <td>
+    <a href="ToAssignOperServlet?conId=<%=cbm.getConId()%>">分配
     </a>
     </td>
   </tr>
@@ -162,8 +170,12 @@ theTable.rows[i].style.display = 'table-row';
 currentRow=1;
 showPage();
 preText();
-nextLink();
-lastLink();
+if(pageCount()==1){
+	nextText();
+}else{
+	nextLink();
+}
+    lastLink();
 }
 //最后一页
 function last() {
@@ -175,8 +187,11 @@ for ( var i = currentRow+1; i<numberRowsInTable; i++ ) {
 theTable.rows[i].style.display = 'table-row';
 }
 showPage();
-preLink();
-nextText();
+if(pageCount()==1){
+	preText();
+}else{
+	preLink();
+}
 firstLink();
 }
 
@@ -194,8 +209,8 @@ pageNum.innerHTML = pageNow;
 //总共页数
 function pageCount() {
 var count = 0;
-if ( numberRowsInTable%pageSize != 0) count = 1; 
-return parseInt(numberRowsInTable-1/pageSize) + count;
+if ( (numberRowsInTable-1)%pageSize != 0) count = 1; 
+return parseInt((numberRowsInTable-1)/pageSize) + count;
 }
 //显示链接
 function preLink() { spanPre.innerHTML = "<a href='javascript:pre();'>上一页</a>"; }

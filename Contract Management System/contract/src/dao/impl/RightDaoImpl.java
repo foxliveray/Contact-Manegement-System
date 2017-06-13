@@ -50,7 +50,7 @@ public class RightDaoImpl implements RightDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new AppException("dao.impl.RightDaoImpl.getRoleIdByUserId");
+			throw new AppException("RightDaoImpl.getRoleIdByUserId");
 		} finally {
 			// Close the database operation object, release resources
 			JDBCUtil.closeResultSet(rs);
@@ -80,11 +80,10 @@ public class RightDaoImpl implements RightDao {
 			// Create database connection
 			conn = JDBCUtil.getConnection();
 			// Declare operation statement,query user id based on role id, "?" is a placeholder
-			String sql = "select user_id from t_right where role_id = ? and del = 0";
-			
+			String sql = "select user_id from t_right where role_id = ? and del = 0";			
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, roleId);
-			
+		
 			rs = psmt.executeQuery();// Return result set
 			// Get information in result set by loop,and save in userIds
 			while (rs.next()) {
@@ -93,7 +92,7 @@ public class RightDaoImpl implements RightDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException(
-					"dao.impl.RightDaoImpl.getUserIdsByRoleId");
+					"RightDaoImpl.getUserIdsByRoleId");
 		} finally {
 			// Close the database operation object, release resources
 			JDBCUtil.closeResultSet(rs);

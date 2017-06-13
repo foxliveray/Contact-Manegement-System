@@ -45,6 +45,8 @@ public class DraftServelt extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
 		//HttpSession session = null;
 		HttpSession session = null;
 		// Get session by using request object
@@ -105,9 +107,9 @@ public class DraftServelt extends HttpServlet {
 				return;
 			}
 			// Save message to request
-			request.setAttribute("message", message);
+			//request.setAttribute("message", message);
 			// Forward to draft page 
-			request.getRequestDispatcher("draft.jsp").forward(request, response);
+			//request.getRequestDispatcher("draft.jsp").forward(request, response);
 			
 		}
 		

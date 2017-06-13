@@ -1,17 +1,17 @@
 package util;
 
 /**
- * ç”¨æˆ·å®šä¹‰çš„Exceptionç±»
+ * ÓÃ»§¶¨ÒåµÄExceptionÀà
  * 
- * @author é’±æ´‹
- * @date 2017å¹´6æœˆ6æ—¥ ä¸‹åˆ3:48:32
+ * @author Ç®Ñó
+ * @date 2017Äê6ÔÂ6ÈÕ ÏÂÎç3:48:32
  */
 public class AppException extends Exception {
-	private int exceptionCode; // å¼‚å¸¸ä»£ç 
-	private String message; // å¼‚å¸¸ä¿¡æ¯
+	private int exceptionCode; // Òì³£´úÂë
+	private String message; // Òì³£ĞÅÏ¢
 
 	/**
-	 * æ„é€ å‡½æ•°ï¼Œè®¾ç½®å¼‚å¸¸ä¿¡æ¯
+	 * ¹¹Ôìº¯Êı£¬ÉèÖÃÒì³£ĞÅÏ¢
 	 * 
 	 * @param message
 	 */
@@ -20,7 +20,7 @@ public class AppException extends Exception {
 	}
 
 	/**
-	 * æ„é€ å‡½æ•°ï¼Œè®¾ç½®å¼‚å¸¸ä¿¡æ¯å’Œå¼‚å¸¸ä»£ç 
+	 * ¹¹Ôìº¯Êı£¬ÉèÖÃÒì³£ĞÅÏ¢ºÍÒì³£´úÂë
 	 * 
 	 * @param message
 	 * @param exceptionCode
@@ -31,7 +31,7 @@ public class AppException extends Exception {
 	}
 
 	/**
-	 * è·å–å¼‚å¸¸ä»£ç 
+	 * »ñÈ¡Òì³£´úÂë
 	 * 
 	 * @return exceptionCode
 	 */
@@ -40,7 +40,7 @@ public class AppException extends Exception {
 	}
 
 	/**
-	 * è·å–è¯¦ç»†å¼‚å¸¸ä¿¡æ¯
+	 * »ñÈ¡ÏêÏ¸Òì³£ĞÅÏ¢
 	 * 
 	 * @return detailMessage
 	 */

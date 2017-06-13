@@ -8,19 +8,19 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * @author é’±æ´‹
- * @date 2017å¹´6æœˆ4æ—¥ ä¸Šåˆ10:29:31
+ * @author Ç®Ñó
+ * @date 2017Äê6ÔÂ4ÈÕ ÉÏÎç10:29:31
  */
 public class JDBCUtil {
 
-	//å®ç°æ•°æ®åº“contractdbçš„è¿æ¥
-	//æ•°æ®åº“è¿æ¥å­—ç¬¦ä¸²ï¼Œè®¾ç½®å­—ç¬¦ç¼–ç æ–¹å¼ä¸ºutf-8
+	//ÊµÏÖÊı¾İ¿âcontractdbµÄÁ¬½Ó
+	//Êı¾İ¿âÁ¬½Ó×Ö·û´®£¬ÉèÖÃ×Ö·û±àÂë·½Ê½Îªutf-8
 	private static String url = "jdbc:mysql://localhost:3306/contractdb?useUnicode=true&characterEncoding=utf-8&useSSL=false";
-	//æ•°æ®åº“è´¦æˆ·
+	//Êı¾İ¿âÕË»§
 	private static String user = "root";
-	//æ•°æ®åº“å¯†ç 
-	private static String password = "qy88721518";
-	//é™æ€ä»£ç å—ï¼Œç”¨äºè½½å…¥driver,åªåœ¨åŠ è½½è¯¥ç±»çš„æ—¶å€™æ‰§è¡Œä¸€æ¬¡
+	//Êı¾İ¿âÃÜÂë
+	private static String password = "123456";
+	//¾²Ì¬´úÂë¿é£¬ÓÃÓÚÔØÈëdriver,Ö»ÔÚ¼ÓÔØ¸ÃÀàµÄÊ±ºòÖ´ĞĞÒ»´Î
 	static {
 		try{
 			Class.forName("com.mysql.jdbc.Driver");
@@ -30,8 +30,8 @@ public class JDBCUtil {
 	}
 	
 	/**
-	 * è·å–æ•°æ®åº“è¿æ¥ï¼Œæ¯è°ƒç”¨ä¸€æ¬¡è¯¥æ–¹æ³•å°±åˆ›å»ºä¸€ä¸ªæ–°è¿æ¥
-	 * @return å¦‚æœæˆåŠŸåˆ›å»ºè¿æ¥ï¼Œåˆ™è¿”å›è¿æ¥å®ä½“å¯¹è±¡ï¼Œå¦åˆ™è¿”å›null
+	 * »ñÈ¡Êı¾İ¿âÁ¬½Ó£¬Ã¿µ÷ÓÃÒ»´Î¸Ã·½·¨¾Í´´½¨Ò»¸öĞÂÁ¬½Ó
+	 * @return Èç¹û³É¹¦´´½¨Á¬½Ó£¬Ôò·µ»ØÁ¬½ÓÊµÌå¶ÔÏó£¬·ñÔò·µ»Ønull
 	 */
 	public static Connection getConnection(){
 		Connection conn = null;
@@ -46,8 +46,8 @@ public class JDBCUtil {
 	}
 	
 	/**
-	 * å…³é—­æ•°æ®åº“è¿æ¥
-	 * @param æ•°æ®åº“è¿æ¥å¯¹è±¡
+	 * ¹Ø±ÕÊı¾İ¿âÁ¬½Ó
+	 * @param Êı¾İ¿âÁ¬½Ó¶ÔÏó
 	 * @return 
 	 */
 	public static void closeConnection(Connection conn){
@@ -62,8 +62,8 @@ public class JDBCUtil {
 	}
 	
 	/**
-	 * å…³é—­æ•°æ®åº“æŸ¥è¯¢å‘½ä»¤
-	 * @param statementè¯­å¥å¯¹è±¡
+	 * ¹Ø±ÕÊı¾İ¿â²éÑ¯ÃüÁî
+	 * @param statementÓï¾ä¶ÔÏó
 	 */
 	public static void CloseStatement(Statement st){
 		try{
@@ -77,8 +77,8 @@ public class JDBCUtil {
 	}
 	
 	/**
-	 * å…³é—­æ•°æ®åº“æŸ¥è¯¢å‘½ä»¤
-	 * @param Preparedstatementè¯­å¥å¯¹è±¡
+	 * ¹Ø±ÕÊı¾İ¿â²éÑ¯ÃüÁî
+	 * @param PreparedstatementÓï¾ä¶ÔÏó
 	 */
 	public static void ClosePreparedStatement(PreparedStatement st){
 		try{
@@ -92,9 +92,9 @@ public class JDBCUtil {
 	}
 	
 	/**
-	 * å…³é—­æ•°æ®åº“æŸ¥è¯¢ç»“æœ
+	 * ¹Ø±ÕÊı¾İ¿â²éÑ¯½á¹û
 	 * 
-	 * @param ResultSetæŸ¥è¯¢ç»“æœå¯¹è±¡
+	 * @param ResultSet²éÑ¯½á¹û¶ÔÏó
 	 */
 	public static void closeResultSet(ResultSet rs) {
 		try {

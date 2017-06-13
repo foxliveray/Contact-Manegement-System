@@ -65,7 +65,8 @@ x.innerHTML="";    // 改变内容
 <textarea name="text"cols="79"rows="10"id="text"></textarea>
 </div>
 <p>
-<input type="button" id="turnIn" value="提交" class="btn1" onclick="OnTurnIn()"/>
+<input type="button" id="turnIn" name="turnIn" value="提交" class="btn1" onclick="OnTurnIn()"/>
+<input type="hidden" id="conId" name="conId" value="<%=contract.getId()%>"/>
 <input type="button" id="reset" value="重置" class="btn2" onclick="OnReset()"/>
 </p>
 

@@ -1,14 +1,11 @@
 package model;
 
-/**
- * Permissions business entity class
- */
 public class PermissionBusiModel {
 
-	private int userId;			//用户id
-	private int roleId;			//角色id
-	private String userName;	//用户名
-	private String roleName;	//角色名 
+	private int userId;			//User id
+	private int roleId;			//Role id
+	private String userName;	//User name
+	private String roleName;	//Role name 
 	
 	/**
 	 * No-arg constructor:assigned initial values to the object attribute

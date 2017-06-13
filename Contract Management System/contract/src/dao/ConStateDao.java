@@ -42,5 +42,5 @@ public interface ConStateDao {
 	 * @throws AppException
 	 */
 	public boolean isExist(int con_id, int type) throws AppException;
-	
+	public ConState getConStateById(int conId) throws AppException;
 }

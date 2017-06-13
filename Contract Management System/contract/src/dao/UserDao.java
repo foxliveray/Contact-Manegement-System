@@ -1,52 +1,41 @@
 package dao;
 
+import java.util.List;
+
 import model.User;
 import util.AppException;
 
 /**
- * @author é’±æ´‹
- * @date 2017å¹´6æœˆ7æ—¥ ä¸Šåˆ9:28:57
+ * @author Ç®Ñó
+ * @date 2017Äê6ÔÂ7ÈÕ ÉÏÎç9:28:57
  */
 public interface UserDao {
 
 	/**
-	 * åŒºåˆ†æ˜¯å¦æœ‰åŒåçš„ç”¨æˆ·å­˜åœ¨
-	 * @param name 	(ç”¨æˆ·å)
-	 * @return è¿”å›Trueå¦‚æœæœ‰ç”¨æˆ·æœ‰ç›¸åŒçš„åå­—ï¼Œå¦åˆ™è¿”å›false
+	 * Çø·ÖÊÇ·ñÓĞÍ¬ÃûµÄÓÃ»§´æÔÚ
+	 * @param name 	(ÓÃ»§Ãû)
+	 * @return ·µ»ØTrueÈç¹ûÓĞÓÃ»§ÓĞÏàÍ¬µÄÃû×Ö£¬·ñÔò·µ»Øfalse
 	 * @throws AppException
 	 */
 	public boolean isExist(String name) throws AppException;
 	
 	/**
-	 * ä¿å­˜ç”¨æˆ·ä¿¡æ¯
-	 * @param user (userå¯¹è±¡å®ä¾‹)
-	 * @return è¿”å›Trueå¦‚æœæœ‰æ·»åŠ æ–°ç”¨æˆ·æˆåŠŸï¼Œå¦åˆ™è¿”å›false
+	 * ±£´æÓÃ»§ĞÅÏ¢
+	 * @param user (user¶ÔÏóÊµÀı)
+	 * @return ·µ»ØTrueÈç¹ûÓĞÌí¼ÓĞÂÓÃ»§³É¹¦£¬·ñÔò·µ»Øfalse
 	 * @throws AppException
 	 */
 	public boolean add(User user) throws AppException;
-	
 	/**
-	 * ä¿®æ”¹ç”¨æˆ·ä¿¡æ¯
-	 * 
-	 * @param user
-	 *            (userå¯¹è±¡å®ä¾‹)
-	 * @return è¿”å›Trueå¦‚æœç”¨æˆ·ä¿®æ”¹æˆåŠŸï¼Œå¦åˆ™è¿”å›false
+	 * Query  UserId according to user name and password
+	 * @param name User name
+	 * @param password 
 	 * @throws AppException
 	 */
-	public boolean update(User user) throws AppException;
+	public int login(String name,String password) throws AppException;
 	
 	/**
-	 * åˆ é™¤ç”¨æˆ·
-	 * 
-	 * @param user
-	 *            (userå¯¹è±¡å®ä¾‹)
-	 * @return è¿”å›Trueå¦‚æœç”¨æˆ·åˆ é™¤æˆåŠŸï¼Œå¦åˆ™è¿”å›false
-	 * @throws AppException
-	 */
-	public boolean delete(User user) throws AppException;
-	
-	/**
-	 * æ ¹æ®ç”¨æˆ·idè·å–ç”¨æˆ·ä¿¡æ¯
+	 * Query user's information according to id
 	 * 
 	 * @param id  User id
 	 * @return User 
@@ -55,10 +44,13 @@ public interface UserDao {
 	public User getById(int id) throws AppException;
 	
 	/**
-	 * è·å–ç”¨æˆ·æ€»æ•°
+	 * Query user id set
 	 * 
-	 * @return int Total count of User
+	 * @return User id set
 	 * @throws AppException
 	 */
+	public List<Integer> getIds() throws AppException;
+	public boolean update(User user) throws AppException;
+	public boolean delete(User user) throws AppException;
 	public int getUserCount() throws AppException;
 }

@@ -6,7 +6,6 @@ import java.util.Date;
  * Contract business details entity class
  */
 public class ConDetailBusiModel {
-
 	private int id; 			//ID
 	private String draftsman; 	//Draftsman
 	private String customer; 	//Customer
