@@ -16,6 +16,7 @@ import dao.impl.ContractDaoImpl;
 import dao.impl.UserDaoImpl;
 import model.ConBusiModel;
 import model.ConDetailBusiModel;
+import model.ConProModel;
 import model.ConProcess;
 import model.ConState;
 import model.Contract;
@@ -164,7 +165,6 @@ public class ContractService {
 	public ConProcess getConProcesscontent(int conId,Integer userId) throws AppException {
 		// Declare contract
 		ConProcess conProcess = null;
-		System.out.println("2");
 		try {
 			// Get designated contract's information 
 			conProcess = conProcessDao.getById2(conId,userId);
@@ -204,6 +204,158 @@ public class ContractService {
 					"com.ruanko.service.ContractService.distribute");
 		}
 		return flag;
+	}
+	
+	/**新增
+	 * Query all contracts' sate
+	 * 
+	 * @param userId User id
+	 * @return Query all contracts that to be countersigned
+	 * @throws AppException
+	 */
+	public List<ConProModel> getAllConStateList() throws AppException {
+		// Initialize  conList
+		List<ConProModel> conList = new ArrayList<ConProModel>();
+		try {
+			/*
+			 * 1.Get contract id set that to be countersigned
+			 */
+			List<Integer> conIds = contractDao.getIds();
+
+			/* 
+			 * 2.Get contract's information that to be countersigned,and save into contract business entity object,and put the entity class into conList
+			 */
+			for (int conId:conIds) {
+				// Get contract's information that designated 
+				Contract contract = contractDao.getById(conId);
+				// Get status of designated contract
+				ConState conState = conStateDao.getConStateById(conId);
+				// Initialize conBusiModel
+				ConProModel conProModel = new ConProModel();
+				if (contract != null) {
+					// Set contract id and name into conBusiModel object
+					conProModel.setConId(contract.getId());
+					conProModel.setConName(contract.getName());
+					conProModel.setUserId(contract.getUserId());
+				}
+				if (conState != null) {
+					// Set Drafting time into conBusiModel object
+					conProModel.setDrafTime(conState.getTime());
+					conProModel.setType(conState.getType());
+				}
+				conList.add(conProModel);
+			}
+		} catch (AppException e) {
+			e.printStackTrace();
+			throw new AppException("com.ruanko.service.ContractService.getDhqhtList");
+		}
+		// Return the set of storage contract business entities
+		return conList;
+	}
+	
+	/**新增
+	 * Query all contract set that has been countersigned
+	 * 
+	 * @param userId User id
+	 * @return Query all contracts that to be countersigned
+	 * @throws AppException
+	 */
+	public List<ConProModel> getAllDhqhtDoneList() throws AppException {
+		// Initialize  conList
+		List<ConProModel> conList = new ArrayList<ConProModel>();
+		ConProcess conProcess = new ConProcess();
+		// Set values to contract process object
+		//conProcess.setUserId(userId);
+		// Set process's operation type to "PROCESS_CSIGN"
+		conProcess.setType(Constant.PROCESS_CSIGN);
+		// Set corresponding state of "PROCESS_CSIGN" type  is "UNDONE"
+		conProcess.setState(Constant.DONE);
+		try {
+			/*
+			 * 1.Get contract id set that to be countersigned
+			 */
+			conList = conProcessDao.getNotForUserConIds(conProcess);
+
+			/* 
+			 * 2.Get contract's information that to be countersigned,and save into contract business entity object,and put the entity class into conList
+			 */
+			System.out.println(conList.size());
+			for (int i=0;i<conList.size();i++) {
+				// Get contract's information that designated 
+				int conId=conList.get(i).getConId();
+				Contract contract=contractDao.getById(conId);
+				ConState conState = conStateDao.getConState(conId, Constant.STATE_DRAFTED);
+				
+				if (contract != null) {
+					// Set contract id and name into conBusiModel object
+					conList.get(i).setConId(contract.getId());
+					conList.get(i).setConName(contract.getName());
+					//System.out.println(contract.getName());
+				}
+				if (conState != null) {
+					// Set Drafting time into conBusiModel object
+					conList.get(i).setDrafTime(conState.getTime()); 
+					//System.out.println(conState.getTime());
+				}
+			}
+		} catch (AppException e) {
+			e.printStackTrace();
+			throw new AppException("com.ruanko.service.ContractService.getDhqhtList");
+		}
+		// Return the set of storage contract business entities
+		return conList;
+	}
+	
+	/**新增
+	 * Query contract set that has been countersigned
+	 * 
+	 * @param userId User id
+	 * @return Query all contracts that to be countersigned
+	 * @throws AppException
+	 */
+	public List<ConBusiModel> getDhqhtDoneList(int userId) throws AppException {
+		// Initialize  conList
+		List<ConBusiModel> conList = new ArrayList<ConBusiModel>();
+		ConProcess conProcess = new ConProcess();
+		// Set values to contract process object
+		conProcess.setUserId(userId);
+		// Set process's operation type to "PROCESS_CSIGN"
+		conProcess.setType(Constant.PROCESS_CSIGN);
+		// Set corresponding state of "PROCESS_CSIGN" type  is "UNDONE"
+		conProcess.setState(Constant.DONE);
+		try {
+			/*
+			 * 1.Get contract id set that to be countersigned
+			 */
+			List<Integer> conIds = conProcessDao.getConIds(conProcess);
+
+			/* 
+			 * 2.Get contract's information that to be countersigned,and save into contract business entity object,and put the entity class into conList
+			 */
+			for (int conId : conIds) {
+				// Get contract's information that designated 
+				Contract contract = contractDao.getById(conId);
+				// Get status of designated contract
+				ConState conState = conStateDao.getConState(conId, Constant.STATE_DRAFTED);
+				// Initialize conBusiModel
+				ConBusiModel conBusiModel = new ConBusiModel();
+				if (contract != null) {
+					// Set contract id and name into conBusiModel object
+					conBusiModel.setConId(contract.getId());
+					conBusiModel.setConName(contract.getName());
+				}
+				if (conState != null) {
+					// Set Drafting time into conBusiModel object
+					conBusiModel.setDrafTime(conState.getTime()); 
+				}
+				conList.add(conBusiModel);
+			}
+		} catch (AppException e) {
+			e.printStackTrace();
+			throw new AppException("com.ruanko.service.ContractService.getDhqhtList");
+		}
+		// Return the set of storage contract business entities
+		return conList;
 	}
 	
 	/**
