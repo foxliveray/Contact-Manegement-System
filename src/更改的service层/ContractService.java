@@ -176,6 +176,73 @@ public class ContractService {
 		return conProcess;
 	}
 	
+	/** 新增
+	 * 通过user id 获得 contract
+	 * 
+	 * 
+	 * @param id 
+	 * @return contract entity
+	 * @throws AppException
+	 */
+	public List<Contract> getContractListForUser(int userId) throws AppException {
+		// Declare contract
+		List<Contract> contractList = new ArrayList<Contract>();;
+		try {
+			// Get designated contract's information 
+			List<Integer> conIds  = contractDao.getIdsByUserId(userId);
+			/* 
+			 * 2.Get contract's information that to be countersigned,and save into contract business entity object,and put the entity class into conList
+			 */
+			for (int conID:conIds) {
+				ConState conState=conStateDao.getConState(conID,Constant.STATE_CSIGNED);
+				Contract contract=contractDao.getById(conID);
+				if (conState != null) {
+					// Set contract id and name into conBusiModel object
+					contractList.add(contract);
+					System.out.println("yes");
+				}	
+			}
+		} catch (AppException e) {
+			e.printStackTrace();
+			throw new AppException(
+					"com.ruanko.service.ContractService.getContract");
+		}
+		return contractList;
+	}
+	
+	/** 新增
+	 * 通过contract id 获得 conProcess
+	 * 
+	 * 
+	 * @param id 
+	 * @return contract entity
+	 * @throws AppException
+	 */
+	public List<ConProcess> getConProcesscon(int conId) throws AppException {
+		// Declare contract
+		List<ConProcess> conProcessList = new ArrayList<ConProcess>();;
+		try {
+			// Get designated contract's information 
+			List<Integer> conIds  = conProcessDao.getIds(conId,Constant.PROCESS_CSIGN,Constant.DONE);
+			/* 
+			 * 2.Get contract's information that to be countersigned,and save into contract business entity object,and put the entity class into conList
+			 */
+			for (int conID:conIds) {
+				ConProcess conProcess=conProcessDao.getById(conID);
+				if (conProcess != null) {
+					// Set contract id and name into conBusiModel object
+					conProcessList.add(conProcess);
+				}
+			
+			}
+		} catch (AppException e) {
+			e.printStackTrace();
+			throw new AppException(
+					"com.ruanko.service.ContractService.getContract");
+		}
+		return conProcessList;
+	}
+	
 	/**
 	 * Distribute contract
 	 * 
