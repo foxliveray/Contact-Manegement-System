@@ -3,38 +3,35 @@ package service;
 import java.util.ArrayList;
 import java.util.List;
 
-import dao.Impl.RightDaoImpl;
-import dao.Impl.RoleDaoImpl;
-
+import dao.RightDao;
+import dao.RoleDao;
+import dao.UserDao;
+import dao.impl.RightDaoImpl;
+import dao.impl.RoleDaoImpl;
+import dao.impl.UserDaoImpl;
 import model.PermissionBusiModel;
 import model.Right;
 import model.Role;
-
-import dao.RightDao;
-import dao.RoleDao;
-
-import dao.UserDao;
-import dao.Impl.UserDaoImpl;
 import model.User;
 import util.AppException;
 
 /**
- * @author Ǯ��
- * @date 2017��6��7�� ����10:26:02
+ * @author 钱洋
+ * @date 2017年6月7日 上午10:26:02
  */
 public class UserService {
-	private UserDao userDao = null;	//����һ��UserDao�ӿڶ���
-	private RoleDao roleDao = null;// Define a roleDao interface object
-	private RightDao rightDao = null;// Define a userDao rightDao object
+	private UserDao userDao = null;	//定义一个UserDao接口对象
+	private RightDao rightDao=null;
+	private RoleDao roleDao=null;
 	
 	public UserService(){
 		userDao = new UserDaoImpl();
-		roleDao = new RoleDaoImpl();
-		rightDao = new RightDaoImpl();
+		rightDao=new RightDaoImpl();
+		roleDao=new RoleDaoImpl();
 	}
 	
 	/**
-	 *�û�ע��
+	 *用户注册
 	 * @param user User object
 	 * @return Return true if registration is successful, otherwise return false
 	 * @throws AppException
@@ -74,185 +71,7 @@ public class UserService {
 	}
 	
 	/**
-	 * Get role information that corresponding to the user
-	 * 
-	 * @param userId 
-	 * @return Role object
-	 * @throws AppException
-	 */
-	public Role getUserRole(int userId) throws AppException {	
-		Role role = null;// Declare role
-		int roleId = -1; // Initialize roleId
-		try {
-			// Get the roleId that corresponding to the user
-			roleId = rightDao.getRoleIdByUserId(userId);
-			if(roleId > 0){
-				// Get role information
-				role = roleDao.getById(roleId); 
-			}
-		} catch (AppException e) {
-			e.printStackTrace();
-			throw new AppException("service.UserService.getUserRole");
-		}
-		return role;
-	}
-	
-	/**
-	 * Get user list that corresponding to the role
-	 * 
-	 * @param roleId 
-	 * @return User list
-	 * @throws AppException
-	 */
-	public List<User> getUserListByRoleId(int roleId) throws AppException {
-		// Initialize  userList
-		List<User> userList = new ArrayList<User>();
-		// Declare userIds
-		List<Integer> userIds = null;; 
-		
-		try {
-			/*
-			 * 1.Get designated user's userIds
-			 */
-			userIds = rightDao.getUserIdsByRoleId(roleId);
-			
-			/*
-			 * 2.Get user information list according to userIds
-			 */ 
-			for (int userId : userIds) {
-				// Get user's information
-				User user = userDao.getById(userId);
-				if (user != null) {
-					userList.add(user); 
-				}
-			}
-		} catch (AppException e) {
-			e.printStackTrace();
-			throw new AppException("service.UserService.getUserList");
-		}	
-		// Return userList
-		return userList;
-	}
-	
-	/**
-	 * Get user permission list
-	 * 
-	 * @return permissionList  User permission list
-	 * @throws AppException
-	 */
-	public List<PermissionBusiModel> getYhqxList() throws AppException {
-		// Initialize permissionList
-		List<PermissionBusiModel> permissionList = new ArrayList<PermissionBusiModel>();
-		// Declare userIds
-		List<Integer> userIds = null; 
-		
-		try {
-			/*
-			 * 1.Get user id set
-			 */
-			userIds = userDao.getIds();
-			
-			/*
-			 * 2.Get user permission information: user information and corresponding role information
-			 */
-			for (int userId : userIds) {
-			
-				// Initialize business entity class object
-				PermissionBusiModel permission = new PermissionBusiModel();
-				
-				User user = userDao.getById(userId); // Get user information according to user id
-				int roleId = -1;
-				roleId = rightDao.getRoleIdByUserId(userId); // Get role id according to user id
-				
-				if (roleId > 0) {
-					Role role = roleDao.getById(roleId); // Get role information according to role id
-					// Save role information to permission
-					permission.setRoleId(roleId);
-					permission.setRoleName(role.getName());
-				}
-				
-				// Save user information to permission
-				permission.setUserId(userId);
-				permission.setUserName(user.getName());
-				
-				permissionList.add(permission);
-			}
-			
-		} catch (AppException e) {
-			e.printStackTrace();
-			throw new AppException("service.UserService.getYhqxList");
-		}	
-		// Permission business entity set
-		return permissionList;
-	}
-	
-	/**
-	 * Get role list
-	 * 
-	 * @return Role object set
-	 * @throws AppException
-	 */
-	public List<Role> getRoleList() throws AppException {	
-		// Initialize role set
-		List<Role> roleList = new ArrayList<Role>();
-		
-		try {
-			// Get all role object set
-			roleList = roleDao.getAll();
-			
-		} catch (AppException e) {
-			e.printStackTrace();
-			throw new AppException("service.UserService.getRoleList");
-		}
-		return roleList;
-	}
-	
-	/**
-	 * Configure permission
-	 *  
-	 * @param right Permission object
-	 * @return boolean Return true if operation successful,otherwise return false
-	 * @throws AppException
-	 */
-	public boolean assignPermission(Right right) throws AppException {
-		boolean flag = false;// Define flag
-		
-		try {
-			//  Get user's role 
-			int roleId = -1; // Initialize roleId
-			// Get user's role id
-			roleId = rightDao.getRoleIdByUserId(right.getUserId());
-			// Declare role object
-			Role role = null;
-			if (roleId > 0) {
-				// Get role information
-				role = roleDao.getById(roleId);
-			}
-		
-			/*
-			 * Judgement role of user owned before,if user has a role before,so change the role,otherwise add a new role
-			 */
-			if (role != null) {
-				// Get user's permission
-				int rightId = rightDao.getIdByUserId(right.getUserId());
-				// Set permission id to right object
-				right.setId(rightId);
-				right.setDescription("update");
-				// Update permission information
-				flag = rightDao.updateById(right);
-			} else {
-				flag = rightDao.add(right);
-			}
-			
-		} catch (AppException e) {
-			e.printStackTrace();
-			throw new AppException(
-					"service.UserService.assignPermission");
-		}
-		return flag;
-	}
-	/**
-	 *��ȡ�����û���Ϣ
+	 *获取所有用户信息
 	 * @return Query all contracts that need to be allocated; Otherwise return
 	 *         null
 	 * @throws AppException
@@ -278,9 +97,8 @@ public class UserService {
 	}
 	
 	/**
-	 *�����û�id��ȡָ���û���Ϣ
-	 * @return Query all contracts that need to be allocated; Otherwise return
-	 *         null
+	 *根据用户id获取指定用户信息
+	 * @return Query user info according to userId
 	 * @throws AppException
 	 */
 	public User getUserById(int id) throws AppException{
@@ -298,27 +116,59 @@ public class UserService {
 	}
 	
 	/**
-	 *�����û�
+	 *根据用户名获取指定用户信息
+	 *@param String name
+	 * @return Query user info according to userName
+	 * @throws AppException
+	 */
+	public User getUserByName(String name) throws AppException{
+		User user=null;
+		
+		try {
+			user=userDao.getByName(name);
+		} catch (AppException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new AppException("service.UserService.getUserByName");
+		}
+		
+		return user;
+	}
+	
+	/**
+	 *添加用户
 	 * @param User new User
 	 * @return Return true if adding is successful, otherwise return false
 	 * @throws AppException
 	 */
 	public boolean addUser(User user) throws AppException{
-		boolean flag=false;
+		boolean flag1=false,flag2=false;
 		
 		try {
-			flag=userDao.add(user);
+			flag1=userDao.add(user);
+			User userWithId=getUserByName(user.getName());
+			//upgrade table_right
+			Right newRight=new Right();
+			newRight.setUserId(userWithId.getId());
+			newRight.setRoleId(3);//no right yet
+			newRight.setDescription("nothing");
+			flag2=rightDao.add(newRight);
 		} catch (AppException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new AppException("service.UserService.addUser");
 		}
 		
-		return flag;
+		if(flag1&&flag2){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 	
 	/**
-	 *�޸��û�
+	 *修改用户
 	 * @param User new User
 	 * @return Return true if edit is successful, otherwise return false
 	 * @throws AppException
@@ -338,22 +188,149 @@ public class UserService {
 	}
 	
 	/**
-	 *ɾ���û�
+	 *删除用户
 	 * @param User old User
 	 * @return Return true if delete is successful, otherwise return false
 	 * @throws AppException
 	 */
 	public boolean deleteUser(User user) throws AppException{
-		boolean flag=false;
+		boolean flag1=false,flag2=false;
 		
 		try {
-			flag=userDao.delete(user);
+			flag1=userDao.delete(user);
+			//upgrade table_right
+			flag2=rightDao.delete(user.getId());
+			
 		} catch (AppException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new AppException("service.UserService.deleteUser");
 		}
 		
+		if(flag1&&flag2){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	/**
+	 *根据用户id获取用户-角色信息
+	 *@param int userId User ID
+	 * @return Right right object
+	 * @throws AppException
+	 */
+	public Right getRightByUserID(int userId) throws AppException {
+		Right right=null;
+		
+		try {
+			right=rightDao.getRightByUserId(userId);
+		} catch (AppException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new AppException("service.UserService.getRightByUserID");
+		}
+		
+		return right;
+	}
+	
+	/**
+	 *获取所有用户-角色信息
+	 * @return Query all rights that need to be allocated; Otherwise return
+	 *         null
+	 * @throws AppException
+	 */
+	public List<PermissionBusiModel> getPMList() throws AppException{
+		List<User> userList=new ArrayList<User>();
+		List<PermissionBusiModel> pmList=new ArrayList<PermissionBusiModel>();
+		
+		try {
+			for(int i=0,j=1;i<userDao.getUserCount();i++,j++){
+				while(userDao.getById(j)==null){
+					j++;
+				}
+				userList.add(userDao.getById(j));
+			}
+			for(int i=0;i<userList.size();i++){
+				User user=userList.get(i);	
+				int roleId=rightDao.getRoleIdByUserId(user.getId());
+				Role role=roleDao.getById(roleId);
+				
+				PermissionBusiModel onepm=new PermissionBusiModel();
+				onepm.setUserId(user.getId());
+				onepm.setUserName(user.getName());
+				onepm.setRoleId(roleId);
+				onepm.setRoleName(role.getName());
+				pmList.add(onepm);
+			}
+			
+		} catch (AppException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new AppException("service.UserService.getUserList");
+		}
+		
+		return pmList;
+	}
+	
+	/**
+	 *更新用户-角色信息
+	 *@param Right right object
+	 * @return Return true if update is successful, otherwise return false
+	 * @throws AppException
+	 */
+	public boolean UpdatePermission(Right right) throws AppException{
+		boolean flag=false;
+		
+		try {
+			flag=rightDao.updateById(right);
+		} catch (AppException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new AppException("service.UserService.UpdatePermission");
+		}
+		
 		return flag;
+	}
+	
+	/**
+	 *根据角色id获取角色信息
+	 *@param int userId User ID
+	 * @return Right right object
+	 * @throws AppException
+	 */
+	public Role getRoleByRoleId(int roleId) throws AppException{
+		Role role=null;
+		
+		try {
+			role=roleDao.getById(roleId);
+		} catch (AppException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new AppException("service.UserService.getRoleByRoleId");
+		}
+		
+		return role;
+	}
+	
+	/**
+	 *获取所有角色信息
+	 * @return Query all roles that need to be allocated; Otherwise return
+	 *         null
+	 * @throws AppException
+	 */
+	public List<Role> getRoleList() throws AppException{
+		List<Role> roleList=new ArrayList<Role>();
+		
+		try {
+			roleList=roleDao.getAll();
+		} catch (AppException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new AppException("service.UserService.getRoleList");
+		}
+		
+		return roleList;
 	}
 }

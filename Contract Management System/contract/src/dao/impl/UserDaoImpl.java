@@ -1,12 +1,10 @@
-package dao.Impl;
+package dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
+import java.text.SimpleDateFormat;
 
 import dao.UserDao;
 import model.User;
@@ -14,15 +12,16 @@ import util.AppException;
 import util.JDBCUtil;
 
 /**
- * @author «Æ—Û
- * @date 2017ƒÍ6‘¬7»’ …œŒÁ9:50:27
+ * @author Èí±Ê¥ã
+ * @date 2017Âπ¥6Êúà7Êó• ‰∏äÂçà9:50:27
  */
 public class UserDaoImpl implements UserDao {
 
 	/**
-	 * «¯∑÷ «∑Ò”–Õ¨√˚µƒ”√ªß¥Ê‘⁄
-	 * @param name(”√ªß√˚)
-	 * @return ∑µªÿTrue»Áπ˚”–”√ªß”–œ‡Õ¨µƒ√˚◊÷£¨∑Ò‘Ú∑µªÿfalse
+	 * Âå∫ÂàÜÊòØÂê¶ÊúâÂêåÂêçÁöÑÁî®Êà∑Â≠òÂú®
+	 * 
+	 * @param name(Áî®Êà∑Âêç)
+	 * @return ËøîÂõûTrueÂ¶ÇÊûúÊúâÁî®Êà∑ÊúâÁõ∏ÂêåÁöÑÂêçÂ≠óÔºåÂê¶ÂàôËøîÂõûfalse
 	 * @throws AppException
 	 */
 	@Override
@@ -30,18 +29,18 @@ public class UserDaoImpl implements UserDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		boolean flag = false;
-		try{
+		try {
 			conn = JDBCUtil.getConnection();
-			String sql = "Select id from user where name = ? and del = 0";
+			String sql = "Select id from t_user where name = ? and del = 0";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, name);
 			rs = pstmt.executeQuery();
-			if (rs.next()){
+			if (rs.next()) {
 				flag = true;
 			}
-		} catch (SQLException e){
+		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException("dao.impl.UserDaoImpl.isExist");
 		} finally {
@@ -53,30 +52,32 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	/**
-	 * ±£¥Ê”√ªß–≈œ¢
-	 * @param user (user∂‘œÛ µ¿˝)
-	 * @return ∑µªÿTrue»Áπ˚”–ÃÌº”–¬”√ªß≥…π¶£¨∑Ò‘Ú∑µªÿfalse
+	 * ‰øùÂ≠òÁî®Êà∑‰ø°ÊÅØ
+	 * 
+	 * @param user
+	 *            (userÂØπË±°ÂÆû‰æã)
+	 * @return ËøîÂõûTrueÂ¶ÇÊûúÊñ∞Áî®Êà∑Ê∑ªÂä†ÊàêÂäüÔºåÂê¶ÂàôËøîÂõûfalse
 	 * @throws AppException
 	 */
 	@Override
 	public boolean add(User user) throws AppException {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		
+
 		boolean flag = false;
 		int result = -1;
-		try{
+		try {
 			conn = JDBCUtil.getConnection();
-			String sql = "Insert into user (name,password) values (?,?)";
+			String sql = "Insert into t_user (name,password) values (?,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, user.getName());
 			pstmt.setString(2, user.getPassword());
-			
+
 			result = pstmt.executeUpdate();
-			if (result > 0){
+			if (result > 0) {
 				flag = true;
 			}
-		} catch (SQLException e){
+		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException("doa.impl.UserDaoImpl.add");
 		} finally {
@@ -85,147 +86,16 @@ public class UserDaoImpl implements UserDao {
 		}
 		return flag;
 	}
-	/**
-	 * Query user number according to the user name and password
-	 * 
-	 * @param name 
-	 * @param password 
-	 * @return User number
-	 * @throws AppException
-	 */
-	public int login(String name, String password) throws AppException {
-		int userId = -1; // Initialize userId
-		//Declare database connection object, pre-compiled object and result set object
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		ResultSet rs = null;
-
-		try {
-			// Create database connection
-			conn = JDBCUtil.getConnection();
-			// Declare operation statement:query user id according to the user name and password , "?" is a placeholder
-			String sql = "select id from user where name = ? and password = ? and del = 0";
-			//  pre-compiled sql
-			psmt = conn.prepareStatement(sql);
-			// Set values for the placeholder
-			psmt.setString(1, name);
-			psmt.setString(2, password);
-			// Execute the query operation
-			rs = psmt.executeQuery();
-			// Query record and get  user id
-			if (rs.next()) {
-				userId = rs.getInt("id");
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new AppException("com.ruanko.dao.impl.UserDaoImpl.login");
-		} finally {
-			// Close database object operation, release resources
-			JDBCUtil.closeResultSet(rs);
-			JDBCUtil.CloseStatement(psmt);
-			JDBCUtil.closeConnection(conn);
-		}
-		return userId;
-	}
-	
-	/**
-	 * Query user information according to id
-	 * 
-	 * @param id User id
-	 * @return User User object
-	 * @throws AppException
-	 */
-	public User getById(int id) throws AppException {
-		// Declare user object
-		User user = null;
-		//Declare database connection object, pre-compiled object and result set object
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		ResultSet rs = null;
-		try {
-			// Create database connection
-			conn = JDBCUtil.getConnection();
-			// Declare operation statement:query user information according to the user id , "?" is a placeholder
-			String sql = "select id,name,password "
-					+"from user "
-					+"where id = ? and del = 0";
-			// pre-compiled sql
-			psmt = conn.prepareStatement(sql);
-			// Set values for the placeholder
-			psmt.setInt(1, id);
-			// Query resultSet
-			rs = psmt.executeQuery();
-			
-			// Save user information in Pole entity object when queried out resultSet
-			if (rs.next()) {
-				user = new User(); // Instantiate user objects
-				// Set value to user object
-				user.setId(rs.getInt("id"));
-				user.setName(rs.getString("name"));
-				user.setPassword(rs.getString("password"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new AppException("com.ruanko.dao.impl.UserDaoImpl.getById");
-		} finally {
-			// Close database object operation, release resources
-			JDBCUtil.closeResultSet(rs);
-			JDBCUtil.CloseStatement(psmt);
-			JDBCUtil.closeConnection(conn);
-		}
-		return user;
-	}
 
 	/**
-	 * Query user id set
-	 * 
-	 * @return User id set
-	 * @throws AppException
-	 */
-	public List<Integer> getIds() throws AppException {
-		// Initialiaze ids
-		List<Integer> ids = new ArrayList<Integer>();
-		
-		//Declare Connection object,PreparedStatement object and ResultSet object
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		ResultSet rs = null;
-		
-		try {
-			// Create database connection
-			conn = JDBCUtil.getConnection();
-			// Declare operation statement:query user id set,"?" is a placeholder
-			String sql = "select id from user where del = 0";
-			
-			psmt = conn.prepareStatement(sql);
-			
-			rs = psmt.executeQuery();// Return result set
-			// Loop to get information in result set,and save in ids
-			while (rs.next()) {
-				ids.add(rs.getInt("id"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new AppException(
-					"dao.impl.UserDaoImpl.getIds");
-		} finally {
-			// Close database operation object, release resources
-			JDBCUtil.closeResultSet(rs);
-			JDBCUtil.CloseStatement(psmt);
-			JDBCUtil.closeConnection(conn);
-		}
-		return ids;
-	}
-	/**
-	 * –ﬁ∏ƒ”√ªß–≈œ¢
+	 * ‰øÆÊîπÁî®Êà∑‰ø°ÊÅØ
 	 * 
 	 * @param user
-	 *            (user∂‘œÛ µ¿˝)
-	 * @return ∑µªÿTrue»Áπ˚”√ªß–ﬁ∏ƒ≥…π¶£¨∑Ò‘Ú∑µªÿfalse
+	 *            (userÂØπË±°ÂÆû‰æã)
+	 * @return ËøîÂõûTrueÂ¶ÇÊûúÁî®Êà∑‰øÆÊîπÊàêÂäüÔºåÂê¶ÂàôËøîÂõûfalse
 	 * @throws AppException
-	 */public boolean update(User user) throws AppException
-	 {
+	 */
+	public boolean update(User user) throws AppException {
 		boolean flag = false;
 
 		Connection conn = null;
@@ -235,7 +105,7 @@ public class UserDaoImpl implements UserDao {
 			conn = JDBCUtil.getConnection();
 			// Declare sql:update operation status,content and time info of
 			// contract according to user id,contract id and operation type
-			String sql = "update user set name = ?, password = ? " + "where id = ? ";
+			String sql = "update t_user set name = ?, password = ? " + "where id = ? ";
 
 			// Pre-compiled sql, and set the value to parameter
 			pstmt = conn.prepareStatement(sql);
@@ -262,11 +132,11 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	/**
-	 * …æ≥˝”√ªß
+	 * Âà†Èô§Áî®Êà∑
 	 * 
 	 * @param user
-	 *            (user∂‘œÛ µ¿˝)
-	 * @return ∑µªÿTrue»Áπ˚”√ªß…æ≥˝≥…π¶£¨∑Ò‘Ú∑µªÿfalse
+	 *            (userÂØπË±°ÂÆû‰æã)
+	 * @return ËøîÂõûTrueÂ¶ÇÊûúÁî®Êà∑Âà†Èô§ÊàêÂäüÔºåÂê¶ÂàôËøîÂõûfalse
 	 * @throws AppException
 	 */
 	public boolean delete(User user) throws AppException {
@@ -279,12 +149,12 @@ public class UserDaoImpl implements UserDao {
 			conn = JDBCUtil.getConnection();
 			// Declare sql:update operation status,content and time info of
 			// contract according to user id,contract id and operation type
-			String sql = "delete from user " + "where id = ? ";
+			String sql = "delete from t_user " + "where id = ? ";
 
 			// Pre-compiled sql, and set the value to parameter
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, user.getId());
-			
+
 			int count = pstmt.executeUpdate();
 
 			if (count > 0) {// If affected lines greater than 0, the update is
@@ -302,8 +172,111 @@ public class UserDaoImpl implements UserDao {
 
 		return flag;
 	}
+
 	/**
-	 * ªÒ»°”√ªß◊‹ ˝
+	 * Ê†πÊçÆÁî®Êà∑idËé∑ÂèñÁî®Êà∑‰ø°ÊÅØ
+	 * 
+	 * @param id
+	 *            User id
+	 * @return User User object
+	 * @throws AppException
+	 */
+	public User getById(int id) throws AppException {
+		// Declare user object
+		User user = null;
+
+		// Declare database connection object, pre-compiled object and result
+		// set object
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		try {
+			// Create database connection
+			conn = JDBCUtil.getConnection();
+			// Declare operation statement:query user information according to
+			// the user id , "?" is a placeholder
+			String sql = "select id,name,password " + "from t_user " + "where id = ? and del = 0";
+			// pre-compiled sql
+			psmt = conn.prepareStatement(sql);
+			// Set values for the placeholder
+			psmt.setInt(1, id);
+			// Query resultSet
+			rs = psmt.executeQuery();
+
+			// Save user information in Pole entity object when queried out
+			// resultSet
+			if (rs.next()) {
+				user = new User(); // Instantiate user objects
+				// Set value to user object
+				user.setId(rs.getInt("id"));
+				user.setName(rs.getString("name"));
+				user.setPassword(rs.getString("password"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException("dao.impl.UserDaoImpl.getById");
+		} finally {
+			// Close database object operation, release resources
+			JDBCUtil.CloseStatement(psmt);
+			JDBCUtil.closeConnection(conn);
+		}
+
+		return user;
+	}
+
+	/**
+	 * Ê†πÊçÆÁî®Êà∑ÂêçËé∑ÂèñÁî®Êà∑‰ø°ÊÅØ
+	 * 
+	 * @param String
+	 *            UserName
+	 * @return User
+	 * @throws AppException
+	 */
+	public User getByName(String name) throws AppException {
+		User user = null;
+
+		// Declare database connection object, pre-compiled object and result set object
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		try {
+			// Create database connection
+			conn = JDBCUtil.getConnection();
+			// Declare operation statement:query user information according to
+			// the user id , "?" is a placeholder
+			String sql = "select id,password " + "from t_user " + "where name = ? and del = 0";
+			// pre-compiled sql
+			psmt = conn.prepareStatement(sql);
+			// Set values for the placeholder
+			psmt.setString(1, name);
+			// Query resultSet
+			rs = psmt.executeQuery();
+
+			// Save user information in Pole entity object when queried out
+			// resultSet
+			if (rs.next()) {
+				user = new User(); // Instantiate user objects
+				// Set value to user object
+				user.setId(rs.getInt("id"));
+				user.setName(name);
+				user.setPassword(rs.getString("password"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException("dao.impl.UserDaoImpl.getById");
+		} finally {
+			// Close database object operation, release resources
+			JDBCUtil.CloseStatement(psmt);
+			JDBCUtil.closeConnection(conn);
+		}
+
+		return user;
+	}
+
+	/**
+	 * Ëé∑ÂèñÁî®Êà∑ÊÄªÊï∞
 	 * 
 	 * @return int Total count of User
 	 * @throws AppException
@@ -322,7 +295,7 @@ public class UserDaoImpl implements UserDao {
 			conn = JDBCUtil.getConnection();
 			// Declare operation statement:query user information according to
 			// the user id , "?" is a placeholder
-			String sql = "select count(*) as totalNum" + " from user ";
+			String sql = "select count(*) as totalNum" + " from t_user ";
 			// pre-compiled sql
 			psmt = conn.prepareStatement(sql);
 			// Query resultSet
@@ -343,5 +316,4 @@ public class UserDaoImpl implements UserDao {
 
 		return totalCount;
 	}
-
 }
