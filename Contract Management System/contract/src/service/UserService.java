@@ -225,9 +225,10 @@ public class UserService {
 		boolean flag1=false,flag2=false;
 		
 		try {
-			flag1=userDao.delete(user);
-			//upgrade table_right
+			//upgrade table_right first
 			flag2=rightDao.delete(user.getId());
+			//upgrade table_user
+			flag1=userDao.delete(user);
 			
 		} catch (AppException e) {
 			// TODO Auto-generated catch block
@@ -360,5 +361,68 @@ public class UserService {
 		}
 		
 		return roleList;
+	}
+	
+	/**
+	 *添加角色
+	 *
+	 *@param Role Role object
+	 * @return Return true if added successfully,otherwise return false
+	 * @throws AppException
+	 */
+	public boolean addRole(Role role) throws AppException{
+		boolean flag=false;
+		
+		try {
+			flag=roleDao.add(role);
+		} catch (AppException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new AppException("service.UserService.addRole");
+		}
+		
+		return flag;
+	}
+	
+	/**
+	 *更新角色
+	 * 
+	 * @param Role Role object
+	 * @return Return true if updated successfully,otherwise return false
+	 * @throws AppException
+	 */
+	public boolean updateRole(Role role) throws AppException{
+		boolean flag=false;
+		
+		try {
+			flag=roleDao.update(role);
+		} catch (AppException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new AppException("service.UserService.updateRole");
+		}
+		
+		return flag;
+	}
+	
+	/**
+	 *删除角色
+	 * 
+	 * @param int Role id
+	 * @return Return true if deleted successfully,otherwise return false
+	 * @throws AppException
+	 */
+	public boolean deleteRole(int roleId) throws AppException{
+		boolean flag=false;
+		
+		try {
+			flag=roleDao.delete(roleId);
+		} catch (AppException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new AppException("service.UserService.deleteRole");
+		}
+		
+		return flag;
 	}
 }

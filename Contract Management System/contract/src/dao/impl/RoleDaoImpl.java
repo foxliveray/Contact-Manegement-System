@@ -1,4 +1,4 @@
-package dao.Impl;
+package dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,10 +18,10 @@ import util.JDBCUtil;
 public class RoleDaoImpl implements RoleDao {
 
 	/**
-	 * Query role's information according to id
+	 * 根据角色id获取角色信息
 	 * 
-	 * @param id 
-	 * @return Role 
+	 * @param int id 
+	 * @return Role Role object
 	 * @throws AppException
 	 */
 	public Role getById(int id) throws AppException {
@@ -35,7 +35,7 @@ public class RoleDaoImpl implements RoleDao {
 			// Create database connection
 			conn = JDBCUtil.getConnection();
 			// Declare operation statement,query role's information based on role id, "?" is a placeholder
-			String sql = "select name,description,function_ids from contractdb.t_role where id=? and del=0";
+			String sql = "select name,description,function_ids from contractdb.role where id=? and del=0";
 			
 			// Pre-compiled sql
 			psmt = conn.prepareStatement(sql);
@@ -66,9 +66,9 @@ public class RoleDaoImpl implements RoleDao {
 	}
 	
 	/**
-	 * Query all role object set
+	 * 查询所有角色
 	 * 
-	 * @return Role object set
+	 * @return List<Role> Role object set
 	 * @throws AppException
 	 */
 	public List<Role> getAll() throws AppException {
@@ -84,7 +84,7 @@ public class RoleDaoImpl implements RoleDao {
 			// Create database connection
 			conn = JDBCUtil.getConnection();
 			// Declare operation statement:query all role object set,"?" is a placeholder
-			String sql = "select id,name,description,function_ids from contractdb.t_role where del = 0";
+			String sql = "select id,name,description,function_ids from contractdb.role where del = 0";
 			
 			psmt = conn.prepareStatement(sql);
 			
@@ -113,4 +113,126 @@ public class RoleDaoImpl implements RoleDao {
 		return roleList;
 	}
 
+	/**
+	 *添加角色
+	 * 
+	 * @param Role Role object
+	 * @return Return true if added successfully,otherwise return false
+	 * @throws AppException
+	 */
+	public boolean add(Role role) throws AppException{
+		boolean flag=false;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int result = -1;
+		
+		try {
+			conn = JDBCUtil.getConnection();
+			String sql = "Insert into contractdb.role (name,description,function_ids) values (?,?,?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, role.getName());
+			pstmt.setString(2, role.getDescription());
+			pstmt.setString(3, role.getFuncIds());
+
+			result = pstmt.executeUpdate();
+			if (result > 0) {
+				flag = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException("doa.impl.RoleDaoImpl.add");
+		} finally {
+			JDBCUtil.CloseStatement(pstmt);
+			JDBCUtil.closeConnection(conn);
+		}
+		
+		return flag;
+	}
+
+	/**
+	 *更新角色
+	 * 
+	 * @param Role Role object
+	 * @return Return true if updated successfully,otherwise return false
+	 * @throws AppException
+	 */
+	public boolean update(Role role) throws AppException{
+		boolean flag=false;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			// Create database connection
+			conn = JDBCUtil.getConnection();
+			// Declare sql:update operation status,content and time info of
+			// contract according to user id,contract id and operation type
+			String sql = "update contractdb.role set name = ?, description = ?, function_ids = ?" 
+					+ "where id = ? ";
+
+			// Pre-compiled sql, and set the value to parameter
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, role.getName());
+			pstmt.setString(2, role.getDescription());
+			pstmt.setString(3, role.getFuncIds());
+			pstmt.setInt(4, role.getId());
+			// Execute update, return the affected rows
+			int count = pstmt.executeUpdate();
+
+			if (count > 0) {// If affected lines greater than 0, the update is
+							// successful
+				flag = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException("dao.impl.RoleDaoImpl.update");
+		} finally {
+			// Close the database operation object
+			JDBCUtil.CloseStatement(pstmt);
+			JDBCUtil.closeConnection(conn);
+		}
+		
+		return flag;
+	}
+	
+	/**
+	 *删除角色
+	 * 
+	 * @param int Role id
+	 * @return Return true if deleted successfully,otherwise return false
+	 * @throws AppException
+	 */
+	public boolean delete(int id) throws AppException{
+		boolean flag=false;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			// Create database connection
+			conn = JDBCUtil.getConnection();
+			// Declare sql:update operation status,content and time info of
+			// contract according to user id,contract id and operation type
+			String sql = "delete from contractdb.role " + "where id = ? ";
+
+			// Pre-compiled sql, and set the value to parameter
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, id);
+
+			int count = pstmt.executeUpdate();
+
+			if (count > 0) {// If affected lines greater than 0, the update is
+							// successful
+				flag = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException("dao.impl.RoleDaoImpl.delete");
+		} finally {
+			// Close the database operation object
+			JDBCUtil.CloseStatement(pstmt);
+			JDBCUtil.closeConnection(conn);
+		}
+		
+		return flag;
+	}
 }

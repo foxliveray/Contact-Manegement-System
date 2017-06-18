@@ -1,12 +1,10 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="model.User" %>
+<%@page import="model.Role" %>
 <%@page import="java.util.*"%>
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-
-    <meta charset="utf-8">
+	<head>
+		<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -32,15 +30,19 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+    
 		<script>
+			function showRoleDescription(roleDescription){
+				alert(roleDescription);
+			}
+			
 			function deleteCheck(url){
 				var result=confirm("确认删除？");
 				if(result){
 					window.location.assign(url);
 				}
 			}
-		</script>
+    	</script>
 	</head>
 
 	<body>
@@ -129,48 +131,56 @@
                     <h1 class="page-header">用户列表</h1>
                 </div>
             </div>
-
+	
 		<br />
 
 		<div style="text-align:right;width:480px;">
-		   <a href="addUser.jsp">
+		   <a href="addRole.jsp">
 				<img src="images/add.png"  alt="Add Role" />
-				添加用户
+				添加角色
 			</a>
 		</div>
 
 		<div class="panel-body">
 		<div class="table-responsive">
-		  <table width="500" border="1" id="userList">
+		  <table width="500" border="1">
 			<tr>
 				<th style="width:100px;">
-					用户名
+					角色名
 				</th>
 				<th>
-					密码
+					描述
 				</th>
 				<th style="width:100px;">
 					操作
 				</th>
 			</tr>
-			<% List<User> userList = (List<User>)request.getAttribute("userList");
-			  for (int i=0;i<userList.size();i++) {
-		        	User oneUser=userList.get(i);
-		     %>
+			<%
+				List<Role> roleList=(List<Role>)request.getAttribute("roleList");
+				for(int i=0;i<roleList.size();++i){
+					Role oneRole=roleList.get(i);
+			%>
 			<tr>
 				<td class="tdname">
-					<%=oneUser.getName() %>
+					<%=oneRole.getName() %>
 				</td>
 				<td class="tdname">
-					<%=oneUser.getPassword() %>
+					<a href="javascript:showRoleDescription('<%=oneRole.getDescription() %>')">
+					    <%if (oneRole.getDescription().length()<=20){ %>
+							<%=oneRole.getDescription() %>
+						<%} else {%>
+							<%=oneRole.getDescription().substring(0,20).concat("...") %>
+						<%} %>
+					</a>
+					
 				</td>
 				<td>
-					<a href="ToEditUserServlet?selectUserId=<%=oneUser.getId()%>">
+					<a href="ToEditRoleServlet?selectRoleId=<%=oneRole.getId() %>">
 						<img src="images/icon-edit.png"  alt="Edit" />
 						修改
 					</a>
-					｜
-					<a href="javascript:deleteCheck('DeleteUserServlet?selectUserId=<%=oneUser.getId()%>')">
+						｜
+					<a href="javascript:deleteCheck('DeleteRoleServlet?selectRoleId=<%=oneRole.getId()%>')">
 						<img src="images/delete.png"  alt="Delete" />
 						删除
 					</a>
@@ -185,8 +195,8 @@
 		</div>
 		</div>
 		</div>
-		
-		  <script src="vendor/jquery/jquery.min.js"></script>
+
+		<script src="vendor/jquery/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
