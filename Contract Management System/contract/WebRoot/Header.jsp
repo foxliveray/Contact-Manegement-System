@@ -48,7 +48,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="Index.jsp">合同管理系统</a>
+                <a class="navbar-brand" href="Frame1.jsp">合同管理系统</a>
 
             </div>
             <!-- /.navbar-header -->

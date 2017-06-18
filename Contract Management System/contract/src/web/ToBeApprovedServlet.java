@@ -17,7 +17,7 @@ import service.ContractService;
 import util.AppException;
 
 /**
- * Access page of contract to be approved ´ýÉóÅú½çÃæ·ÃÎÊ´¦Àí
+ * Access page of contract to be approved ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê´ï¿½ï¿½ï¿½
  */
 @WebServlet("/ToBeApprovedServlet")
 public class ToBeApprovedServlet extends HttpServlet {
@@ -30,29 +30,28 @@ public class ToBeApprovedServlet extends HttpServlet {
 		session = request.getSession();
 
 		Integer userId = (Integer) session.getAttribute("userId");
-		session.setAttribute("userId", 1);//
 
-		// if (userId == null) {
-		// response.sendRedirect("toLogin");
-		// } else {
-		int toPage = Integer.parseInt(request.getParameter("toPage"));
-		int trPerPage = Integer.parseInt(request.getParameter("trPerPage"));
-		request.setAttribute("toPage", toPage);
-		request.setAttribute("trPerPage", trPerPage);
-		try {
-			ContractService conService = new ContractService();
-			List<ConBusiModel> conList = new ArrayList<ConBusiModel>();
+		if (userId == null) {
+			response.sendRedirect("ToLogin");
+		} else {
+			int toPage = Integer.parseInt(request.getParameter("toPage"));
+			int trPerPage = Integer.parseInt(request.getParameter("trPerPage"));
+			request.setAttribute("toPage", toPage);
+			request.setAttribute("trPerPage", trPerPage);
+			try {
+				ContractService conService = new ContractService();
+				List<ConBusiModel> conList = new ArrayList<ConBusiModel>();
 
-			conList = conService.getDshphtList(1);
-			request.setAttribute("contractList", conList);
+				conList = conService.getDshphtList(userId);
+				request.setAttribute("contractList", conList);
 
-			request.getRequestDispatcher("/dshphtList.jsp").forward(request, response);
-		} catch (AppException e) {
-			e.printStackTrace();
-			// Redirect to the exception page
-			response.sendRedirect("toError");
+				request.getRequestDispatcher("/dshphtList.jsp").forward(request, response);
+			} catch (AppException e) {
+				e.printStackTrace();
+				// Redirect to the exception page
+				response.sendRedirect("toError");
+			}
 		}
-		// }
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

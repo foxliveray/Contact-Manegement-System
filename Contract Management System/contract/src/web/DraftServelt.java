@@ -51,17 +51,17 @@ public class DraftServelt extends HttpServlet {
 		HttpSession session = null;
 		// Get session by using request object
 		session = request.getSession();
-		Integer userId = 123;
+		Integer userId = (Integer)session.getAttribute("userId");
 
 		if (userId == null){
-			//zhuce
+			response.sendRedirect("ToLogin");
 		}else{
 			String name = request.getParameter("name1");
 			String customer = request.getParameter("customer");
 			String content = request.getParameter("content");
 			String beginTime = request.getParameter("beginTime");
 			String endTime = request.getParameter("endTime");
-			response.getWriter().append("Served at: ").append(name+" "+customer+" "+content+" "+beginTime);
+			//response.getWriter().append("Served at: ").append(name+" "+customer+" "+content+" "+beginTime);
 			// Instantiate begin and end of java.util.Date type,for accepting transformed beginTime and endTime
 			Date begin = new Date();
 			Date end = new Date();
@@ -78,7 +78,7 @@ public class DraftServelt extends HttpServlet {
 				
 				// Build a Contract object and assign value for the object's attribute
 				Contract contract = new Contract();
-				contract.setId(userId);
+				contract.setUserId(userId);
 				contract.setName(name);
 				contract.setCustomer(customer);
 				contract.setBeginTime(begin);
@@ -93,6 +93,7 @@ public class DraftServelt extends HttpServlet {
 					message = "Drafting succeeded!";
 					// Transform the information created now to page for display
 					request.setAttribute("contract", contract);
+					response.sendRedirect("Frame1.jsp");
 				} else {
 					message = "Drafting failure!";
 				}

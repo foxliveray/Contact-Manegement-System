@@ -1,9 +1,10 @@
-package dao.impl;
+package dao.Impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import dao.CustomerDao;
 import model.Customer;
@@ -30,7 +31,7 @@ public class CustomerDaoImpl implements CustomerDao{
 		boolean flag = false;
 		try {
 			conn = JDBCUtil.getConnection();
-			String sql = "Select id from t_customer where name = ? and del = 0";
+			String sql = "Select id from customer where name = ? and del = 0";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, name);
 			rs = pstmt.executeQuery();
@@ -62,7 +63,7 @@ public class CustomerDaoImpl implements CustomerDao{
 		int result = -1;
 		try{
 			conn = JDBCUtil.getConnection();
-			String sql = "Insert into t_customer (name,address,tel,fax,code,bank,account) values (?,?,?,?,?,?,?)";
+			String sql = "Insert into customer (name,address,tel,fax,code,bank,account) values (?,?,?,?,?,?,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, customer.getName());
 			pstmt.setString(2, customer.getAddress());
@@ -84,6 +85,13 @@ public class CustomerDaoImpl implements CustomerDao{
 			JDBCUtil.closeConnection(conn);
 		}
 		return flag;
+	}
+
+	public ArrayList<Customer> getAllCustomer() throws AppException {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		return null;
 	}
 
 }

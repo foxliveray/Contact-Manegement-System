@@ -1,30 +1,29 @@
 package web;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.ConBusiModel;
+import dao.ConStateDao;
+import dao.Impl.ConStateDaoImpl;
+import model.Contract;
 import service.ContractService;
 import util.AppException;
-
+import util.Constant;
 /**
- * Servlet implementation class DshphtList
+ * Servlet implementation class TochangestateServlet
  */
-@WebServlet("/DshphtList")
-public class DshphtList extends HttpServlet {
+@WebServlet("/TochangestateServlet")
+public class TochangestateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DshphtList() {
+    public TochangestateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,24 +33,16 @@ public class DshphtList extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.setCharacterEncoding("UTF-8");
-		Integer userId = Integer.parseInt(request.getParameter("conId"));
+		response.setContentType("text/html;charset=UTF-8");
+		int conId = Integer.parseInt(request.getParameter("conId"));
+		ContractService service=new ContractService();
 		try {
-			// Initialize contractService
-			ContractService contractService = new ContractService();
-			// Initialize contractList
-			List<ConBusiModel> contractList = new ArrayList<ConBusiModel>();
-			// Call business logic layer to get list of contract to be approved
-			contractList = contractService.getDshphtList(userId);
-
-			// Save contractList to request
-			request.setAttribute("contractList", contractList);
-			// Forward to page of contract to be approved
-			request.getRequestDispatcher("/dshphtList.jsp").forward(request, response);
+			Contract contract=service.getContract(conId);
+			service.finalize(contract);
+			response.sendRedirect("ContractListForUser");
 		} catch (AppException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-			//Redirect to the exception page
-			response.sendRedirect("toError");
 		}
 	}
 
@@ -60,7 +51,7 @@ public class DshphtList extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//doGet(request, response);
+		doGet(request, response);
 	}
 
 }

@@ -39,7 +39,7 @@ public class ToAssignPermServlet extends HttpServlet {
 		
 		// If the user is not login, then jump to login page
 		if (userId == null) {
-			response.sendRedirect("toLogin");
+			response.sendRedirect("ToLogin");
 		} else {
 
 			// Get user id, user name and role id to configure permission

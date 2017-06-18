@@ -1,4 +1,4 @@
-package dao.impl;
+package dao.Impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -35,7 +35,7 @@ public class RoleDaoImpl implements RoleDao {
 			// Create database connection
 			conn = JDBCUtil.getConnection();
 			// Declare operation statement,query role's information based on role id, "?" is a placeholder
-			String sql = "select name,description,function_ids from contractdb.role where id=? and del=0";
+			String sql = "select name,description,function_ids from contractdb.t_role where id=? and del=0";
 			
 			// Pre-compiled sql
 			psmt = conn.prepareStatement(sql);
@@ -84,7 +84,7 @@ public class RoleDaoImpl implements RoleDao {
 			// Create database connection
 			conn = JDBCUtil.getConnection();
 			// Declare operation statement:query all role object set,"?" is a placeholder
-			String sql = "select id,name,description,function_ids from contractdb.role where del = 0";
+			String sql = "select id,name,description,function_ids from contractdb.t_role where del = 0";
 			
 			psmt = conn.prepareStatement(sql);
 			

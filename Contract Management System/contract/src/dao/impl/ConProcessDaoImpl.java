@@ -443,7 +443,7 @@ public class ConProcessDaoImpl implements ConProcessDao {
 		return conProcess;
 	}
 	
-	/**  ����
+	/**  ����
 	 * Query contract process information according to contract id and user id
 	 * 
 	 * @param id
@@ -504,6 +504,64 @@ public class ConProcessDaoImpl implements ConProcessDao {
 		return conProcess;
 	}
 
+	/**
+	 * ���ݺ�ͬid�����ͱ�־λ��״̬��־λ��ȡ��ͬ������Ϣ
+	 * 
+	 * @param int
+	 *            contractId,int conProcess type,int conProcess state
+	 * @return ConProcess Contract Process object
+	 * @throws AppException
+	 */
+	public ConProcess getByConId_type_state(int conId, int type, int state) throws AppException {
+		ConProcess conProcess = null;
+
+		// Declare database connection object, pre-compiled object and result set object
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		try {
+			// Create database connection
+			conn = JDBCUtil.getConnection();
+			// Define sql:query contract process information according to
+			// contract process id
+			String sql = "select id,user_id,content,time " + "from contract_process "
+					+ "where con_id = ? and type = ? and state = ? and del = 0";
+
+			// Pre-compiled sql, and set the parameter values
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, conId); // Set contract id
+			psmt.setInt(2,type);
+			psmt.setInt(3, state);
+
+			// Query result set
+			rs = psmt.executeQuery();
+
+			// Get information in result set by loop,and encapsulate to
+			// conProcess entity
+			if (rs.next()) {
+				conProcess = new ConProcess();
+				conProcess.setId(rs.getInt("id"));
+				conProcess.setConId(conId);
+				conProcess.setUserId(rs.getInt("user_id"));
+				conProcess.setType(type);
+				conProcess.setState(state);
+				conProcess.setContent(rs.getString("content"));
+				conProcess.setTime(rs.getTimestamp("time"));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException("dao.impl.ConProcessDaoImpl.getByConId_type_state");
+		} finally {
+			// Close database operation object
+			JDBCUtil.closeResultSet(rs);
+			JDBCUtil.CloseStatement(psmt);
+			JDBCUtil.closeConnection(conn);
+		}
+
+		return conProcess;
+	}
 }
 
 

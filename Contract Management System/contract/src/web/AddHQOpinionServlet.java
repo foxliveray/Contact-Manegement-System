@@ -33,20 +33,18 @@ public class AddHQOpinionServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// Set the request's character encoding
 		response.setContentType("text/html;charset=UTF-8");
-		String docType=new String(request.getParameter("text").getBytes("ISO8859-1"),"UTF-8");
+		String docType=request.getParameter("text");
 		System.out.println(docType);
 		
 		// Declare session
-	/**	HttpSession session = null;
+		HttpSession session = null;
 		// Get session by using request
 		session = request.getSession();
 		Integer userId = (Integer)session.getAttribute("userId");
-		**/
-		
-		Integer userId=1;
+
 		// If user is not login, jump to login page
 		if (userId == null) {
-			response.sendRedirect("toLogin");
+			response.sendRedirect("ToLogin");
 		} else {
 			
 			// Get contract id

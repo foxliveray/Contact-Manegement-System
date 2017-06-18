@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.ArrayList;
+
 import model.Customer;
 import util.AppException;
 
@@ -25,5 +27,6 @@ public interface CustomerDao {
 	 */
 	public boolean add(Customer customer) throws AppException;
 	
+	public ArrayList <Customer> getAllCustomer() throws AppException;
 	
 }

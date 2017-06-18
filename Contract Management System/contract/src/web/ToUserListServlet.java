@@ -43,10 +43,10 @@ public class ToUserListServlet extends HttpServlet {
 		
 		Integer userId=(Integer)session.getAttribute("userId");
 		
-//		if(userId==null){
-//			response.sendRedirect("toLogin");
-//		}
-//		else{
+		if(userId==null){
+			response.sendRedirect("ToLogin");
+		}
+		else{
 			UserService userService=new UserService();
 			List<User> userList=new ArrayList<User>();
 			
@@ -62,7 +62,7 @@ public class ToUserListServlet extends HttpServlet {
 				// Redirect to the exception page
 				response.sendRedirect("toError");
 			}
-//		}
+		}
 	}
 
 	/**

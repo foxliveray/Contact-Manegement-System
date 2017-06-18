@@ -9,9 +9,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.ConProcess;
 import model.Contract;
+import model.Role;
 import service.database_operation;
 
 /**
@@ -41,18 +43,32 @@ public class Signed extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	request.setCharacterEncoding("UTF-8");
-    	response.setContentType("text/html; charset=UTF-8");
-		response.setCharacterEncoding("UTF-8");
 		database_operation d_o=new database_operation();
 		List<Contract> lists = new ArrayList<Contract>();
+		List<ConProcess> conlist = new ArrayList<ConProcess>();
 		String searchwords=request.getParameter("searchwords");
+		/*
+		 * ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½Ã»ï¿½ï¿½ï¿½Ýºï¿½id
+		 */
+		int if_admin=1;
+		HttpSession session = null;
+		// Get session by using request
+		session = request.getSession();
+		Integer userId = (Integer) session.getAttribute("userId");
+
+			
 		if(searchwords==""||searchwords==null){
-			lists=d_o.select_contract_after_sign();
-	        request.setAttribute("lists", lists);//½«lists·Åµ½×÷ÓÃÓò	
+			lists=d_o.select_contract_after_sign(0,userId);//ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îª0Ê±ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÝµÚ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½idï¿½ï¿½Ñ¯
+	        request.setAttribute("lists", lists);//ï¿½ï¿½listsï¿½Åµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½	
+	        
+	        conlist=d_o.select_detail_after_sign(lists);//ï¿½ï¿½Ñ¯Ç©ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ï¿½Ï¢
+	        request.setAttribute("conlist", conlist);
 		}else{
 			lists=d_o.search_after_sign_contract_by_user(searchwords);
-	        request.setAttribute("lists", lists);//½«lists·Åµ½×÷ÓÃÓò
+	        request.setAttribute("lists", lists);//ï¿½ï¿½listsï¿½Åµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	        
+	        conlist=d_o.select_detail_after_sign(lists);//ï¿½ï¿½Ñ¯Ç©ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ï¿½Ï¢
+	        request.setAttribute("conlist", conlist);
 		}
        
         String curPage=request.getParameter("curPage");

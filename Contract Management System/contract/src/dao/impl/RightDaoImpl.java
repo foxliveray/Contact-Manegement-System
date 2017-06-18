@@ -1,4 +1,4 @@
-package dao.impl;
+package dao.Impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,7 +19,7 @@ import util.JDBCUtil;
 public class RightDaoImpl implements RightDao {
 
 	/**
-	 * 根据用户id获取角色id
+	 * 锟斤拷锟斤拷锟矫伙拷id锟斤拷取锟斤拷色id
 	 * 
 	 * @param userId
 	 * @return roleId
@@ -62,7 +62,7 @@ public class RightDaoImpl implements RightDao {
 	}
 
 	/**
-	 * 根据角色id查找用户id
+	 * 锟斤拷锟捷斤拷色id锟斤拷锟斤拷锟矫伙拷id
 	 * 
 	 * @param roleId
 	 *            Role id
@@ -108,7 +108,7 @@ public class RightDaoImpl implements RightDao {
 	}
 
 	/**
-	 * 根据用户id获取permission id
+	 * 锟斤拷锟斤拷锟矫伙拷id锟斤拷取permission id
 	 * 
 	 * @param userId
 	 *            User id
@@ -152,7 +152,7 @@ public class RightDaoImpl implements RightDao {
 	}
 
 	/**
-	 * 根据用户id获取查询用户-角色关系
+	 * 锟斤拷锟斤拷锟矫伙拷id锟斤拷取锟斤拷询锟矫伙拷-锟斤拷色锟斤拷系
 	 * 
 	 * @param userId
 	 *            User id
@@ -201,7 +201,7 @@ public class RightDaoImpl implements RightDao {
 	}
 
 	/**
-	 * 更新用户-角色关系 
+	 * 锟斤拷锟斤拷锟矫伙拷-锟斤拷色锟斤拷系 
 	 * 
 	 * @param Right Right object
 	 * @return boolean Return true if successful , otherwise false
@@ -245,7 +245,7 @@ public class RightDaoImpl implements RightDao {
 	}
 
 	/**
-	 * 保存新用户-角色关系
+	 * 锟斤拷锟斤拷锟斤拷锟矫伙拷-锟斤拷色锟斤拷系
 	 * 
 	 * @param right
 	 *            permission object
@@ -288,7 +288,7 @@ public class RightDaoImpl implements RightDao {
 	}
 
 	/**
-	 * 删除用户-角色关系
+	 * 删锟斤拷锟矫伙拷-锟斤拷色锟斤拷系
 	 * 
 	 * @param right
 	 *            permission object

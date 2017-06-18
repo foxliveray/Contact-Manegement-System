@@ -32,11 +32,10 @@ public class AssignOperServlet extends HttpServlet {
 		HttpSession session = null;
 		// Get session by using request
 		session = request.getSession();
-		//Integer userId = (Integer)session.getAttribute("userId");
-		Integer userId =1;
+		Integer userId = (Integer)session.getAttribute("userId");
 		// If user is not login, jump to login page
 		if (userId == null) {
-			response.sendRedirect("toLogin");
+			response.sendRedirect("ToLogin");
 		}
 		
 		/*
@@ -79,7 +78,7 @@ public class AssignOperServlet extends HttpServlet {
 			// Redirect to exception page
 			response.sendRedirect("toError");
 		}
-		request.getRequestDispatcher("menu.jsp").forward(request,response);
+		request.getRequestDispatcher("Frame2.jsp").forward(request,response);
 	}
 
 	/**

@@ -51,7 +51,7 @@ public class RegisterServlet extends HttpServlet {
 		String message = "";
 		User user = new User();
 		UserService userService = new UserService();
-
+		
 		if (name == "" || password == "" || password2 == "") {
 			System.out.println("---Entered incorrectly!---");
 			System.out.println("User name, password, and the repeat password can not be empty!");
@@ -62,9 +62,10 @@ public class RegisterServlet extends HttpServlet {
 			message = "Repeat password and password should keep consistent!";
 		} else {
 			try {
+				
 				user.setName(name);
 				user.setPassword(password);
-				flag = userService.register(user);
+				flag = userService.addUser(user);
 				if (flag) {
 					message = "Registration Successful!";
 					System.out.println("Registration Successful!");

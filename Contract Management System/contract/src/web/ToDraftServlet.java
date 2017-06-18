@@ -29,7 +29,7 @@ public class ToDraftServlet extends HttpServlet {
 		
 		// If user is not login, jump to login page
 		if (userId == null) {
-			response.sendRedirect("toLogin");
+			response.sendRedirect("ToLogin");
 		}else {
 			// Forward to draft page
 			request.getRequestDispatcher("/draft.jsp").forward(request, response);

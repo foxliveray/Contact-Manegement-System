@@ -28,7 +28,7 @@
 			合同审批
 		</div>
 		<br />
-		<form action="approveDone" method="post">
+		<form action="AddApprovedOpinionServlet" method="post">
 			<%
 				Contract contract = (Contract)request.getAttribute("contract");
 			%>

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-import="java.util.*,model.ConProModel"
+import="java.util.*,model.Contract"
     pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
@@ -46,7 +46,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 
 <body>
- <div id="wrapper">
+<div id="wrapper">
 
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -57,7 +57,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="Frame2.jsp">合同管理系统</a>
+                <a class="navbar-brand" href="Frame1.jsp">合同管理系统</a>
 
             </div>
             <!-- /.navbar-header -->
@@ -90,39 +90,49 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
+                        
                         <li>
-                            <a href="http://localhost:8080/contract/LogServlet"><i class="fa fa-dashboard fa-fw"></i> 日志管理</a>
+                            <a href="AddCustomer.jsp"><i class="fa fa-dashboard fa-fw"></i> 客户管理</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> 权限管理<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> 我的合同<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                    
-                                <li><a href="ToPermissionListServlet">权限配置</a></li>
-								<li><a href="http://localhost:8080/contract/ToUserListServlet">用户管理</a></li>
+                                <li>
+                                    <a href="darft.jsp">起草合同</a>
+                                </li>
+                             
+                                  <li>
+                                    <a href="http://localhost:8080/contract/ContractListForUser" >定稿合同</a>
+                                </li>
+								
                             </ul>
-                            </li>
-                            
-                          <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> 合同管理<span class="fa arrow"></span></a>
+                         </li>
+                         <li>
+                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> 管理合同<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
+                               
                                 <li>
-                                    <a href="http://localhost:8080/contract/DstributeContract">分配合同</a>
+                                    <a href="http://localhost:8080/contract/DhqhtListServlet">待会签合同</a>
                                 </li>
-                                <li>
-                                	<a href="http://localhost:8080/contract/ConSateQuery">合同管理</a>
+                                 <li>
+                                    <a href="http://localhost:8080/contract/DhqhtDoneListServlet">已会签合同</a>
                                 </li>
-                                <li>
-                                	<a href="http://localhost:8080/contract/AllDhqhtDoneListServlet">所有已会签合同</a>
-                                </li>  
 
+                                <li>
+                                    <a href="ToBeApprovedServlet?toPage=0&trPerPage=1" target="_self">待审批合同</a>
+                                </li>
+                                  <li>
+                                    <a href="http://localhost:8080/contract/ApprovedConListServlet">已审批合同</a>
+                                </li>
+                                <li>
+                                 	<a href="http://localhost:8080/contract/Sign">待签订合同</a>
+                                </li> 
+       	 						<li>
+       	 							<a href="http://localhost:8080/contract/Signed">已签订合同</a>
+       	 						</li>
+								
                             </ul>
-                            </li>
-                            <!-- /.nav-second-level -->
-                       
-                </div>
-                <!-- /.sidebar-collapse -->
-            </div>
-            <!-- /.navbar-static-side -->
+                         </li>
         </nav>
 <!-- Use JavaScript script to open a new window display information when preview-->
 		<script>
@@ -134,101 +144,64 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	            var x=document.getElementById("tbl");
 	            var z=document.getElementById("select").value;
 	            var y=x.rows.length;
-	            if(z==0){
-	            	 for(var i = 1; i <y; i++){  
-	 	            	x.rows[i].style.display='table-row';
-	 	            }
-	            	 hide();
-	            }else{
+	            //x.style.visibility='hidden';
 	            for(var i = 1; i <y; i++){  
-	            	var temp=x.rows[i].cells[4].lang;
+	            	var temp=x.rows[i].cells[0].lang;
 	            	if(temp.indexOf(z)==-1){
 	            		x.rows[i].style.display='none'; 
 	            		}else{
 	            	    x.rows[i].style.display='table-row';
 	            		}
 	            }
-	            } 
+	            //x.style.display='none';  
 	        }  
 		</script>
 
 <!-- 标题 -->
-  <div id="page-wrapper">
+ <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">已会签合同</h1>
+                    <h1 class="page-header">定稿合同</h1>
                 </div>
-	</div>
+
 
 <!-- 查找栏 -->
-<p >查找合同流程:
-<select id="select" > 
-        <option value="0" onclick="Check()">全部合同</option> 
-        <option value="1" onclick="Check()">起草</option> 
-        <option value="2" onclick="Check()">会签完成</option>
-        <option value="3" onclick="Check()">定稿完成</option>
-        <option value="4" onclick="Check()">审批完成</option>
-        <option value="5" onclick="Check()">签订完成</option>
-</select> 
+<p >查找已定稿合同:
+<input type="text" id="select" name="select"/>
+<input type="button" id="search" value="search" style="padding-right:30px" onclick="Check()" />
 </p>
 
 <!-- 合同列表 -->
 <div class="panel-body">
 <div class="table-responsive">
 <table width="980" border="1" id="tbl">
-<thead>
+   <thead>
  <tr>
    <th>合同名称</th>
-   <th>合同编号</th>
-    <th>起草用户</th>
     <th>起草时间</th>
-     <th>合同状态</th>
+     <th>操作</th>
   </tr>
   </thead>
   
           <%
-                List<ConProModel> contractList = (List<ConProModel>)request.getAttribute("contractList");
+                List<Contract> contractList = (List<Contract>)request.getAttribute("contractList");
                 Integer userId=(Integer)request.getAttribute("userId");
                 for(int i=0;  i<contractList.size(); i++){
-                	String type="";
-                	ConProModel cbm = contractList.get(i);
-                    switch(cbm.getType())
-                    {
-                    case 1:
-                    	type="起草";
-                    	break;
-                    case 2:
-                    	type="会签完成";
-                    	break;
-                    case 3:
-                    	type="定稿完成";
-                    	break;
-                    case 4:
-                    	type="审批完成";
-                    	break;
-                    case 5:
-                    	type="签订完成";
-                    	break;
-                    }
+                	Contract cbm = contractList.get(i);
           %>
   
 <!-- 表中的行 -->
   <tr>
-    <td lang="<%=cbm.getConName()%>">
-    <a href="javascript:preview('contractDetail?conId=<%=cbm.getConId()%>')"><%=cbm.getConName()%></a>
+    <td lang="<%=cbm.getName()%>">
+    <a href="javascript:preview('contractDetail?conId=<%=cbm.getId()%>')"><%=cbm.getName()%></a>
     </td>
     <td>
-    <%=cbm.getConId()%>
+    <%=cbm.getBeginTime()%>
     </td>
-    <td>
-    <%=cbm.getUserId()%>
-    </td>
-    <td>
-    <%=cbm.getDrafTime()%>
-    </td>
-    <!-- 添加标签，显示合同状态 -->
-    <td style="color:black" lang="<%=cbm.getType()%>">
-    <%=type%>
+    <!-- 添加按钮，点击即可会签 -->
+    <td style="color:black">
+    <a href="DhqhtDoneListForUser?conId=<%=cbm.getId()%>">查看
+    </a>
     </td>
   </tr>
   

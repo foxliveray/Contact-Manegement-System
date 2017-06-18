@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.ConProcess;
 import model.Contract;
@@ -34,30 +35,15 @@ public class NewFile extends HttpServlet {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 				request.setCharacterEncoding("UTF-8");
-						/**
+
 						// Declare session
-						HttpSession session = null;
-						// Get session by using request
-						session = request.getSession();
-						Integer userId = (Integer)session.getAttribute("userId");
-						
-						// If user is not login, jump to login page
-						if (userId == null) {
-							response.sendRedirect("toLogin");
-						} else {
-		                     **/
+	
 							// Get contract id
 							  
-							//int conId = Integer.parseInt(request.getParameter("conId"));
-				
-                              //调用前自行接收查看的用户id 和 合同编号
-				              int conId=1;
-						      Integer userId=1;
+							int conId = Integer.parseInt(request.getParameter("conId"));
+							Integer userId =Integer.parseInt(request.getParameter("userId"));
 							try {
 							
-							
-						        
-						       
 								// Initialize contractService
 								ContractService contractService = new ContractService();
 								// Query contract process information according to Contract id
@@ -74,6 +60,7 @@ public class NewFile extends HttpServlet {
 								// Redirect to the exception page
 								response.sendRedirect("toError");
 							}
+						
 	}
 
 	/**

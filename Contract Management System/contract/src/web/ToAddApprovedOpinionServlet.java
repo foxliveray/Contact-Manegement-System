@@ -28,7 +28,7 @@ public class ToAddApprovedOpinionServlet extends HttpServlet {
 	}
 
 	/**
-	 * Ìø×ªÖÁÉóÅú½çÃæ
+	 * ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -37,11 +37,11 @@ public class ToAddApprovedOpinionServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 
 		HttpSession session = null;
-		session = request.getSession();
-//		Integer userId = (Integer) session.getAttribute("userId");
-		Integer userId=1;
+		session = request.getSession();		
+		Integer userId = (Integer) session.getAttribute("userId");
+
 		if (userId == null) {
-			response.sendRedirect("toLogin");
+			response.sendRedirect("ToLogin");
 		} else {
 			int conId = Integer.parseInt(request.getParameter("conId"));
 

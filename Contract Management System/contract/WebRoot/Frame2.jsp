@@ -1,9 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 
-<%@page import="service.database_operation" %>
-<%@page import="model.Log" %>
-<%@page import="java.util.List" %>
-<%@page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,38 +33,11 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<% List<Log> loglist = (List<Log>)request.getAttribute("lists");%>
-<%!public static final int PAGESIZE = 20;  
-int pageCount;  
-int curPage = 1;%>
-<% 
-int size=loglist.size();
-pageCount = (size%PAGESIZE==0)?(size/PAGESIZE):(size/PAGESIZE+1);
-String tmp = request.getParameter("curPage");  
-if(tmp==null){  
-    tmp="1";  
-}  
-curPage = Integer.parseInt(tmp);  
-if(curPage>=pageCount) curPage = pageCount;  
-if(curPage<=1) curPage = 1;  
-int count = 0;  
-List<Log> list = new ArrayList<Log>();
-int j=0;
-for(Log lo:loglist){
-	if((j<curPage*PAGESIZE)&&(j>=(curPage-1)*PAGESIZE)){
-		list.add(lo);
-		System.out.println(lo.getContent());
-	}
-	j++;
-}
- %>
 
 <body>
-<div id="wrapper">
+
+    <div id="wrapper">
 
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -145,46 +115,27 @@ for(Log lo:loglist){
             </div>
             <!-- /.navbar-static-side -->
         </nav>
+
+        <!-- Page Content -->
         <div id="page-wrapper">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">日志管理</h1>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">首页</h1>
+                        <img alt="管理员界面" src="images/admin.jpg">
+                    </div>
+                    <!-- /.col-lg-12 -->
                 </div>
-<form class="form-inline" id="searchForm" name="searchForm" action="LogServlet" >
-     <input type="text" class="form-control" name="searchwords" id="searchwords" value=""  style="display:inline; width:200px" >
-     <button type="submit" class="btn btn-primary" style="display:inline;" onclick="searchForm.submit()" type="button" >搜索</button>
-</form>
-<br></br>
-<form action="" method="post">
- <table id="example2" cellpadding="0" cellspacing="0" border="1" width="800">
-                        <thead>
-                            <tr>
-                                
-                                <td align="center">日志ID</td>
-                                <td align="center">用户ID</td>
-                                <td align="center">内容</td>
-                                <td align="center">操作时间</td>                               
-                          </tr>
-                        </thead>
-                        <tbody>             
-                        <% for (Log log : list) { %> 
-                        <tr>
-					    	<td align="center"><%=log.getId()%></td>
-                            <td align="center"><%=log.getUserId()%></td>
-                            <td align="center"><%=log.getContent()%></td>
-                            <td align="center"><%=log.getTime()%></td>
-                        </tr>
-                            <%} %> 
-                        </tbody>
-                    </table>
-</form>
-<form method="post" action=""> 
-<a href = "LogServlet?curPage=1" >首页</a>  
-<a href = "LogServlet?curPage=<%=curPage-1%>" >上一页</a>  
-<a href = "LogServlet?curPage=<%=curPage+1%>" >下一页</a>  
-<a href = "LogServlet?curPage=<%=pageCount%>" >尾页</a>  
-第<%=curPage%>页/共<%=pageCount%>页  </form>
- <!-- jQuery -->
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
     <script src="vendor/jquery/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->

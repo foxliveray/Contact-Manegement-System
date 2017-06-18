@@ -1,10 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 
-    <%@page import="service.database_operation" %>
-    <%@page import="model.ConProcess" %>
-    <%@page import="java.util.List" %>
-    <%@page import="model.Contract" %>
-    <%@page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,13 +32,63 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
-	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+	<script type="text/javascript">
+		function check(){
+			var name = document.getElementById("customername");
+			var address = document.getElementById("address");
+			var telephone = document.getElementById("telephone");
+			var fax = document.getElementById("fax");
+			var code = document.getElementById("code");
+			var bank = document.getElementById("bank");
+			var account = document.getElementById("account");
+			
+			if(name.value == ""){
+				alert("新客户姓名不能为空！");
+				name.focus();
+				document.getElementById("state").value="添加新客户失败";
+			}
+			else if(address.value == ""){
+				alert("客户的地址不能为空！");
+				address.focus();
+				document.getElementById("state").value="添加新客户失败";
+			}
+			else if (telephone.value == ""){
+				alert("客户的电话不能为空！");
+				telephone.focus();
+				document.getElementById("state").value="添加新客户失败";
+			}
+			else if (fax.value == ""){
+				alert("客户的传真不能为空！");
+				fax.focus();
+				document.getElementById("state").value="添加新客户失败";
+			}
+			else if (code.value == ""){
+				alert("客户的邮编不能为空！");
+				code.focus();
+				document.getElementById("state").value="添加新客户失败";
+			}
+			else if (bank.value == ""){
+				alert("客户的银行不能为空！");
+				bank.focus();
+				document.getElementById("state").value="添加新客户失败";
+			}
+			else if (account.value == ""){
+				alert("客户的银行账户不能为空！");
+				account.focus();
+				document.getElementById("state").value="添加新客户失败";
+			}
+			else{
+				document.getElementById("state").value="添加新客户成功";
+				document.forms[0].submit();
+			}
+		}
+	</script>
 </head>
+
 <body>
-<div id="wrapper">
+
+    <div id="wrapper">
 
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -82,8 +128,8 @@
                 <!-- /.dropdown -->
             </ul>
             <!-- /.navbar-top-links -->
-
-            <div class="navbar-default sidebar" role="navigation">
+            
+                        <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         
@@ -130,120 +176,44 @@
                             </ul>
                          </li>
         </nav>
-<% List<Contract> contractList = (List<Contract>)request.getAttribute("lists");%>
-<%!public static final int PAGESIZE = 20;  
-int pageCount;  
-int curPage = 1;%>
-<% 
-int size=contractList.size();
-pageCount = (size%PAGESIZE==0)?(size/PAGESIZE):(size/PAGESIZE+1);
-String tmp = request.getParameter("curPage");  
-if(tmp==null){  
-    tmp="1";  
-}  
-curPage = Integer.parseInt(tmp);  
-if(curPage>=pageCount) curPage = pageCount;  
-if(curPage<=1) curPage = 1;  
-int count = 0;  
-List<Contract> list = new ArrayList<Contract>();
-int j=0;
-for(Contract lo:contractList){
-	if((j<curPage*PAGESIZE)&&(j>=(curPage-1)*PAGESIZE)){
-		list.add(lo);
-	}
-	j++;
-}
- %>
- <div id="page-wrapper">
+
+        <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">待签订合同</h1>
+                    <h1 class="page-header">添加新客户</h1>
                 </div>
-<form class="form-inline" id="searchForm" name="searchForm" action="Sign">
-     <input type="hidden" value="1" name="flag" id="flag"/>
-     <input type="text" class="form-control" id="searchwords" name="searchwords" value=""  style="display:inline; width:200px" >
-     <button type="submit" class="btn btn-primary" style="display:inline;" onclick="searchForm.submit()" type="button" >搜索</button>
-</form>
-<br></br>
-<form action="" method="post">
- <table id="example2" cellpadding="0" cellspacing="0" border="1" width="800">
-                        <thead>
-                            <tr>
-                                
-                                <td align="center">名称</td>
-                                <td align="center">客户</td>
-                                <td align="center">开始时间</td>
-                                <td align="center">结束时间</td>
-                                <td align="center">操作</td>
-                          </tr>
-                        </thead>
-                        <tbody>             
-                        <% for (Contract contract : list) { %> 
-                        <tr>
-					    	<td align="center"><%=contract.getName()%></td>
-                            <td align="center"><%=contract.getCustomer()%></td>
-                            <td align="center"><%=contract.getBeginTime()%></td>
-                            <td align="center"><%=contract.getEndTime()%></td>
-                            <td align="center"><a href="javascript:sign('<%=contract.getName()%>','<%=contract.getId()%>')"  id="">签订</a></td>
-                        </tr>
-                            <%} %> 
-                        </tbody>
-                    </table>
-</form>
-<form method="post" action=""> 
-<a href = "Sign?curPage=1" >首页</a>  
-<a href = "Sign?curPage=<%=curPage-1%>" >上一页</a>  
-<a href = "Sign?curPage=<%=curPage+1%>" >下一页</a>  
-<a href = "Sign?curPage=<%=pageCount%>" >尾页</a>  
-第<%=curPage%>页/共<%=pageCount%>页  </form>
-<SCRIPT type="text/javascript">  
-function sign(name,id) {
-	document.fileForm.remark.focus();
-    $("#con_id").val(id);
-    $("#name").val(name); 
-    $('#myModal').modal({
-        keyboard: true
-    })
-}
-</SCRIPT>
+             <input type="text" id="state" style="border:0px;color:black;font-size:18px;"value=""onfocus=this.blur()>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <form role="form" action="AddCustomer" method="post">
+                                        <div class="form-group">
+                                            <input class="form-control" placeholder="客户姓名" name="customername" id="customername">
+                                            </br>
+                                            <input class="form-control" placeholder="地址" name="address" id="address">
+                                            </br>
+                                            <input class="form-control" placeholder="联系电话" name="telephone" id="telephone">
+                                            </br>
+                                            <input class="form-control" placeholder="传真" name="fax" id="fax">
+                                            </br>
+                                            <input class="form-control" placeholder="邮政编码" name="code" id="code">
+                                            </br>
+                                            <input class="form-control" placeholder="银行" name="bank" id="bank">
+                                            </br>
+                                            <input class="form-control" placeholder="银行账户" name="account" id="account">
+                                            </br>
+                                            <button type="submit" class="btn btn-info" onClick="check()">submit</button>
+                                            <button type="reset" class="btn btn-info">reset</button>
+                                        </div>
+                                    </form>
 
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-   <div class="modal-dialog">           
-       <div class="modal-content">
-       <div class="modal-header" >
-       <h3>签订</h3><h5 id="name" name="name" value=""></h5>
-       </div>
-        <div class="modal-body">
-          <form class="form-horizontal" name="fileForm" role="form" method="post" action="Sign" >
-                <div style="margin-left:60px;margin-right:60px;">
-                <input type="hidden" name="con_id" id="con_id" value="" />
-                <input type="hidden" value="3" name="flag" id="flag"/></div>
-                 <div class="form-group">
-                      <label for="remark" class="col-sm-2 control-label">附入信息</label>
-                        <div class="col-sm-10">
-                            <textarea  id="remark" name="remark" rows="5" cols="10" style="width:400px" ></textarea>
-                            </div>
-                        </div>     
-                        <lable for="if_ok" class="col-sm-2 contrl-label">是否通过</lable>
-                        <div class="col-sm-20">
-                        <select id="if_ok" name="if_ok">
-                             <option value ="0" selected >是</option>
-                             <option value ="1">否</option>                    
-                             </select>
-                        </div>                             
-                        </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-            <div style="margin-left:60px;margin-right:60px;">
-                <button type="button" class="btn btn-default"data-dismiss="modal"> 关闭 </button>
-                <button type="button" class="btn btn-primary" name="submit" value="0" onclick="fileForm.submit()">确认</button>
-            </div>
-          </div>
-       </div>
-   </div>
-</div>
-<!-- jQuery -->
+    <!-- jQuery -->
     <script src="vendor/jquery/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
@@ -254,5 +224,7 @@ function sign(name,id) {
 
     <!-- Custom Theme JavaScript -->
     <script src="dist/js/sb-admin-2.js"></script>
+
 </body>
+
 </html>

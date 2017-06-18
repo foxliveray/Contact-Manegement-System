@@ -1,7 +1,7 @@
 package service;
 
 import dao.CustomerDao;
-import dao.impl.CustomerDaoImpl;
+import dao.Impl.CustomerDaoImpl;
 import model.Customer;
 import util.AppException;
 

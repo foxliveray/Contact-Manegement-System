@@ -9,9 +9,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.Contract;
 import model.Log;
+import model.Role;
 import service.database_operation;
 
 /**
@@ -44,12 +46,18 @@ public class LogServlet extends HttpServlet {
 		database_operation d_o=new database_operation();
 		Log log=new Log();
 		List<Log> lists = new ArrayList<Log>();
+		int if_admin=1;
+		HttpSession session = null;
+		// Get session by using request
+		session = request.getSession();
+		Integer userId = (Integer) session.getAttribute("userId");
+		
 		String operation=request.getParameter("searchwords");
-		if(operation==""||operation==null)
-			lists=d_o.select_Log_by_UserId(1,2);
-		else 
+		if(operation==""||operation==null){
+			lists=d_o.select_Log_by_UserId(0,userId); //ï¿½ï¿½Ç°Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îª1Ê±ï¿½ï¿½ï¿½Ô¹ï¿½ï¿½ï¿½Ô±ï¿½ï¿½Ý²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Ö¾ï¿½ï¿½Ç°Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½IDï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½Ú¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		}else 
 			lists=d_o.search_log_by_operation(operation);
-		request.setAttribute("lists", lists);//½«lists·Åµ½×÷ÓÃÓò 
+		request.setAttribute("lists", lists);//ï¿½ï¿½listsï¿½Åµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 		String curPage=request.getParameter("curPage");
 		request.setAttribute("curpage", curPage);
 		request.getRequestDispatcher("/log.jsp").forward(request, response);

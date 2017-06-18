@@ -6,9 +6,9 @@ import java.util.List;
 import dao.RightDao;
 import dao.RoleDao;
 import dao.UserDao;
-import dao.impl.RightDaoImpl;
-import dao.impl.RoleDaoImpl;
-import dao.impl.UserDaoImpl;
+import dao.Impl.RightDaoImpl;
+import dao.Impl.RoleDaoImpl;
+import dao.Impl.UserDaoImpl;
 import model.PermissionBusiModel;
 import model.Right;
 import model.Role;
@@ -69,7 +69,35 @@ public class UserService {
 		// Return userId
 		return userId;
 	}
-	
+	public List<User> getUserListByRoleId(int roleId) throws AppException {
+		// Initialize  userList
+		List<User> userList = new ArrayList<User>();
+		// Declare userIds
+		List<Integer> userIds = null;; 
+		
+		try {
+			/*
+			 * 1.Get designated user's userIds
+			 */
+			userIds = rightDao.getUserIdsByRoleId(roleId);
+			
+			/*
+			 * 2.Get user information list according to userIds
+			 */ 
+			for (int userId : userIds) {
+				// Get user's information
+				User user = userDao.getById(userId);
+				if (user != null) {
+					userList.add(user); 
+				}
+			}
+		} catch (AppException e) {
+			e.printStackTrace();
+			throw new AppException("service.UserService.getUserList");
+		}	
+		// Return userList
+		return userList;
+	}
 	/**
 	 *获取所有用户信息
 	 * @return Query all contracts that need to be allocated; Otherwise return

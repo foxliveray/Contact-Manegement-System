@@ -1,54 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>contract</display-name>
-  <servlet>
-    <servlet-name>HelloServlet</servlet-name>
-    <servlet-class>test.HelloServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>HelloServlet</servlet-name>
-    <url-pattern>/AmIRight</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>ToApprovedServlet</servlet-name>
-    <servlet-class>web.ToBeApprovedServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ToApprovedServlet</servlet-name>
-    <url-pattern>/toApproved</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>ApprovingServlet</servlet-name>
-    <servlet-class>web.ToAddApprovedOpinionServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ApprovingServlet</servlet-name>
-    <url-pattern>/approving</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>ApproveDoneServlet</servlet-name>
-    <servlet-class>web.AddApprovedOpinionServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ApproveDoneServlet</servlet-name>
-    <url-pattern>/approveDone</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>ApprovedListServlet</servlet-name>
-    <servlet-class>web.ApprovedConListServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ApprovedListServlet</servlet-name>
-    <url-pattern>/showApprovedConList</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>ConDetailsServlet</servlet-name>
-    <servlet-class>web.ContractDetailsServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ConDetailsServlet</servlet-name>
-    <url-pattern>/showConDetails</url-pattern>
-  </servlet-mapping>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>

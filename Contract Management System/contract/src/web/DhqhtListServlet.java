@@ -40,24 +40,21 @@ public class DhqhtListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Set the request's character encoding
 				request.setCharacterEncoding("UTF-8");
-				
-			/**	
+
 				// Declare session
 				HttpSession session = null;
 				// Get session by using request
 				session = request.getSession();
-				//Integer userId = (Integer)session.getAttribute("userId");
+				Integer userId = (Integer)session.getAttribute("userId");
 				
 				
 				// If user is not login, jump to login page
 				if (userId == null) {
-					response.sendRedirect("Login");
+					response.sendRedirect("ToLogin");
 				}else {
 					
-					**/
 					
 					try {
-						Integer userId=1;
 						// Initialize contractService
 						ContractService contractService = new ContractService();
 						// Initialize contractList
@@ -75,7 +72,7 @@ public class DhqhtListServlet extends HttpServlet {
 						// Redirect to the exception page
 						response.sendRedirect("toError");
 					}
-			//	}
+				}
 	}
 
 	/**

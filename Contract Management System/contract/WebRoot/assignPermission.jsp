@@ -16,11 +16,12 @@
 			配置权限
 		</div>
 		<br />
-		<form action="assignPerm" method="post">
+		<form action="AssignPermissionServlet" method="post">
 			<%
-				PermissionBusiModel permission = (PermissionBusiModel) request
-						.getAttribute("permission");
+				PermissionBusiModel permission = (PermissionBusiModel)request.getAttribute("permission");
+				int permissionId=(int)request.getAttribute("permissionId");
 			%>
+			<input type="hidden" name="permissionId" value="<%=permissionId %>">
 			<input type="hidden" name="userId" value="<%=permission.getUserId()%>">
 			<table class="update" style="width:500px;">
 				<tr height="28">

@@ -11,21 +11,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.ConProModel;
+import model.ConProcess;
 import service.ContractService;
 import util.AppException;
 
 /**
- * Servlet implementation class DstributeContract
+ * Servlet implementation class DhqhtDoneListForUser
  */
-@WebServlet("/DstributeContract")
-public class DstributeContract extends HttpServlet {
+@WebServlet("/DhqhtDoneListForUser")
+public class DhqhtDoneListForUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DstributeContract() {
+    public DhqhtDoneListForUser() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,38 +37,41 @@ public class DstributeContract extends HttpServlet {
 		// TODO Auto-generated method stub
 request.setCharacterEncoding("UTF-8");
 		
-
+		/**	
 			// Declare session
 			HttpSession session = null;
 			// Get session by using request
 			session = request.getSession();
-			Integer userId = (Integer)session.getAttribute("userId");
+			//Integer userId = (Integer)session.getAttribute("userId");
 			
 			
 			// If user is not login, jump to login page
 			if (userId == null) {
-				response.sendRedirect("ToLogin");
+				response.sendRedirect("Login");
 			}else {
+				
+				**/
 				try {
-
+					
+					int conId=Integer.parseInt(request.getParameter("conId"));
 					// Initialize contractService
 					ContractService contractService = new ContractService();
 					// Initialize contractList
-					List<ConProModel> contractList = new ArrayList<ConProModel>();
+					List<ConProcess> contractList = new ArrayList<ConProcess>();
 					// Call business logic layer to get list of contract to be countersigned 
-					contractList = contractService.getAllCanDisList();
+					contractList = contractService.getConProcesscon(conId);
 					
 					// Save contractList to request
 					request.setAttribute("contractList", contractList);
 					
 					// Forward to page of contract to be countersigned
-					request.getRequestDispatcher("/dstributeContract.jsp").forward(request, response);
+					request.getRequestDispatcher("/DhqhtDoneListForUser.jsp").forward(request, response);
 				} catch (AppException e) {
 					e.printStackTrace();
 					// Redirect to the exception page
 					response.sendRedirect("toError");
 				}
-			}
+		//	}
 	}
 
 	/**

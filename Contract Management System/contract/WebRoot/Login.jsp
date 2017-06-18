@@ -1,83 +1,133 @@
-<%@ page language="java" pageEncoding="UTF-8"%>
-<!-- page import -->
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="LoginlLayout">
-    <meta name="author" content="Bootstrap">
 
-    <title>Contact Management System - Login</title>
+<html lang="en" class="no-js">
 
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="css/signin.css" rel="stylesheet">
-	
-	<!-- header&footer styles for this template -->
-	<link href="css/style.css" rel="stylesheet" media="screen" type="text/css">
-	
-	<script type="text/javascript">  
- 	// Make the page as the parent window display
- 	if(top!=self){
- 		top.location.href=self.location.href;
- 		}  
-  	</script>
-	
-  </head>
 
-  <body>
-    
-    <div class="header">
-		<h1>
-			<img src="images/logo_title.png" alt="Contract Management System" />
-		</h1>
-	</div>
-  
-    <div class="container">
+    <head>
 
-      <form class="form-signin">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
+
+
+        <meta charset="utf-8">
+
+        <title>Login</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta name="description" content="">
+
+        <meta name="author" content="">
+
+
+
+        <!-- CSS -->
+
+        <link rel="stylesheet" href="assets/css/reset.css">
+
+        <link rel="stylesheet" href="assets/css/supersized.css">
+
+        <link rel="stylesheet" href="assets/css/style.css">
+
+		
+
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+
+        <!--[if lt IE 9]>
+
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+
+        <![endif]-->
+		
+		<script type="text/javascript">
+			function check(){
+				var name = document.getElementById("username");
+				var password = document.getElementById("password");
+				if (name.value == ""){
+					alert("用户名不能为空！");
+					name.focus();
+					return false;
+				}
+				
+				if (password.value == "") {
+					alert("密码不能为空！");
+					password.focus();
+					return false;
+				}
+			}
+		</script>
+
+		
+    </head>
+
+
+
+    <body>
+
+
+
+        <div class="page-container">
+
+            <h1>Login</h1>
+
+            <form action="Login" method="post">
+
+                <input type="text" name="username" class="username" placeholder="Username">
+
+                <input type="password" name="password" class="password" placeholder="Password">
+
+                <button type="submit" onClick="check()">Sign in</button>
+				
+                <div class="error"><span>+</span></div>
+		
+            </form>
+            
+            <a href="Register.jsp" style="color:#fff; text-decoration:none "><button type="submit">Register</button></a>
+            <div class="connect">
+
+                <p>Contract Management System</p>
+                <!--
+                <p>
+
+                    <a class="facebook" href=""></a>
+
+                    <a class="twitter" href=""></a>
+
+                </p>
+                -->
+            
+                
+
+            </div>
+            
+            <div class="info">
+            <p>Copyright © 疯狂的拖延症  Copyright Reserved</p>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      </form>
 
-    </div> <!-- /container -->
-	
-	<div class="footer">
-		<ul>
-			<li>
-				<a target="_blank" href="#">Contract Management System</a>
-			</li>
-			<li>
-				｜
-			</li>
-			<li>
-				<a target="_blank" href="#">Help</a>
-			</li>
-		</ul>
-		<p>
-		    Copyright&nbsp;&copy;&nbsp;Ruanko COE&nbsp;
-			<a href="http://www.ruanko.com" title="wwww.ruanko.com"
-				target="_blank"><strong>www.ruanko.com</strong> </a>&nbsp;Copyright
-			Reserved
-		</p>
-	</div>
-	
-	<!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="js/ie10-viewport-bug-workaround.js"></script>
-	
+      
+
+
+
+        <!-- Javascript -->
+
+        <script src="assets/js/jquery-1.8.2.min.js"></script>
+
+        <script src="assets/js/supersized.3.2.7.min.js"></script>
+
+        <script src="assets/js/supersized-init.js"></script>
+
+        <script src="assets/js/scripts.js"></script>
+
+
+
+    </body>
+
+
+
 </html>
+
+
+

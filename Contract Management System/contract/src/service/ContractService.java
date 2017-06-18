@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
-
+import service.database_operation;
 import dao.ConProcessDao;
 import dao.UserDao;
 import dao.Impl.ConProcessDaoImpl;
@@ -22,6 +22,7 @@ import dao.Impl.ConStateDaoImpl;
 import dao.Impl.ContractDaoImpl;
 import model.ConState;
 import model.Contract;
+import model.Log;
 import util.AppException;
 import util.Constant;
 
@@ -34,7 +35,8 @@ public class ContractService {
 	private ConStateDao conStateDao = null;// Define a conStateDao interface object
 	private ConProcessDao conProcessDao = null;// Define a conProcessDao interface object
 	private UserDao userDao = null;//Define a userDao interface object
-
+	Log log=new Log();
+	private database_operation m=null;
 	/**
 	 * No-arg constructor method is used to initialize instance in data access layer
 	 */
@@ -43,6 +45,7 @@ public class ContractService {
 		conStateDao = new ConStateDaoImpl();
 		conProcessDao = new ConProcessDaoImpl();
 		userDao = new UserDaoImpl();
+		m=new database_operation();
 	}
 	
 	/**
@@ -54,7 +57,11 @@ public class ContractService {
 	 */
 	public boolean draft(Contract contract) throws AppException {
 		boolean flag = false;// Define flag
-		
+		Log log=new Log();
+		log.setUserId(contract.getUserId());
+		log.setDel(0);
+		log.setContent("起草合同");
+		m.insert_log(log);
 		/*
 		 * 1.Call generateConNum() to generate contract number,and set the number to contract object
 		 */ 
@@ -82,7 +89,11 @@ public class ContractService {
 	}
 	public boolean ModifyContract(Contract contract) throws AppException {
 		boolean flag = false;// Define flag
-		
+		Log log=new Log();
+		log.setUserId(contract.getUserId());
+		log.setDel(0);
+		log.setContent("修改合同");
+		m.insert_log(log);
 		try {
 			/*
 			 * 2.If the contract successfully saved, save the draft contract state in the database
@@ -107,7 +118,6 @@ public class ContractService {
 	public List<ConBusiModel> getDfphtList() throws AppException {
 		// Initialize contractList
 		List<ConBusiModel> contractList = new ArrayList<ConBusiModel>();
-	
 		try {
 			/*
 			 * 1.Get id set of contract that the status is "STATE_DRAFTED" 
@@ -165,6 +175,11 @@ public class ContractService {
 		try {
 			// Get designated contract's information 
 			contract = contractDao.getById(id);
+			Log log=new Log();
+			log.setUserId(contract.getUserId());
+			log.setDel(0);
+			log.setContent("得到合同");
+			m.insert_log(log);
 		} catch (AppException e) {
 			e.printStackTrace();
 			throw new AppException(
@@ -185,6 +200,11 @@ public class ContractService {
 	public boolean distribute(int conId, int userId, int type)
 			throws AppException {
 		boolean flag = false;// Define flag
+		Log log=new Log();
+		log.setUserId(userId);
+		log.setDel(0);
+		log.setContent("分配合同");
+		m.insert_log(log);
 		try {
 			ConProcess conProcess = new ConProcess();
 			// Assign value to contract process object
@@ -205,13 +225,18 @@ public class ContractService {
 	public ConProcess getConProcesscontent(int conId,Integer userId) throws AppException {
 		// Declare contract
 		ConProcess conProcess = null;
+		Log log=new Log();
+		log.setUserId(userId);
+		log.setDel(0);
+		log.setContent("得到合同意见");
+		m.insert_log(log);
 		try {
 			// Get designated contract's information 
 			conProcess = conProcessDao.getById2(conId,userId);
 		} catch (AppException e) {
 			e.printStackTrace();
 			throw new AppException(
-					"com.ruanko.service.ContractService.getContract");
+					"service.ContractService.getContract");
 		}
 		return conProcess;
 	}
@@ -242,7 +267,7 @@ public class ContractService {
 			 * 2.Get contract's information that to be countersigned,and save into contract business entity object,and put the entity class into conList
 			 */
 			for (int conId : conIds) {
-				// 鑾� Get information from  specified contract
+				// 閼撅拷 Get information from  specified contract
 				Contract contract = contractDao.getById(conId);
 				// Get status of designated contract
 				ConState conState = conStateDao.getConState(conId, Constant.STATE_DRAFTED);
@@ -313,6 +338,11 @@ public class ContractService {
 	}
 	public List<ConBusiModel> getDhqhtDoneList(int userId) throws AppException {
 		// Initialize  conList
+		Log log=new Log();
+		log.setUserId(userId);
+		log.setDel(0);
+		log.setContent("得到列表");
+		m.insert_log(log);
 		List<ConBusiModel> conList = new ArrayList<ConBusiModel>();
 		ConProcess conProcess = new ConProcess();
 		// Set values to contract process object
@@ -359,7 +389,7 @@ public class ContractService {
 	 * Countersign contract,save Countersigned information
 	 * 
 	 * @param conProcess contract process object
-	 * @return boolean Return true if operation successfully锛宱therwise return false
+	 * @return boolean Return true if operation successfully閿涘therwise return false
 	 * @throws AppException
 	 */
 	public boolean counterSign(ConProcess conProcess) throws AppException {
@@ -369,7 +399,11 @@ public class ContractService {
 		conProcess.setType(Constant.PROCESS_CSIGN);
 		// Set corresponding state of "PROCESS_CSIGN" type  is "DONE"
 		conProcess.setState(Constant.DONE);
-		
+		Log log=new Log();
+		log.setUserId(conProcess.getUserId());
+		log.setDel(0);
+		log.setContent("会签");
+		m.insert_log(log);
 		try {
 			if (conProcessDao.update(conProcess)) { // To do countersign contract, enter countersigne information
 				/*
@@ -414,6 +448,11 @@ public class ContractService {
 		try {
 			// Get details of designated contract
 			Contract contract = contractDao.getById(id);
+			Log log=new Log();
+			log.setUserId(contract.getUserId());
+			log.setDel(0);
+			log.setContent("详情");
+			m.insert_log(log);
 			// Get draftman's information that corresponding to the contract
 			User user = userDao.getById(contract.getUserId());
 
@@ -449,7 +488,11 @@ public class ContractService {
 		List<ConBusiModel> conList = new ArrayList<ConBusiModel>();
 		// Initialize conIds,for saving id set of contracts that to be finalized
 		List<Integer> conIds = new ArrayList<Integer>();
-		
+		Log log=new Log();
+		log.setUserId(userId);
+		log.setDel(0);
+		log.setContent("列表〃");
+		m.insert_log(log);
 		try {
 			/*
 			 * Get drafted and to be finalized contract ,contract to be finalized exist "STATE_CSIGNED" state
@@ -504,12 +547,16 @@ public class ContractService {
 	 * Finalize  contract 
 	 * 
 	 * @param contract Contract object
-	 * @return boolean Return true if operation successfully锛宱therwise return false 
+	 * @return boolean Return true if operation successfully閿涘therwise return false 
 	 * @throws AppException
 	 */
 	public boolean finalize(Contract contract) throws AppException {
 		boolean flag = false;// Define flag 
-
+		Log log=new Log();
+		log.setUserId(contract.getUserId());
+		log.setDel(0);
+		log.setContent("定稿");
+		m.insert_log(log);
 		try {
 			// Finalize contract:update contract's content
 			if (contractDao.updateById(contract)) {
@@ -544,7 +591,11 @@ public class ContractService {
 	public List<CSignatureOpinion> showHQOpinion(int conId) throws AppException {
 		// Initialize csOpinionList
 		List<CSignatureOpinion> csOpinionList = new ArrayList<CSignatureOpinion>();
-		
+		Log log=new Log();
+		log.setUserId(conId);
+		log.setDel(0);
+		log.setContent("意见查看");
+		m.insert_log(log);
 		try {
 			
 			/*
@@ -594,7 +645,11 @@ public class ContractService {
 		List<ConBusiModel> conList = new ArrayList<ConBusiModel>();
 		// Initialize conList for saving id set of contract to be approved
 		List<Integer> conIds = new ArrayList<Integer>();
-		
+		Log log=new Log();
+		log.setUserId(userId);
+		log.setDel(0);
+		log.setContent("意见查看");
+		m.insert_log(log);
 		ConProcess conProcess = new ConProcess();
 		// Set values to contract process object
 		conProcess.setUserId(userId);
@@ -653,7 +708,7 @@ public class ContractService {
 	 * Approve contract,save approval information
 	 * 
 	 * @param conProcess Contract process object  
-	 * @return boolean Return true if operation successfully锛宱therwise return false 
+	 * @return boolean Return true if operation successfully閿涘therwise return false 
 	 * @throws AppException
 	 */
 	public boolean approve(ConProcess conProcess) throws AppException {
@@ -661,7 +716,11 @@ public class ContractService {
 		
 		// Set process's operation type to "PROCESS_APPROVE"
 		conProcess.setType(Constant.PROCESS_APPROVE);
-
+		Log log=new Log();
+		log.setUserId(conProcess.getUserId());
+		log.setDel(0);
+		log.setContent("同意");
+		m.insert_log(log);
 		try {
 			/*
 			 * First to do approve operation,then count all the number of persons to be approved and persons approved as "refuse",
@@ -710,6 +769,11 @@ public class ContractService {
 	 */
 	public List<ConBusiModel> getDqdhtList(int userId) throws AppException {
 		// Initialize conList
+		Log log=new Log();
+		log.setUserId(userId);
+		log.setDel(0);
+		log.setContent("列表");
+		m.insert_log(log);
 		List<ConBusiModel> conList = new ArrayList<ConBusiModel>();
 		// nitialize conIds for saving contract id set that to be signed
 		List<Integer> conIds = new ArrayList<Integer>();
@@ -772,12 +836,16 @@ public class ContractService {
 	 * Sign contract,save signed information
 	 * 
 	 * @param conProcess Contract process object
-	 * @return boolean Return true if operation successfully锛宱therwise return false 
+	 * @return boolean Return true if operation successfully閿涘therwise return false 
 	 * @throws AppException
 	 */
 	public boolean sign(ConProcess conProcess) throws AppException {
 		boolean flag = false;// Define flag
-		
+		Log log=new Log();
+		log.setUserId(conProcess.getUserId());
+		log.setDel(0);
+		log.setContent("签订");
+		m.insert_log(log);
 		// Set process's operation type to "PROCESS_SIGN"
 		conProcess.setType(Constant.PROCESS_SIGN);
 		// Set "PROCESS_SIGN" type corresponding state to "DONE"
@@ -823,7 +891,7 @@ public class ContractService {
 		String contractNum = sft.format(date) + rand;
 		return contractNum;
 	}
-	/**新增
+	/**鏂板
 	 * Query all contracts' sate
 	 * 
 	 * @param userId User id
@@ -869,7 +937,7 @@ public class ContractService {
 		// Return the set of storage contract business entities
 		return conList;
 	}
-	/**新增
+	/**鏂板
 	 * Query all contracts  that can be distribute
 	 * 
 	 * @param userId User id
@@ -913,6 +981,128 @@ public class ContractService {
 			throw new AppException("com.ruanko.service.ContractService.getDhqhtList");
 		}
 		// Return the set of storage contract business entities
+		return conList;
+	}
+	public List<Contract> getContractListForUser(int userId) throws AppException {
+		// Declare contract
+		List<Contract> contractList = new ArrayList<Contract>();
+		Log log=new Log();
+		log.setUserId(userId);
+		log.setDel(0);
+		log.setContent("列表");
+		m.insert_log(log);
+		
+		try {
+			// Get designated contract's information 
+			List<Integer> conIds  = contractDao.getIdsByUserId(userId);
+			/* 
+			 * 2.Get contract's information that to be countersigned,and save into contract business entity object,and put the entity class into conList
+			 */
+			for (int conID:conIds) {
+				ConState conState=conStateDao.getConState(conID,Constant.STATE_CSIGNED);
+				ConState conState2=conStateDao.getConState(conID,Constant.STATE_FINALIZED);
+				Contract contract=contractDao.getById(conID);
+				if (conState != null&&conState2==null) {
+					// Set contract id and name into conBusiModel object
+					contractList.add(contract);
+					System.out.println("yes");
+				}	
+			}
+		} catch (AppException e) {
+			e.printStackTrace();
+			throw new AppException(
+					"service.ContractService.getContract");
+		}
+		return contractList;
+	}
+	
+	/** 锟斤拷锟斤拷
+	 * 通锟斤拷contract id 锟斤拷锟� conProcess
+	 * 
+	 * 
+	 * @param id 
+	 * @return contract entity
+	 * @throws AppException
+	 */
+	public List<ConProcess> getConProcesscon(int conId) throws AppException {
+		// Declare contract
+		List<ConProcess> conProcessList = new ArrayList<ConProcess>();
+
+		try {
+			// Get designated contract's information 
+			List<Integer> conIds  = conProcessDao.getIds(conId,Constant.PROCESS_CSIGN,Constant.DONE);
+			/* 
+			 * 2.Get contract's information that to be countersigned,and save into contract business entity object,and put the entity class into conList
+			 */
+			for (int conID:conIds) {
+				ConProcess conProcess=conProcessDao.getById(conID);
+				if (conProcess != null) {
+					// Set contract id and name into conBusiModel object
+					conProcessList.add(conProcess);
+				}
+			
+			}
+		} catch (AppException e) {
+			e.printStackTrace();
+			throw new AppException(
+					"service.ContractService.getContract");
+		}
+		return conProcessList;
+	}
+	public List<ConProcess> getSHPOpinionList(List<ConBusiModel> conList){
+		List<ConProcess> shpOpinionList=new ArrayList<ConProcess>();
+		
+		for(int i=0;i<conList.size();i++){
+			ConProcess oneConProcess=null;
+			try {
+				oneConProcess=conProcessDao.getByConId_type_state(conList.get(i).getConId(), 2, 1);
+				if(oneConProcess==null){
+					oneConProcess=conProcessDao.getByConId_type_state(conList.get(i).getConId(), 2, 2);
+				}
+				shpOpinionList.add(oneConProcess);
+			} catch (AppException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return shpOpinionList;
+	}
+	public List<ConBusiModel> getApprovedConList(int userId) throws AppException {
+		List<ConBusiModel> conList = new ArrayList<ConBusiModel>();
+
+		List<Integer> conIds = new ArrayList<Integer>();
+		ConProcess conProcess = new ConProcess();
+		conProcess.setUserId(userId);
+		conProcess.setType(Constant.PROCESS_APPROVE);
+		conProcess.setState(Constant.DONE);
+
+		try {
+			List<Integer> myConIds = conProcessDao.getConIds(conProcess);
+			for (int conId : myConIds) {
+				if (conStateDao.isExist(conId, Constant.STATE_APPROVED)) {
+					conIds.add(conId);
+				}
+			}
+
+			for (int conId : conIds) {
+				Contract contract = contractDao.getById(conId);
+				ConState conState = conStateDao.getConState(conId, Constant.STATE_DRAFTED);
+				ConBusiModel conBusiModel = new ConBusiModel();
+				if (contract != null) {
+					conBusiModel.setConId(contract.getId());
+					conBusiModel.setConName(contract.getName());
+				}
+				if (conState != null) {
+					conBusiModel.setDrafTime(conState.getTime());
+				}
+				conList.add(conBusiModel);
+			}
+		} catch (AppException e) {
+			e.printStackTrace();
+			throw new AppException("service.ContractService.getApprovedConList");
+		}
+
 		return conList;
 	}
 }

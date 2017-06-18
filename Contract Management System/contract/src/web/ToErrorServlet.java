@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class ToErrorServlet
  */
-@WebServlet("/ToError")
+@WebServlet("/toError")
 public class ToErrorServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

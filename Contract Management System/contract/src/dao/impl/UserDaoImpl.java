@@ -1,4 +1,4 @@
-package dao.impl;
+package dao.Impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,7 +33,7 @@ public class UserDaoImpl implements UserDao {
 		boolean flag = false;
 		try {
 			conn = JDBCUtil.getConnection();
-			String sql = "Select id from t_user where name = ? and del = 0";
+			String sql = "Select id from user where name = ? and del = 0";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, name);
 			rs = pstmt.executeQuery();
@@ -68,7 +68,7 @@ public class UserDaoImpl implements UserDao {
 		int result = -1;
 		try {
 			conn = JDBCUtil.getConnection();
-			String sql = "Insert into t_user (name,password) values (?,?)";
+			String sql = "Insert into user (name,password) values (?,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, user.getName());
 			pstmt.setString(2, user.getPassword());
@@ -86,7 +86,41 @@ public class UserDaoImpl implements UserDao {
 		}
 		return flag;
 	}
+	public int login(String name, String password) throws AppException {
+		int userId = -1; // Initialize userId
+		//Declare database connection object, pre-compiled object and result set object
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
 
+		try {
+			// Create database connection
+			conn = JDBCUtil.getConnection();
+			// Declare operation statement:query user id according to the user name and password , "?" is a placeholder
+			String sql = "select id from user where name = ? and password = ? and del = 0";
+			//  pre-compiled sql
+			psmt = conn.prepareStatement(sql);
+			// Set values for the placeholder
+			psmt.setString(1, name);
+			psmt.setString(2, password);
+			// Execute the query operation
+			rs = psmt.executeQuery();
+			// Query record and get  user id
+			if (rs.next()) {
+				userId = rs.getInt("id");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException("com.ruanko.dao.impl.UserDaoImpl.login");
+		} finally {
+			// Close database object operation, release resources
+			JDBCUtil.closeResultSet(rs);
+			JDBCUtil.ClosePreparedStatement(psmt);
+			JDBCUtil.closeConnection(conn);
+		}
+		return userId;
+	}
 	/**
 	 * 修改用户信息
 	 * 
@@ -105,7 +139,7 @@ public class UserDaoImpl implements UserDao {
 			conn = JDBCUtil.getConnection();
 			// Declare sql:update operation status,content and time info of
 			// contract according to user id,contract id and operation type
-			String sql = "update t_user set name = ?, password = ? " + "where id = ? ";
+			String sql = "update user set name = ?, password = ? " + "where id = ? ";
 
 			// Pre-compiled sql, and set the value to parameter
 			pstmt = conn.prepareStatement(sql);
@@ -149,7 +183,7 @@ public class UserDaoImpl implements UserDao {
 			conn = JDBCUtil.getConnection();
 			// Declare sql:update operation status,content and time info of
 			// contract according to user id,contract id and operation type
-			String sql = "delete from t_user " + "where id = ? ";
+			String sql = "delete from user " + "where id = ? ";
 
 			// Pre-compiled sql, and set the value to parameter
 			pstmt = conn.prepareStatement(sql);
@@ -196,7 +230,7 @@ public class UserDaoImpl implements UserDao {
 			conn = JDBCUtil.getConnection();
 			// Declare operation statement:query user information according to
 			// the user id , "?" is a placeholder
-			String sql = "select id,name,password " + "from t_user " + "where id = ? and del = 0";
+			String sql = "select id,name,password " + "from user " + "where id = ? and del = 0";
 			// pre-compiled sql
 			psmt = conn.prepareStatement(sql);
 			// Set values for the placeholder
@@ -246,7 +280,7 @@ public class UserDaoImpl implements UserDao {
 			conn = JDBCUtil.getConnection();
 			// Declare operation statement:query user information according to
 			// the user id , "?" is a placeholder
-			String sql = "select id,password " + "from t_user " + "where name = ? and del = 0";
+			String sql = "select id,password " + "from user " + "where name = ? and del = 0";
 			// pre-compiled sql
 			psmt = conn.prepareStatement(sql);
 			// Set values for the placeholder
@@ -295,7 +329,7 @@ public class UserDaoImpl implements UserDao {
 			conn = JDBCUtil.getConnection();
 			// Declare operation statement:query user information according to
 			// the user id , "?" is a placeholder
-			String sql = "select count(*) as totalNum" + " from t_user ";
+			String sql = "select count(*) as totalNum" + " from user ";
 			// pre-compiled sql
 			psmt = conn.prepareStatement(sql);
 			// Query resultSet

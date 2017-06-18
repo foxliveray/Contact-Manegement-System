@@ -29,7 +29,7 @@ public class AddApprovedOpinionServlet extends HttpServlet {
     }
     
     /**
-	 * ´¦ÀíÉóÅúÒâ¼û
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -39,10 +39,9 @@ public class AddApprovedOpinionServlet extends HttpServlet {
 		
 		HttpSession session=null;
 		session=request.getSession();
-//		Integer userId=(Integer)session.getAttribute("userId");
-		Integer userId=1;
+		Integer userId=(Integer)session.getAttribute("userId");
 		if(userId==null){
-			response.sendRedirect("toLogin");
+			response.sendRedirect("ToLogin");
 		}
 		else{
 			int conId=Integer.parseInt(request.getParameter("conId"));
@@ -54,10 +53,10 @@ public class AddApprovedOpinionServlet extends HttpServlet {
 			conProcess.setUserId(userId);
 			conProcess.setContent(content);
 			
-			if(standpoint.equals("true")){ //ÔÞ³É
+			if(standpoint.equals("true")){ //ï¿½Þ³ï¿½
 				conProcess.setState(Constant.DONE);
 			}
-			else{ //·´¶Ô
+			else{ //ï¿½ï¿½ï¿½ï¿½
 				conProcess.setState(Constant.VETOED);
 			}
 			
@@ -66,7 +65,7 @@ public class AddApprovedOpinionServlet extends HttpServlet {
 				
 				conService.approve(conProcess);
 				
-				response.sendRedirect("ToBeApprovedServlet");
+				response.sendRedirect("ToBeApprovedServlet?toPage=0&trPerPage=1");
 			}
 			catch(AppException e){
 				e.printStackTrace();

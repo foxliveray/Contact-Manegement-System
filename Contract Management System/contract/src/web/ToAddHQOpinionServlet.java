@@ -37,7 +37,6 @@ public class ToAddHQOpinionServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		request.setCharacterEncoding("UTF-8");
-				/**
 				// Declare session
 				HttpSession session = null;
 				// Get session by using request
@@ -46,9 +45,8 @@ public class ToAddHQOpinionServlet extends HttpServlet {
 				
 				// If user is not login, jump to login page
 				if (userId == null) {
-					response.sendRedirect("toLogin");
+					response.sendRedirect("ToLogin");
 				} else {
-                     **/
 					// Get contract id
 					  
 					int conId = Integer.parseInt(request.getParameter("conId"));
@@ -84,7 +82,7 @@ public class ToAddHQOpinionServlet extends HttpServlet {
 					}
 				
 				
-	        //}
+	        }
 	}
 
 	/**

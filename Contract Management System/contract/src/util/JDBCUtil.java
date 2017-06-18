@@ -8,37 +8,39 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * @author Ç®Ñó
- * @date 2017Äê6ÔÂ4ÈÕ ÉÏÎç10:29:31
+ * @author é’±æ´‹
+ * @date 2017å¹´6æœˆ4æ—¥ ä¸Šåˆ10:29:31
  */
 public class JDBCUtil {
 
-	//ÊµÏÖÊı¾İ¿âcontractdbµÄÁ¬½Ó
-	//Êı¾İ¿âÁ¬½Ó×Ö·û´®£¬ÉèÖÃ×Ö·û±àÂë·½Ê½Îªutf-8
+	//å®ç°æ•°æ®åº“contractdbçš„è¿æ¥
+	//æ•°æ®åº“è¿æ¥å­—ç¬¦ä¸²ï¼Œè®¾ç½®å­—ç¬¦ç¼–ç æ–¹å¼ä¸ºutf-8
 	private static String url = "jdbc:mysql://localhost:3306/contractdb?useUnicode=true&characterEncoding=utf-8&useSSL=false";
-	//Êı¾İ¿âÕË»§
+	//æ•°æ®åº“è´¦æˆ·
 	private static String user = "root";
-	//Êı¾İ¿âÃÜÂë
-	private static String password = "123456";
-	//¾²Ì¬´úÂë¿é£¬ÓÃÓÚÔØÈëdriver,Ö»ÔÚ¼ÓÔØ¸ÃÀàµÄÊ±ºòÖ´ĞĞÒ»´Î
+	//æ•°æ®åº“å¯†ç 
+	private static String password = "qy88721518";
+	//é™æ€ä»£ç å—ï¼Œç”¨äºè½½å…¥driver,åªåœ¨åŠ è½½è¯¥ç±»çš„æ—¶å€™æ‰§è¡Œä¸€æ¬¡
+	/*
 	static {
 		try{
 			Class.forName("com.mysql.jdbc.Driver");
 		}catch(ClassNotFoundException e){
 			e.printStackTrace();
 		}
-	}
+	}*/
 	
 	/**
-	 * »ñÈ¡Êı¾İ¿âÁ¬½Ó£¬Ã¿µ÷ÓÃÒ»´Î¸Ã·½·¨¾Í´´½¨Ò»¸öĞÂÁ¬½Ó
-	 * @return Èç¹û³É¹¦´´½¨Á¬½Ó£¬Ôò·µ»ØÁ¬½ÓÊµÌå¶ÔÏó£¬·ñÔò·µ»Ønull
+	 * è·å–æ•°æ®åº“è¿æ¥ï¼Œæ¯è°ƒç”¨ä¸€æ¬¡è¯¥æ–¹æ³•å°±åˆ›å»ºä¸€ä¸ªæ–°è¿æ¥
+	 * @return å¦‚æœæˆåŠŸåˆ›å»ºè¿æ¥ï¼Œåˆ™è¿”å›è¿æ¥å®ä½“å¯¹è±¡ï¼Œå¦åˆ™è¿”å›null
 	 */
 	public static Connection getConnection(){
 		Connection conn = null;
 		try{
+			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url,user,password);
 			System.out.println("Connect success!");
-		}catch (SQLException e){
+		}catch (SQLException | ClassNotFoundException e){
 			e.printStackTrace();
 		}
 		return conn;
@@ -46,8 +48,8 @@ public class JDBCUtil {
 	}
 	
 	/**
-	 * ¹Ø±ÕÊı¾İ¿âÁ¬½Ó
-	 * @param Êı¾İ¿âÁ¬½Ó¶ÔÏó
+	 * å…³é—­æ•°æ®åº“è¿æ¥
+	 * @param æ•°æ®åº“è¿æ¥å¯¹è±¡
 	 * @return 
 	 */
 	public static void closeConnection(Connection conn){
@@ -62,8 +64,8 @@ public class JDBCUtil {
 	}
 	
 	/**
-	 * ¹Ø±ÕÊı¾İ¿â²éÑ¯ÃüÁî
-	 * @param statementÓï¾ä¶ÔÏó
+	 * å…³é—­æ•°æ®åº“æŸ¥è¯¢å‘½ä»¤
+	 * @param statementè¯­å¥å¯¹è±¡
 	 */
 	public static void CloseStatement(Statement st){
 		try{
@@ -77,8 +79,8 @@ public class JDBCUtil {
 	}
 	
 	/**
-	 * ¹Ø±ÕÊı¾İ¿â²éÑ¯ÃüÁî
-	 * @param PreparedstatementÓï¾ä¶ÔÏó
+	 * å…³é—­æ•°æ®åº“æŸ¥è¯¢å‘½ä»¤
+	 * @param Preparedstatementè¯­å¥å¯¹è±¡
 	 */
 	public static void ClosePreparedStatement(PreparedStatement st){
 		try{
@@ -92,9 +94,9 @@ public class JDBCUtil {
 	}
 	
 	/**
-	 * ¹Ø±ÕÊı¾İ¿â²éÑ¯½á¹û
+	 * å…³é—­æ•°æ®åº“æŸ¥è¯¢ç»“æœ
 	 * 
-	 * @param ResultSet²éÑ¯½á¹û¶ÔÏó
+	 * @param ResultSetæŸ¥è¯¢ç»“æœå¯¹è±¡
 	 */
 	public static void closeResultSet(ResultSet rs) {
 		try {
@@ -108,7 +110,7 @@ public class JDBCUtil {
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		//getConnection();
+		getConnection();
 	}
 
 }

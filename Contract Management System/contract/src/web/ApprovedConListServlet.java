@@ -12,11 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.ConBusiModel;
+import model.ConProcess;
 import service.ContractService;
 import util.AppException;
 
 /**
- * ÒÑÉóÅú½çÃæ·ÃÎÊ´¦Àí
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê´ï¿½ï¿½ï¿½
  */
 @WebServlet("/ApprovedConListServlet")
 public class ApprovedConListServlet extends HttpServlet {
@@ -45,15 +46,19 @@ public class ApprovedConListServlet extends HttpServlet {
 
 		Integer userId = (Integer) session.getAttribute("userId");
 
-		if (userId == null) {
-			response.sendRedirect("toLogin");
-		} else {
+//		if (userId == null) {
+//			response.sendRedirect("toLogin");
+//		} else {
 			try {
 				ContractService conService = new ContractService();
 				List<ConBusiModel> conList = new ArrayList<ConBusiModel>();
+				List<ConProcess> shpOpinionList=new ArrayList<ConProcess>();
 
-				conList = conService.getApprovedConList(userId);
+				conList = conService.getApprovedConList(userId);//
+				shpOpinionList=conService.getSHPOpinionList(conList);
+				
 				request.setAttribute("contractList", conList);
+				request.setAttribute("shpOpinionList", shpOpinionList);
 				
 				request.getRequestDispatcher("/ApprovedConList.jsp").forward(request, response);
 			} catch (AppException e) {
@@ -61,7 +66,7 @@ public class ApprovedConListServlet extends HttpServlet {
 				// Redirect to the exception page
 				response.sendRedirect("toError");
 			}
-		}
+//		}
 
 	}
 

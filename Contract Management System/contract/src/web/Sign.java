@@ -6,6 +6,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import model.Contract;
 import service.database_operation;
 import model.ConProcess;
@@ -32,14 +34,16 @@ public class Sign extends HttpServlet {
 	
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException{
-    	request.setCharacterEncoding("UTF-8");
-    	response.setContentType("text/html; charset=UTF-8");
-		response.setCharacterEncoding("UTF-8");
+    	HttpSession session = null;
+		// Get session by using request
+		session = request.getSession();
+		Integer userId = (Integer) session.getAttribute("userId");
+
     	database_operation d_o=new database_operation();
 		List<Contract> lists = new ArrayList<Contract>();
-		String remark=request.getParameter("remark");//Òâ¼û
-		String str_id=request.getParameter("con_id");//ºÏÍ¬id
-		String if_ok=request.getParameter("if_ok");//ÊÇ·ñÍ¨¹ı
+		String remark=request.getParameter("remark");//é”Ÿæ–¤æ‹·é”Ÿï¿½
+		String str_id=request.getParameter("con_id");//é”Ÿæ–¤æ‹·åŒid
+		String if_ok=request.getParameter("if_ok");//é”Ÿè§’å‡¤æ‹·é€šé”Ÿæ–¤æ‹·
 		String searchwords=request.getParameter("searchwords");
 		int if_pass=-1;
 		if(if_ok!=null)
@@ -50,21 +54,21 @@ public class Sign extends HttpServlet {
         String flag=request.getParameter("flag");
         if(searchwords==null&&remark==null){
         	lists=d_o.select_contract_for_sign();
-            request.setAttribute("lists", lists);//½«lists·Åµ½×÷ÓÃÓò
+            request.setAttribute("lists", lists);//é”Ÿæ–¤æ‹·listsé”Ÿè„šç¢‰æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
         }else if(searchwords!=null&&remark==null){
         	lists=d_o.search_by_user(searchwords);
-            request.setAttribute("lists", lists);//½«lists·Åµ½×÷ÓÃÓò 
+            request.setAttribute("lists", lists);//é”Ÿæ–¤æ‹·listsé”Ÿè„šç¢‰æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹· 
         }else if(remark!=null){
         	ConProcess cp= new ConProcess();
             cp.setConId(id);
-            cp.setUserId(0);//////////ĞèÒªĞŞ¸Ä
-        	cp.setType(3);
+            cp.setUserId(userId);//////////é”Ÿæ–¤æ‹·è¦é”Ÿç«é©æ‹·
+        	cp.setType(5);
         	cp.setState(1);
         	cp.setContent(remark);
         	cp.setDel(if_pass);
         	d_o.update_after_sign(cp);
         	lists=d_o.select_contract_for_sign();
-            request.setAttribute("lists", lists);//½«lists·Åµ½×÷ÓÃÓò
+            request.setAttribute("lists", lists);//é”Ÿæ–¤æ‹·listsé”Ÿè„šç¢‰æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
         }
         String curPage=request.getParameter("curPage");
 		request.setAttribute("curpage", curPage);

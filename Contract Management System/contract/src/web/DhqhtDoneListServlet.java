@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.ConBusiModel;
 import service.ContractService;
@@ -36,23 +37,20 @@ public class DhqhtDoneListServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		
-		/**	
 			// Declare session
 			HttpSession session = null;
 			// Get session by using request
 			session = request.getSession();
-			//Integer userId = (Integer)session.getAttribute("userId");
+			Integer userId = (Integer)session.getAttribute("userId");
 			
 			
 			// If user is not login, jump to login page
 			if (userId == null) {
-				response.sendRedirect("Login");
+				response.sendRedirect("ToLogin");
 			}else {
-				
-				**/
+
 				
 				try {
-					Integer userId=1;
 					// Initialize contractService
 					ContractService contractService = new ContractService();
 					// Initialize contractList
@@ -71,7 +69,7 @@ public class DhqhtDoneListServlet extends HttpServlet {
 					// Redirect to the exception page
 					response.sendRedirect("toError");
 				}
-		//	}
+			}
 	}
 
 	/**

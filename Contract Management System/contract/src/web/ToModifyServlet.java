@@ -41,8 +41,8 @@ public class ToModifyServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
-//		Integer conId=Integer.parseInt(request.getParameter("conId"));
-		Integer conId=2;
+		Integer conId=Integer.parseInt(request.getParameter("conId"));
+
 		ContractService contractService = new ContractService();
 		try {
 

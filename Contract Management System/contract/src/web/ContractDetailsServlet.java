@@ -28,7 +28,7 @@ public class ContractDetailsServlet extends HttpServlet {
     }
     
     /**
-	 * Ìø×ªÖÁºÏÍ¬Ã÷Ï¸½çÃæ
+	 * ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½Ï¸ï¿½ï¿½ï¿½ï¿½
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -40,7 +40,7 @@ public class ContractDetailsServlet extends HttpServlet {
 		Integer userId=(Integer)session.getAttribute("userId");
 		
 		if(userId==null){
-			response.sendRedirect("toLogin");
+			response.sendRedirect("ToLogin");
 		}
 		else{
 			int conId=Integer.parseInt(request.getParameter("conId"));

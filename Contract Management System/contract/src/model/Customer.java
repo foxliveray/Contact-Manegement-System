@@ -1,25 +1,25 @@
 package model;
 
 /**
- *  ¹Ë¿ÍÊµÌåÀà
+ *  ï¿½Ë¿ï¿½Êµï¿½ï¿½ï¿½ï¿½
  */
 public class Customer {
 
 	private int id;			    //ID
-	private String num;			//¹Ë¿Í±àºÅ
-	private String name;		//¹Ë¿ÍÐÕÃû
-	private String address;		//µØÖ·
-	private String tel;			//µç»°
-	private String fax;			//´«Õæ
-	private String code;		//ÓÊ±à
-	private String bank;		//ÒøÐÐÃû³Æ
-	private String accout;		//ÒøÐÐÕËºÅ
-	private int del;			// ÊÇ·ñÉ¾³ý£¬0Ã»ÓÐÉ¾³ý£¬1É¾³ý
+	//private String num;			//ï¿½Ë¿Í±ï¿½ï¿½
+	private String name;		//ï¿½Ë¿ï¿½ï¿½ï¿½ï¿½ï¿½
+	private String address;		//ï¿½ï¿½Ö·
+	private String tel;			//ï¿½ç»°
+	private String fax;			//ï¿½ï¿½ï¿½ï¿½
+	private String code;		//ï¿½Ê±ï¿½
+	private String bank;		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private String accout;		//ï¿½ï¿½ï¿½ï¿½ï¿½Ëºï¿½
+	private int del;			// ï¿½Ç·ï¿½É¾ï¿½ï¿½ï¿½ï¿½0Ã»ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½1É¾ï¿½ï¿½
 	
-	//Ä¬ÈÏ¹¹Ôìº¯Êý³õÊ¼»¯
+	//Ä¬ï¿½Ï¹ï¿½ï¿½ìº¯ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½
 	public Customer(){
 		this.id = 0;
-		this.num = "";
+		//this.num = "";
 		this.name = "";
 		this.address = "";
 		this.tel = "";
@@ -30,7 +30,7 @@ public class Customer {
 		this.del = 0;
 	}
 
-	//¸÷¸ö³ÉÔ±±äÁ¿µÄgetºÍset·½·¨
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½getï¿½ï¿½setï¿½ï¿½ï¿½ï¿½
 	public int getId() {
 		return id;
 	}
@@ -39,13 +39,14 @@ public class Customer {
 		this.id = id;
 	}
 
+	/*
 	public String getNum() {
 		return num;
 	}
 
 	public void setNum(String num) {
 		this.num = num;
-	}
+	}*/
 
 	public String getName() {
 		return name;

@@ -69,7 +69,8 @@ public class ModifyContractServlrt extends HttpServlet {
 			contract.setEndTime(end);
 			contract.setContent(content);
 			contractService.ModifyContract(contract);
-			response.sendRedirect("IndexServlet");
+			request.setAttribute("conId", conId);
+			response.sendRedirect("ContractListForUser");
 		} catch (AppException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
