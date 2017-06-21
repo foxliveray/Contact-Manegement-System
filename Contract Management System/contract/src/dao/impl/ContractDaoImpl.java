@@ -1,4 +1,5 @@
 package dao.Impl;
+
 import util.AppException;
 import util.JDBCUtil;
 import model.Contract;
@@ -10,52 +11,43 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class ContractDaoImpl implements ContractDao{
-	public boolean add(Contract contract) throws AppException{
-		boolean flag = false;// Operation flag 
-		//Declare Connection object,PreparedStatement object and ResultSet object
+public class ContractDaoImpl implements ContractDao {
+	public boolean add(Contract contract) throws AppException {
+		boolean flag = false;
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
-		
-		try {
-			// Create database connection
-			conn = JDBCUtil.getConnection();
-			//Declare operation statement,save contract information, "?" is a placeholder
-			String sql = "insert into contract" 
-				+"(user_id,customer,num,name,beginTime,endTime,content) "
-				+"values(?,?,?,?,?,?,?)";
-				
-			// Pre-compiled sql, and return primary key
-            psmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS); 
 
-			// Set values for the placeholder 
+		try {
+			conn = JDBCUtil.getConnection();
+			String sql = "insert into contract" + "(user_id,customer,num,name,beginTime,endTime,content) "
+					+ "values(?,?,?,?,?,?,?)";
+
+			psmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+
 			psmt.setInt(1, contract.getUserId());
 			psmt.setString(2, contract.getCustomer());
 			psmt.setString(3, contract.getNum());
 			psmt.setString(4, contract.getName());
-			// Turn java.util.Dat to java.sql.Date
+
 			java.sql.Date beginTime = new java.sql.Date(contract.getBeginTime().getTime());
 			java.sql.Date endTime = new java.sql.Date(contract.getEndTime().getTime());
 			psmt.setDate(5, beginTime);
 			psmt.setDate(6, endTime);
 			psmt.setString(7, contract.getContent());
-			
-			psmt.executeUpdate();// Execute update 
-			rs = psmt.getGeneratedKeys();  //Get primary key in  insert row,only one record in result set
+
+			psmt.executeUpdate();
+			rs = psmt.getGeneratedKeys();
 
 			if (rs.next()) {
-				contract.setId(rs.getInt(1));// Get primary key's value,and set it into contract object
-				flag = true; // If affected lines greater than 0, so operation success
+				contract.setId(rs.getInt(1));
+				flag = true;
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new AppException(
-			"ContractDao.add");
+			throw new AppException("ContractDao.add");
 		} finally {
-			// Close the database operation object, release resources
 			JDBCUtil.closeResultSet(rs);
 			JDBCUtil.CloseStatement(psmt);
 			JDBCUtil.closeConnection(conn);
@@ -64,31 +56,22 @@ public class ContractDaoImpl implements ContractDao{
 	}
 
 	public Contract getById(int id) throws AppException {
-		// Declare contract
 		Contract contract = null;
-		
-		// Declare database connection object, pre-compiled object and result set object
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
-		
-		try {
-			// Create database connection
-			conn = JDBCUtil.getConnection();
-			//Define SQL statement: query contract information according to the contract id 
-			String sql = "select id,name,user_id,customer,num,beginTime,endTime,content "
-					+"from contract"
-					+" where id = ? and del = 0";
 
-			// Pre-compiled sql, and set the parameter values
+		try {
+			conn = JDBCUtil.getConnection();
+			String sql = "select id,name,user_id,customer,num,beginTime,endTime,content " + "from contract"
+					+ " where id = ? and del = 0";
+
 			psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, id); //Set contract id
-			
-			// Query result set
+			psmt.setInt(1, id);
+
 			rs = psmt.executeQuery();
 
-			//Get information in result set by loop,and encapsulated into contract object
-			if(rs.next()) {
+			if (rs.next()) {
 				contract = new Contract();
 				contract.setId(rs.getInt("id"));
 				contract.setName(rs.getString("name"));
@@ -97,45 +80,32 @@ public class ContractDaoImpl implements ContractDao{
 				contract.setNum(rs.getString("num"));
 				contract.setBeginTime(rs.getDate("beginTime"));
 				contract.setEndTime(rs.getDate("endTime"));
-				contract.setContent(rs.getString("content"));	
+				contract.setContent(rs.getString("content"));
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new AppException(
-					"dao.impl.ContractDaoImpl.getById");
+			throw new AppException("dao.impl.ContractDaoImpl.getById");
 		} finally {
-			//  Close the database operation object
 			JDBCUtil.closeResultSet(rs);
 			JDBCUtil.CloseStatement(psmt);
 			JDBCUtil.closeConnection(conn);
 		}
 		return contract;
 	}
-	
 
 	public List<Integer> getIdsByUserId(int userId) throws AppException {
-		// Initialize id set
 		List<Integer> ids = new ArrayList<Integer>();
-		// Declare database connection object, pre-compiled object and result set object
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		try {
-			// Create database connection
 			conn = JDBCUtil.getConnection();
-			// Declare operation statement,query contract id according to user id, "?" is a Placeholder
-			String sql = "select id "
-					+"from contract "
-					+"where user_id = ? and del = 0";
-			// Pre-compiled sql
+			String sql = "select id " + "from contract " + "where user_id = ? and del = 0";
 			psmt = conn.prepareStatement(sql);
-			// Set values for the placeholder '?'
 			psmt.setInt(1, userId);
-			// Query result set
 			rs = psmt.executeQuery();
-			
-			// Get information in result set by loop,and save it to conIds
+
 			while (rs.next()) {
 				ids.add(rs.getInt("id"));
 			}
@@ -143,32 +113,25 @@ public class ContractDaoImpl implements ContractDao{
 			e.printStackTrace();
 			throw new AppException("dao.impl.ContractDaoImpl.getIdsByUserId");
 		} finally {
-			// Close database object operation, release resources
 			JDBCUtil.closeResultSet(rs);
 			JDBCUtil.CloseStatement(psmt);
 			JDBCUtil.closeConnection(conn);
 		}
 		return ids;
 	}
-	
 
 	public boolean updateById(Contract contract) throws AppException {
-		boolean flag = false;// Operation flag
-		// Declare database connection object, pre-compiled object
+		boolean flag = false;
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		try {
-			// Create database connection
 			conn = JDBCUtil.getConnection();
-			// Declare sql:update contract information according to contract id
-			String sql = "update contract set name = ?, customer = ?, beginTime = ?, endTime = ?, content = ? " 
-					+"where id = ? and del = 0";
+			String sql = "update contract set name = ?, customer = ?, beginTime = ?, endTime = ?, content = ? "
+					+ "where id = ? and del = 0";
 
-			// Pre-compiled sql, and set the parameter values
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, contract.getName());
 			psmt.setString(2, contract.getCustomer());
-			// Turn java.util.Dat to java.sql.Date
 			java.sql.Date beginTime = new java.sql.Date(contract.getBeginTime().getTime());
 			java.sql.Date endTime = new java.sql.Date(contract.getEndTime().getTime());
 			psmt.setDate(3, beginTime);
@@ -176,58 +139,45 @@ public class ContractDaoImpl implements ContractDao{
 			psmt.setString(5, contract.getContent());
 			psmt.setInt(6, contract.getId());
 
-			// Execute update,return affected rows
 			int count = psmt.executeUpdate();
-			
-			if (count > 0) {// If affected lines greater than 0, so update success
+
+			if (count > 0) {
 				flag = true;
 			}
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException("dao.impl.ContractDaoImpl.updateById");
 		} finally {
-			// Close database operation object
 			JDBCUtil.CloseStatement(psmt);
 			JDBCUtil.closeConnection(conn);
 		}
 		return flag;
 	}
-	public List<Integer> getIds() throws AppException
-	{
-		// Initialize id set
-				List<Integer> ids = new ArrayList<Integer>();
-				
-				// Declare database connection object, pre-compiled object and result set object
-				Connection conn = null;
-				PreparedStatement psmt = null;
-				ResultSet rs = null;
-				
-				try {
-					// Create database connection
-					conn = JDBCUtil.getConnection();
-					// Declare operation statement,query contract id according to user id, "?" is a Placeholder
-					String sql = "select id "
-							+"from contract "
-							+"where del = 0";
-					// Pre-compiled sql
-					psmt = conn.prepareStatement(sql);
-					// Query result set
-					rs = psmt.executeQuery();
-					
-					// Get information in result set by loop,and save it to conIds
-					while (rs.next()) {
-						ids.add(rs.getInt("id"));
-					}
-				} catch (SQLException e) {
-					e.printStackTrace();
-					throw new AppException("dao.impl.ContractDaoImpl.getIdsByUserId");
-				} finally {
-					// Close database object operation, release resources
-					JDBCUtil.closeResultSet(rs);
-					JDBCUtil.CloseStatement(psmt);
-					JDBCUtil.closeConnection(conn);
-				}
-				
-				return ids;
+
+	public List<Integer> getIds() throws AppException {
+		List<Integer> ids = new ArrayList<Integer>();
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = JDBCUtil.getConnection();
+			String sql = "select id " + "from contract " + "where del = 0";
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			while (rs.next()) {
+				ids.add(rs.getInt("id"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException("dao.impl.ContractDaoImpl.getIdsByUserId");
+		} finally {
+			JDBCUtil.closeResultSet(rs);
+			JDBCUtil.CloseStatement(psmt);
+			JDBCUtil.closeConnection(conn);
+		}
+
+		return ids;
 	}
 }

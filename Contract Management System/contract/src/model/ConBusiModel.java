@@ -7,9 +7,9 @@ import java.util.Date;
  */
 public class ConBusiModel {
 
-	private int conId; 			//Contract id
-	private String conName; 	//Contract name
-	private Date drafTime;		//Draft time
+	private int conId; 			
+	private String conName; 	
+	private Date drafTime;		
 	
 	/**
 	 * No-arg constructor assigns initial values to object attributes
@@ -20,10 +20,6 @@ public class ConBusiModel {
 		this.drafTime = new Date();
 	}
 
-	/*
-     * Provide setter and getter methods for attributes
-	 * setter is used for setting the attribute's value, getter is used for getting the attribute's value
-	 */
 	public int getConId() {
 		return conId;
 	}

@@ -2,10 +2,10 @@ package model;
 
 public class PermissionBusiModel {
 
-	private int userId;			//User id
-	private int roleId;			//Role id
-	private String userName;	//User name
-	private String roleName;	//Role name 
+	private int userId;			
+	private int roleId;			
+	private String userName;	
+	private String roleName;	
 	
 	/**
 	 * No-arg constructor:assigned initial values to the object attribute
@@ -17,10 +17,6 @@ public class PermissionBusiModel {
 		this.roleName = "";
 	}
 
-	/*
-	 * Provide setter and getter methods for attributes
-	 * setter is used for setting the attribute's value, getter is used for getting the attribute's value
-	 */
 	public int getUserId() {
 		return userId;
 	}

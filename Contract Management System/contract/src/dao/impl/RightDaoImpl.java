@@ -26,26 +26,16 @@ public class RightDaoImpl implements RightDao {
 	 * @throws AppException
 	 */
 	public int getRoleIdByUserId(int userId) throws AppException {
-		int roleId = -1; // Initialize roleId
-		// Declare Connection object,PreparedStatement object and ResultSet
-		// object
+		int roleId = -1; 
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		try {
-			// Create database connection
 			conn = JDBCUtil.getConnection();
-			// Declare operation statement,query roleId based on userId, "?" is
-			// a placeholder
 			String sql = "select role_id " + "from t_right " + "where user_id = ? and del = 0";
-			// Pre-compiled sql
 			psmt = conn.prepareStatement(sql);
-			// Set values for the placeholder '?'
 			psmt.setInt(1, userId);
-			// Query result set
 			rs = psmt.executeQuery();
-
-			// Assigned the queried role id to roleId
 			if (rs.next()) {
 				roleId = rs.getInt("role_id");
 			}
@@ -53,7 +43,6 @@ public class RightDaoImpl implements RightDao {
 			e.printStackTrace();
 			throw new AppException("dao.impl.RightDaoImpl.getRoleIdByUserId");
 		} finally {
-			// Close the database operation object, release resources
 			JDBCUtil.closeResultSet(rs);
 			JDBCUtil.CloseStatement(psmt);
 			JDBCUtil.closeConnection(conn);
@@ -71,27 +60,20 @@ public class RightDaoImpl implements RightDao {
 	 * @throws AppException
 	 */
 	public List<Integer> getUserIdsByRoleId(int roleId) throws AppException {
-		// Initialize userIds
 		List<Integer> userIds = new ArrayList<Integer>();
 
-		// Declare Connection object,PreparedStatement object and ResultSet
-		// object
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 
 		try {
-			// Create database connection
 			conn = JDBCUtil.getConnection();
-			// Declare operation statement,query user id based on role id, "?"
-			// is a placeholder
 			String sql = "select user_id from t_right where role_id = ? and del = 0";
 
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, roleId);
 
-			rs = psmt.executeQuery();// Return result set
-			// Get information in result set by loop,and save in userIds
+			rs = psmt.executeQuery();
 			while (rs.next()) {
 				userIds.add(rs.getInt("user_id"));
 			}
@@ -99,7 +81,6 @@ public class RightDaoImpl implements RightDao {
 			e.printStackTrace();
 			throw new AppException("dao.impl.RightDaoImpl.getUserIdsByRoleId");
 		} finally {
-			// Close the database operation object, release resources
 			JDBCUtil.closeResultSet(rs);
 			JDBCUtil.CloseStatement(psmt);
 			JDBCUtil.closeConnection(conn);
@@ -116,26 +97,17 @@ public class RightDaoImpl implements RightDao {
 	 * @throws AppException
 	 */
 	public int getIdByUserId(int userId) throws AppException {
-		int id = -1; // Initialize role object
-		// Declare Connection object,PreparedStatement object and ResultSet
-		// object
+		int id = -1; 
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		try {
-			// Create database connection
 			conn = JDBCUtil.getConnection();
-			// Declare operation statement:query permissionId based on userId,
-			// "?" is a placeholder
 			String sql = "select id " + "from t_right " + "where user_id = ? and del = 0";
-			// Pre-compiled sql
 			psmt = conn.prepareStatement(sql);
-			// Set values for the placeholder '?'
 			psmt.setInt(1, userId);
-			// Query result set
 			rs = psmt.executeQuery();
 
-			// Assigned the queried permission id to id
 			if (rs.next()) {
 				id = rs.getInt("id");
 			}
@@ -143,7 +115,6 @@ public class RightDaoImpl implements RightDao {
 			e.printStackTrace();
 			throw new AppException("dao.impl.RightDaoImpl.getIdByUserId");
 		} finally {
-			// Close the database operation object, release resources
 			JDBCUtil.closeResultSet(rs);
 			JDBCUtil.CloseStatement(psmt);
 			JDBCUtil.closeConnection(conn);
@@ -162,24 +133,16 @@ public class RightDaoImpl implements RightDao {
 	public Right getRightByUserId(int userId) throws AppException {
 		Right right = null;
 
-		// Declare Connection object,PreparedStatement object and ResultSet object
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		try {
-			// Create database connection
 			conn = JDBCUtil.getConnection();
-			// Declare operation statement:query permissionId based on userId,
-			// "?" is a placeholder
 			String sql = "select * " + "from t_right " + "where user_id = ? and del = 0";
-			// Pre-compiled sql
 			psmt = conn.prepareStatement(sql);
-			// Set values for the placeholder '?'
 			psmt.setInt(1, userId);
-			// Query result set
 			rs = psmt.executeQuery();
 
-			// Assigned the queried permission id to id
 			if (rs.next()) {
 				right=new Right();
 				right.setUserId(userId);
@@ -191,7 +154,6 @@ public class RightDaoImpl implements RightDao {
 			e.printStackTrace();
 			throw new AppException("dao.impl.RightDaoImpl.getIdByUserId");
 		} finally {
-			// Close the database operation object, release resources
 			JDBCUtil.closeResultSet(rs);
 			JDBCUtil.CloseStatement(psmt);
 			JDBCUtil.closeConnection(conn);
@@ -208,36 +170,28 @@ public class RightDaoImpl implements RightDao {
 	 * @throws AppException
 	 */
 	public boolean updateById(Right right) throws AppException {
-		boolean flag = false;// Operation flag
-		// Declare Connection object,PreparedStatement object
+		boolean flag = false;
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		try {
-			// Create database connection
 			conn = JDBCUtil.getConnection();
-			// Delare sql:update permission information according to permission
-			// id
 			String sql = "update t_right set user_id = ?, role_id = ?, description = ? " + "where id = ? and del = 0";
 
-			// Pre-compiled sql, and set the value to parameter
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, right.getUserId());
 			psmt.setInt(2, right.getRoleId());
 			psmt.setString(3, right.getDescription());
 			psmt.setInt(4, right.getId());
 
-			// Execute update, return the affected rows
 			int count = psmt.executeUpdate();
 
-			if (count > 0) {// If affected lines greater than 0, the update is
-							// successful
+			if (count > 0) {
 				flag = true;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException("dao.impl.RightDaoImpl.updateById");
 		} finally {
-			// Close the database operation object, release resources
 			JDBCUtil.CloseStatement(psmt);
 			JDBCUtil.closeConnection(conn);
 		}
@@ -253,26 +207,21 @@ public class RightDaoImpl implements RightDao {
 	 * @throws AppException
 	 */
 	public boolean add(Right right) throws AppException {
-		boolean flag = false;// Operation flag
-		// Declare Connection object,PreparedStatement object
+		boolean flag = false;
 		Connection conn = null;
 		PreparedStatement psmt = null;
 
 		int result = -1;
 		try {
-			conn = JDBCUtil.getConnection();// Create database connection
-			// Declare operation statement:save permission information , "?" is
-			// a placeholder
+			conn = JDBCUtil.getConnection();
 			String sql = "insert into contractdb.t_right (user_id,role_id,description)" + " values (?,?,?)";
 
-			psmt = conn.prepareStatement(sql);// re-compiled sql
-			// Set value to placeholder
+			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, right.getUserId());
 			psmt.setInt(2, right.getRoleId());
 			psmt.setString(3, right.getDescription());
 
-			result = psmt.executeUpdate();// Execute update operation, return
-											// the affected rows
+			result = psmt.executeUpdate();
 			if (result > 0) {
 				flag = true;
 			}
@@ -280,7 +229,6 @@ public class RightDaoImpl implements RightDao {
 			e.printStackTrace();
 			throw new AppException("dao.impl.RightDaoImpl.add");
 		} finally {
-			// Close the database operation object, release resources
 			JDBCUtil.CloseStatement(psmt);
 			JDBCUtil.closeConnection(conn);
 		}
@@ -296,24 +244,18 @@ public class RightDaoImpl implements RightDao {
 	 * @throws AppException
 	 */
 	public boolean delete(int userId) throws AppException {
-		boolean flag = false;// Operation flag
-
-		// Declare Connection object,PreparedStatement object
+		boolean flag = false;
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		int result = -1;
 		try {
-			conn = JDBCUtil.getConnection();// Create database connection
-			// Declare operation statement:save permission information , "?" is
-			// a placeholder
+			conn = JDBCUtil.getConnection();
 			String sql = "delete from t_right where user_id= ? ";
 
-			psmt = conn.prepareStatement(sql);// re-compiled sql
-			// Set value to placeholder
+			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, userId);
 
-			result = psmt.executeUpdate();// Execute update operation, return
-											// the affected rows
+			result = psmt.executeUpdate();
 			if (result > 0) {
 				flag = true;
 			}
@@ -321,7 +263,6 @@ public class RightDaoImpl implements RightDao {
 			e.printStackTrace();
 			throw new AppException("dao.impl.RightDaoImpl.add");
 		} finally {
-			// Close the database operation object, release resources
 			JDBCUtil.CloseStatement(psmt);
 			JDBCUtil.closeConnection(conn);
 		}

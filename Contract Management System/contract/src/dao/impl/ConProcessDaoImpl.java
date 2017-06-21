@@ -26,37 +26,28 @@ public class ConProcessDaoImpl implements ConProcessDao {
 	 * @throws AppException
 	 */
 	public boolean isExist(int conId) throws AppException {
-		boolean flag = false; // operation flag
-
-		// Declare database connection object, pre-compiled object and result
-		// set object
+		boolean flag = false; 
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 
 		try {
-			// Create database connection
 			conn = JDBCUtil.getConnection();
-			// Declare operation statement:specifies the number of contract id's
-			// records, "?" is a placeholder
 			String sql = "select count(id) as n from contract_process where con_id = ? and del = 0";
-
-			psmt = conn.prepareStatement(sql);// pre-compiled sql
-			// Set value for the placeholder
+			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, conId);
-			// Execute query operation
 			rs = psmt.executeQuery();
 			rs.next();
-			int n = rs.getInt("n"); // Parameter "n" represents the total number
-									// of records
+			int n = rs.getInt("n"); 
+									
 			if (n > 0) {
-				flag = true;// Designated contract ID exist,flag is set to true
+				flag = true;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException("dao.impl.ConProcessDaoImpl.isExist");
 		} finally {
-			// Close database object operation, release resources
+
 			JDBCUtil.closeResultSet(rs);
 			JDBCUtil.CloseStatement(psmt);
 			JDBCUtil.closeConnection(conn);
@@ -74,38 +65,30 @@ public class ConProcessDaoImpl implements ConProcessDao {
 	 * @throws AppException
 	 */
 	public boolean add(ConProcess conProcess) throws AppException {
-		boolean flag = false;// Operation flag
-		// Declare database connection object, pre-compiled object and result
-		// set object
+		boolean flag = false;
 		Connection conn = null;
 		PreparedStatement psmt = null;
 
 		try {
-			// Create database connection
 			conn = JDBCUtil.getConnection();
-			// Declare operation statement:save contact operation process
-			// information, "?" is a placeholder
 			String sql = "insert into contract_process(con_id,user_id,type,state,content) values(?,?,?,?,?)";
 
-			psmt = conn.prepareStatement(sql);// pre-compiled sql
-			// Set values for the placeholder
+			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, conProcess.getConId());
 			psmt.setInt(2, conProcess.getUserId());
 			psmt.setInt(3, conProcess.getType());
 			psmt.setInt(4, conProcess.getState());
 			psmt.setString(5, conProcess.getContent());
 
-			int result = psmt.executeUpdate();// Execute update
+			int result = psmt.executeUpdate();
 
-			if (result > 0) {// If the affected lines greater than 0, the
-								// operation success
+			if (result > 0) {
 				flag = true;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException("dao.impl.ConProcessDaoImpl.add");
 		} finally {
-			// Close database object operation, release resources
 			JDBCUtil.CloseStatement(psmt);
 			JDBCUtil.closeConnection(conn);
 		}
@@ -122,33 +105,22 @@ public class ConProcessDaoImpl implements ConProcessDao {
 	 * @throws AppException
 	 */
 	public List<Integer> getConIds(ConProcess conProcess) throws AppException {
-		// Initialize conIds
 		List<Integer> conIds = new ArrayList<Integer>();
-
-		// Declare database connection object, pre-compiled object and result
-		// set object
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 
 		try {
-			// Create database connection
 			conn = JDBCUtil.getConnection();
-			// Declare operation statement:query contract id according to user
-			// id,contract operation type and operation state, "?" is a
-			// placeholder
 			String sql = "select con_id from contract_process "
 					+ "where user_id= ? and type = ? and state = ? and del=0";
-			psmt = conn.prepareStatement(sql);// pre-compiled sql
-			// Set values for the placeholder
+			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, conProcess.getUserId());
 			psmt.setInt(2, conProcess.getType());
 			psmt.setInt(3, conProcess.getState());
 
-			// Execute query operation
 			rs = psmt.executeQuery();
-              
-			// Get information in result set by loop,and save it to conIds
+
 			while (rs.next()) {
 				conIds.add(rs.getInt("con_id"));
 			}
@@ -156,7 +128,6 @@ public class ConProcessDaoImpl implements ConProcessDao {
 			e.printStackTrace();
 			throw new AppException("dao.impl.ConProcessDaoImpl.getConIds");
 		} finally {
-			// Close database object operation, release resources
 			JDBCUtil.closeResultSet(rs);
 			JDBCUtil.CloseStatement(psmt);
 			JDBCUtil.closeConnection(conn);
@@ -166,32 +137,21 @@ public class ConProcessDaoImpl implements ConProcessDao {
 	}
 	
 	public List<ConProModel> getNotForUserConIds(ConProcess conProcess) throws AppException {
-		// Initialize conIds
 		List<ConProModel> conList = new ArrayList<ConProModel>();
-
-		// Declare database connection object, pre-compiled object and result
-		// set object
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 
 		try {
-			// Create database connection
 			conn = JDBCUtil.getConnection();
-			// Declare operation statement:query contract id according to user
-			// id,contract operation type and operation state, "?" is a
-			// placeholder
 			String sql = "select con_id,user_id,content from contract_process "
 					+ "where type = ? and state = ? and del=0";
-			psmt = conn.prepareStatement(sql);// pre-compiled sql
-			// Set values for the placeholder
+			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, conProcess.getType());
 			psmt.setInt(2, conProcess.getState());
 
-			// Execute query operation
 			rs = psmt.executeQuery();
-              
-			// Get information in result set by loop,and save it to conIds
+
 			while (rs.next()) {
 				ConProModel conProModel=new ConProModel();
 				conProModel.setConId(rs.getInt("con_id"));
@@ -203,7 +163,7 @@ public class ConProcessDaoImpl implements ConProcessDao {
 			e.printStackTrace();
 			throw new AppException("dao.impl.ConProcessDaoImpl.getConIds");
 		} finally {
-			// Close database object operation, release resources
+
 			JDBCUtil.closeResultSet(rs);
 			JDBCUtil.CloseStatement(psmt);
 			JDBCUtil.closeConnection(conn);
@@ -226,46 +186,35 @@ public class ConProcessDaoImpl implements ConProcessDao {
 	 * @throws AppException
 	 */
 	public boolean update(ConProcess conProcess) throws AppException {
-		boolean flag = false;// Operation flag
-
-		// Declare database connection object, pre-compiled object and results
-		// set object
+		boolean flag = false;
 		Connection conn = null;
 		PreparedStatement psmt = null;
 
 		try {
-			// Create database connection
 			conn = JDBCUtil.getConnection();
-			// Declare sql:update operation status,content and time info of
-			// contract according to user id,contract id and operation type
 			String sql = "update contract_process set state = ?, content = ?, time = ? "
 					+ "where user_id = ? and con_id = ? and type = ?";
 
-			// Pre-compiled sql, and set the value to parameter
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, conProcess.getState());
 			psmt.setString(2, conProcess.getContent());
 
-			// Date format is yyyy-MM-dd hh:mm:ss
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			java.sql.Timestamp time = new java.sql.Timestamp(conProcess.getTime().getTime());
-			df.format(time); // Formatting time
+			df.format(time); 
 			psmt.setTimestamp(3, time);
 			psmt.setInt(4, conProcess.getUserId());
 			psmt.setInt(5, conProcess.getConId());
 			psmt.setInt(6, conProcess.getType());
-			// Execute update, return the affected rows
 			int count = psmt.executeUpdate();
 
-			if (count > 0) {// If affected lines greater than 0, the update is
-							// successful
+			if (count > 0) {
 				flag = true;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException("dao.impl.ConProcessDaoImpl.update");
 		} finally {
-			// Close the database operation object
 			JDBCUtil.CloseStatement(psmt);
 			JDBCUtil.closeConnection(conn);
 		}
@@ -287,39 +236,29 @@ public class ConProcessDaoImpl implements ConProcessDao {
 	 * @throws AppException
 	 */
 	public int getTotalCount(ConProcess conProcess) throws AppException {
-		int totalCount = 0; // Initialize totalCount
-
-		// Declare database connection object, pre-compiled object and results
-		// set object
+		int totalCount = 0;
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 
 		try {
-			// Create database connection
 			conn = JDBCUtil.getConnection();
-			// Declare operation statement:query total number of eligible
-			// records according to contract id,operation type and its
-			// processing state, "?" is a placeholder
 			String sql = "select count(id) as n from contract_process "
 					+ "where con_id = ? and type = ? and state = ?";
 
-			psmt = conn.prepareStatement(sql);// Pre-compiled sql
-			// Set value to placeholder
+			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, conProcess.getConId());
 			psmt.setInt(2, conProcess.getType());
 			psmt.setInt(3, conProcess.getState());
-			// Execute query operation
+
 			rs = psmt.executeQuery();
 			rs.next();
-			totalCount = rs.getInt("n"); // Parameter "n" represents the total
-											// number of records
+			totalCount = rs.getInt("n");
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException("dao.impl.ConProcessDaoImpl.getTotalCount");
 		} finally {
-			// Close database object operation, release resources
 			JDBCUtil.closeResultSet(rs);
 			JDBCUtil.CloseStatement(psmt);
 			JDBCUtil.closeConnection(conn);
@@ -342,33 +281,23 @@ public class ConProcessDaoImpl implements ConProcessDao {
 	 * @throws AppException
 	 */
 	public List<Integer> getIds(int conId, int type, int state) throws AppException {
-		// Initialize ids
 		List<Integer> ids = new ArrayList<Integer>();
 
-		// Declare database connection object, pre-compiled object and results
-		// set object
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 
 		try {
-			// Create database connection
 			conn = JDBCUtil.getConnection();
-			// Declare operation statement:query contract process id set
-			// according to contract id,operation type and its corresponding
-			// operation state, "?" is a Placeholder
 			String sql = "select id from contract_process " + "where con_id= ? and type = ? and state = ? and del=0";
 
-			psmt = conn.prepareStatement(sql);// Pre-compiled sql
-			// Set values for the placeholder
+			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, conId);
 			psmt.setInt(2, type);
 			psmt.setInt(3, state);
 
-			// Execute query operation
 			rs = psmt.executeQuery();
 
-			// Get information in result set by loop,and save it to ids
 			while (rs.next()) {
 				ids.add(rs.getInt("id"));
 			}
@@ -376,7 +305,6 @@ public class ConProcessDaoImpl implements ConProcessDao {
 			e.printStackTrace();
 			throw new AppException("dao.impl.ConProcessDaoImpl.getIds");
 		} finally {
-			// Close database object operation, release resources
 			JDBCUtil.closeResultSet(rs);
 			JDBCUtil.CloseStatement(psmt);
 			JDBCUtil.closeConnection(conn);
@@ -394,30 +322,22 @@ public class ConProcessDaoImpl implements ConProcessDao {
 	 * @throws AppException
 	 */
 	public ConProcess getById(int id) throws AppException {
-		// Declare conProcess
 		ConProcess conProcess = null;
 
-		// Declare database connection object, pre-compiled object and result set object
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		
 		try {
-			// Create database connection
 			conn = JDBCUtil.getConnection();
-			// Define sql:query contract process information according to contract process id
 			String sql = "select id,con_id,user_id,type,state,content,time "
 					+"from contract_process "
 					+"where id = ? and del = 0";
 
-			//Pre-compiled sql, and set the parameter values
 			psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, id); //Set contract id
-			
-			// Query result set
+			psmt.setInt(1, id); 
 			rs = psmt.executeQuery();
 
-			// Get information in result set by loop,and encapsulate to conProcess entity
 			if(rs.next()) {
 				conProcess = new ConProcess();
 				conProcess.setId(rs.getInt("id"));
@@ -434,7 +354,6 @@ public class ConProcessDaoImpl implements ConProcessDao {
 			throw new AppException(
 					"dao.impl.ConProcessDaoImpl.getById");
 		} finally {
-			// Close database operation object 
 			JDBCUtil.closeResultSet(rs);
 			JDBCUtil.CloseStatement(psmt);
 			JDBCUtil.closeConnection(conn);
@@ -453,31 +372,22 @@ public class ConProcessDaoImpl implements ConProcessDao {
 	 * @throws AppException
 	 */
 	public ConProcess getById2(int conId,Integer userId) throws AppException {
-		// Declare conProcess
 		ConProcess conProcess = null;
-
-		// Declare database connection object, pre-compiled object and result set object
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		System.out.println(5);
 		try {
-			// Create database connection
 			conn = JDBCUtil.getConnection();
-			// Define sql:query contract process information according to contract process id
 			String sql = "select id,con_id,user_id,type,state,content,time "
 					+"from contract_process "
 					+"where con_id = ? and user_id = ? and del = 0";
 
-			//Pre-compiled sql, and set the parameter values
 			psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, conId); //Set contract id
-			psmt.setInt(2, userId); //Set user id
-			
-			// Query result set
-			rs = psmt.executeQuery();
+			psmt.setInt(1, conId); 
+			psmt.setInt(2, userId); 
 
-			// Get information in result set by loop,and encapsulate to conProcess entity
+			rs = psmt.executeQuery();
 			if(rs.next()) {
 				conProcess = new ConProcess();
 				conProcess.setId(rs.getInt("id"));
@@ -495,7 +405,6 @@ public class ConProcessDaoImpl implements ConProcessDao {
 			throw new AppException(
 					"dao.impl.ConProcessDaoImpl.getById2");
 		} finally {
-			// Close database operation object 
 			JDBCUtil.closeResultSet(rs);
 			JDBCUtil.CloseStatement(psmt);
 			JDBCUtil.closeConnection(conn);
@@ -515,30 +424,22 @@ public class ConProcessDaoImpl implements ConProcessDao {
 	public ConProcess getByConId_type_state(int conId, int type, int state) throws AppException {
 		ConProcess conProcess = null;
 
-		// Declare database connection object, pre-compiled object and result set object
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		
 		try {
-			// Create database connection
 			conn = JDBCUtil.getConnection();
-			// Define sql:query contract process information according to
-			// contract process id
 			String sql = "select id,user_id,content,time " + "from contract_process "
 					+ "where con_id = ? and type = ? and state = ? and del = 0";
 
-			// Pre-compiled sql, and set the parameter values
 			psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, conId); // Set contract id
+			psmt.setInt(1, conId); 
 			psmt.setInt(2,type);
 			psmt.setInt(3, state);
 
-			// Query result set
 			rs = psmt.executeQuery();
 
-			// Get information in result set by loop,and encapsulate to
-			// conProcess entity
 			if (rs.next()) {
 				conProcess = new ConProcess();
 				conProcess.setId(rs.getInt("id"));
@@ -554,7 +455,6 @@ public class ConProcessDaoImpl implements ConProcessDao {
 			e.printStackTrace();
 			throw new AppException("dao.impl.ConProcessDaoImpl.getByConId_type_state");
 		} finally {
-			// Close database operation object
 			JDBCUtil.closeResultSet(rs);
 			JDBCUtil.CloseStatement(psmt);
 			JDBCUtil.closeConnection(conn);

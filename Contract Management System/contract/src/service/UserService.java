@@ -20,7 +20,7 @@ import util.AppException;
  * @date 2017年6月7日 上午10:26:02
  */
 public class UserService {
-	private UserDao userDao = null;	//定义一个UserDao接口对象
+	private UserDao userDao = null;	
 	private RightDao rightDao=null;
 	private RoleDao roleDao=null;
 	
@@ -58,21 +58,21 @@ public class UserService {
 	 * @throws AppException
 	 */
 	public int login(String name, String password) throws AppException {
-		int userId = -1; // Declare userId
+		int userId = -1; 
 		try {
-			//Get userId
+			
 			userId = userDao.login(name, password); 
 		} catch (AppException e) {
 			e.printStackTrace();
 			throw new AppException("service.UserService.login");
 		}
-		// Return userId
+		
 		return userId;
 	}
 	public List<User> getUserListByRoleId(int roleId) throws AppException {
-		// Initialize  userList
+		
 		List<User> userList = new ArrayList<User>();
-		// Declare userIds
+		
 		List<Integer> userIds = null;; 
 		
 		try {
@@ -85,7 +85,7 @@ public class UserService {
 			 * 2.Get user information list according to userIds
 			 */ 
 			for (int userId : userIds) {
-				// Get user's information
+				
 				User user = userDao.getById(userId);
 				if (user != null) {
 					userList.add(user); 
@@ -95,7 +95,7 @@ public class UserService {
 			e.printStackTrace();
 			throw new AppException("service.UserService.getUserList");
 		}	
-		// Return userList
+		
 		return userList;
 	}
 	/**
@@ -116,7 +116,7 @@ public class UserService {
 			}
 			
 		} catch (AppException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 			throw new AppException("service.UserService.getUserList");
 		}
@@ -135,7 +135,7 @@ public class UserService {
 		try {
 			user=userDao.getById(id);
 		} catch (AppException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 			throw new AppException("service.UserService.getUserById");
 		}
@@ -155,7 +155,7 @@ public class UserService {
 		try {
 			user=userDao.getByName(name);
 		} catch (AppException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 			throw new AppException("service.UserService.getUserByName");
 		}
@@ -175,14 +175,14 @@ public class UserService {
 		try {
 			flag1=userDao.add(user);
 			User userWithId=getUserByName(user.getName());
-			//upgrade table_right
+			
 			Right newRight=new Right();
 			newRight.setUserId(userWithId.getId());
-			newRight.setRoleId(3);//no right yet
+			newRight.setRoleId(3);
 			newRight.setDescription("nothing");
 			flag2=rightDao.add(newRight);
 		} catch (AppException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 			throw new AppException("service.UserService.addUser");
 		}
@@ -207,7 +207,7 @@ public class UserService {
 		try {
 			flag=userDao.update(user);
 		} catch (AppException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 			throw new AppException("service.UserService.editUser");
 		}
@@ -225,13 +225,13 @@ public class UserService {
 		boolean flag1=false,flag2=false;
 		
 		try {
-			//upgrade table_right first
+			
 			flag2=rightDao.delete(user.getId());
-			//upgrade table_user
+			
 			flag1=userDao.delete(user);
 			
 		} catch (AppException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 			throw new AppException("service.UserService.deleteUser");
 		}
@@ -256,7 +256,7 @@ public class UserService {
 		try {
 			right=rightDao.getRightByUserId(userId);
 		} catch (AppException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 			throw new AppException("service.UserService.getRightByUserID");
 		}
@@ -295,7 +295,7 @@ public class UserService {
 			}
 			
 		} catch (AppException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 			throw new AppException("service.UserService.getUserList");
 		}
@@ -315,7 +315,7 @@ public class UserService {
 		try {
 			flag=rightDao.updateById(right);
 		} catch (AppException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 			throw new AppException("service.UserService.UpdatePermission");
 		}
@@ -335,7 +335,7 @@ public class UserService {
 		try {
 			role=roleDao.getById(roleId);
 		} catch (AppException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 			throw new AppException("service.UserService.getRoleByRoleId");
 		}
@@ -355,7 +355,7 @@ public class UserService {
 		try {
 			roleList=roleDao.getAll();
 		} catch (AppException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 			throw new AppException("service.UserService.getRoleList");
 		}
@@ -376,7 +376,7 @@ public class UserService {
 		try {
 			flag=roleDao.add(role);
 		} catch (AppException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 			throw new AppException("service.UserService.addRole");
 		}
@@ -397,7 +397,7 @@ public class UserService {
 		try {
 			flag=roleDao.update(role);
 		} catch (AppException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 			throw new AppException("service.UserService.updateRole");
 		}
@@ -418,7 +418,7 @@ public class UserService {
 		try {
 			flag=roleDao.delete(roleId);
 		} catch (AppException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 			throw new AppException("service.UserService.deleteRole");
 		}

@@ -81,7 +81,7 @@ public interface ConProcessDao {
 	 */
 	public ConProcess getById(int id)throws AppException;
 	
-	/** ����
+	/** 
 	 * Query contract process information according to contract id and user id
 	 * 
 	 * @param id
@@ -95,7 +95,7 @@ public interface ConProcessDao {
 	public List<ConProModel> getNotForUserConIds(ConProcess conProcess) throws AppException;
 	
 	/**
-	 * ���ݺ�ͬid�����ͱ�־λ��״̬��־λ��ȡ��ͬ������Ϣ
+	 * 
 	 * 
 	 * @param int
 	 *            contractId,int conProcess type,int conProcess state

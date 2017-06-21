@@ -7,12 +7,12 @@ import java.util.Date;
  */
 public class ConProModel {
 
-	private int conId; 			//Contract id
-	private int userId;         //userId
-	private String conName; 	//Contract name
-	private Date drafTime;		//Draft time
-	private String content;     //content of the process opinion
-	private int type;           //ConState.type
+	private int conId; 			
+	private int userId;         
+	private String conName; 	
+	private Date drafTime;		
+	private String content;     
+	private int type;           
 	
 	/**
 	 * No-arg constructor assigns initial values to object attributes
@@ -26,10 +26,6 @@ public class ConProModel {
 		this.type=0;
 	}
 
-	/*
-     * Provide setter and getter methods for attributes
-	 * setter is used for setting the attribute's value, getter is used for getting the attribute's value
-	 */
 	public int getConId() {
 		return conId;
 	}

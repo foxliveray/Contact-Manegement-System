@@ -2,9 +2,9 @@ package model;
 
 public class CSignatureOpinion {
 
-	private int conId; 			// Contract id
-	private String csOperator; 	// Countersign operator
-	private String opinion;		// Countersign opinion
+	private int conId; 			
+	private String csOperator; 	
+	private String opinion;		
 	
 	/**
 	 * No-arg constructor assigns initial values to object attributes
@@ -15,10 +15,6 @@ public class CSignatureOpinion {
 		this.opinion = "";
 	}
 
-	/*
-     * Provide setter and getter methods for attributes
-	 * setter is used for setting the attribute's value, getter is used for getting the attribute's value
-	 */
 	public int getConId() {
 		return conId;
 	}
