@@ -169,7 +169,7 @@
 						<img src="images/icon-edit.png"  alt="Edit" />
 						修改
 					</a>
-					｜
+					
 					<a href="javascript:deleteCheck('DeleteUserServlet?selectUserId=<%=oneUser.getId()%>')">
 						<img src="images/delete.png"  alt="Delete" />
 						删除

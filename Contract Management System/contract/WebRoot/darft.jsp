@@ -1,5 +1,9 @@
+<%@page import="com.mysql.fabric.xmlrpc.base.Array"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="model.Customer" %>
+<%@page import="java.util.*"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -55,6 +59,7 @@
 }
 
 </style>
+
 <script type="text/javascript">
 function bottonOK()
 {
@@ -137,14 +142,24 @@ function bottonOK()
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         
-                        <li>
-                            <a href="AddCustomer.jsp"><i class="fa fa-dashboard fa-fw"></i> 客户管理</a>
-                        </li>
+                     <li>
+                            <a href="#"><i class="fa fa-dashboard fa-fw"></i> 客户管理<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="AddCustomer.jsp">添加客户</a>
+                                </li>
+                             
+                                  <li>
+                                    <a href="http://localhost:8080/contract/ToCustomerListServlet" >客户信息管理</a>
+                                </li>
+								
+                            </ul>
+                         </li>
                         <li>
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> 我的合同<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="darft.jsp">起草合同</a>
+                                    <a href="http://localhost:8080/contract/ToDraftServlet">起草合同</a>
                                 </li>
                              
                                   <li>
@@ -199,7 +214,16 @@ function bottonOK()
                                         <div class="form-group">
                                             <input class="form-control" placeholder="合同名称" name="name1" id="name1">
                                             </br>
-                                            <input class="form-control" placeholder="客户名称" name="customer" id="customer">
+                                            <select class="form-control" placeholder="客户名称" name="customer" id="customer">
+                                            	<option>选择客户</option>
+                                            	<%
+                                            	ArrayList<Customer> cusList = new ArrayList<Customer>();
+                                            	cusList = (ArrayList<Customer>)request.getAttribute("cusList");
+                                            	for(int i = 0;i<cusList.size();i++){
+                                            		out.println("<option>"+((Customer)cusList.get(i)).getName()+"</option>");
+                                            	}
+                                            	%>
+                                            </select>
                                             </br>
                                             <input class="form-control" placeholder="开始时间" name="beginTime" id="beginTime">
                                             <input type="text" name="tishi1" size="40"style="border:0px;color:red;"value="*时间格式yyyy-mm-dd (如 2000-01-01)"onfocus=this.blur()>

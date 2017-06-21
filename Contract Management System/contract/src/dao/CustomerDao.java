@@ -27,6 +27,26 @@ public interface CustomerDao {
 	 */
 	public boolean add(Customer customer) throws AppException;
 	
+	/**
+	 * 获取所有客户信息
+	 * @return 返回客户对象List
+	 * @throws AppException
+	 */
 	public ArrayList <Customer> getAllCustomer() throws AppException;
 	
+	/**
+	 * 根据id删除一个指定的客户
+	 * @param Customer customer对象中获取id
+	 * @return 返回True如果删除成功，否则返回false
+	 * @throws AppException
+	 */
+	public boolean delete(Customer customer) throws AppException;
+	
+	/**
+	 * 修改客户信息
+	 * @param Customer customer
+	 * @return 返回True如果修改成功，否则返回false
+	 * @throws AppException
+	 */
+	public boolean update(Customer customer) throws AppException;
 }

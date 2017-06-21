@@ -8,7 +8,7 @@ import util.AppException;
 public interface RoleDao {
 
 	/**
-	 * ¸ù¾İ½ÇÉ«id»ñÈ¡½ÇÉ«ĞÅÏ¢
+	 * æ ¹æ®idæŸ¥è¯¢è§’è‰²ä¿¡æ¯
 	 * 
 	 * @param int id 
 	 * @return Role Role object
@@ -17,7 +17,7 @@ public interface RoleDao {
 	public Role getById(int id) throws AppException;
 	
 	/**
-	 * ²éÑ¯ËùÓĞ½ÇÉ«
+	 * æŸ¥è¯¢æ‰€æœ‰è§’è‰²å¯¹è±¡çš„é›†åˆ
 	 * 
 	 * @return List<Role> Role object set
 	 * @throws AppException
@@ -25,7 +25,7 @@ public interface RoleDao {
 	public List<Role> getAll() throws AppException;
 	
 	/**
-	 *Ìí¼Ó½ÇÉ«
+	 *æ·»åŠ ä¸€ä¸ªè§’è‰²
 	 * 
 	 * @param Role Role object
 	 * @return Return true if added successfully,otherwise return false
@@ -34,7 +34,7 @@ public interface RoleDao {
 	public boolean add(Role role) throws AppException;
 	
 	/**
-	 *¸üĞÂ½ÇÉ«
+	 *æ›´æ–°ä¸€ä¸ªè§’è‰²
 	 * 
 	 * @param Role Role object
 	 * @return Return true if updated successfully,otherwise return false
@@ -43,7 +43,7 @@ public interface RoleDao {
 	public boolean update(Role role) throws AppException;
 	
 	/**
-	 *É¾³ı½ÇÉ«
+	 *åˆ é™¤ä¸€ä¸ªè§’è‰²
 	 * 
 	 * @param int Role id
 	 * @return Return true if deleted successfully,otherwise return false

@@ -92,13 +92,23 @@
                     <ul class="nav" id="side-menu">
                         
                         <li>
-                            <a href="AddCustomer.jsp"><i class="fa fa-dashboard fa-fw"></i> 客户管理</a>
-                        </li>
+                            <a href="#"><i class="fa fa-dashboard fa-fw"></i> 客户管理<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="AddCustomer.jsp">添加客户</a>
+                                </li>
+                             
+                                  <li>
+                                    <a href="http://localhost:8080/contract/ToCustomerListServlet" >客户信息管理</a>
+                                </li>
+								
+                            </ul>
+                         </li>
                         <li>
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> 我的合同<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="darft.jsp">起草合同</a>
+                                    <a href="http://localhost:8080/contract/ToDraftServlet">起草合同</a>
                                 </li>
                              
                                   <li>

@@ -69,7 +69,7 @@ public class ToRoleListServlet extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				// Redirect to the exception page
-				response.sendRedirect("toError");
+				response.sendRedirect("ToError");
 			}
 //		}
 	}

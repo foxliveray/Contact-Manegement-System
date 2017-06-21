@@ -15,53 +15,51 @@ import service.CustomerService;
 import util.AppException;
 
 /**
- * Servlet for accessing draft contract page
+ * Servlet implementation class ToCustomerListServlet
  */
-@WebServlet("/ToDraftServlet")
-public class ToDraftServlet extends HttpServlet {
+@WebServlet("/ToCustomerListServlet")
+public class ToCustomerListServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public ToCustomerListServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
-	 * Jump to draft contract page
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		//Set the request's character encoding
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		this.doPost(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		
-		// Declare session
 		HttpSession session = null;
-		// Get session by using request object
 		session = request.getSession();
 		Integer userId = (Integer)session.getAttribute("userId");
-		
-		// If user is not login, jump to login page
+
 		if (userId == null) {
 			response.sendRedirect("ToLogin");
 		}else {
-			// Forward to draft page
 			CustomerService cus = new CustomerService();
 			ArrayList<Customer> cusList = new ArrayList<Customer>();
 			try {
 				cusList = cus.getAllcustomerInfo();
-				for(int i=0;i<cusList.size();i++){
-					System.out.println(cusList.get(i).getName());
-				}
 				request.setAttribute("cusList", cusList);
-				request.getRequestDispatcher("/darft.jsp").forward(request, response);
+				request.getRequestDispatcher("/CustomerList.jsp").forward(request, response);
 			} catch (AppException e) {
 				e.printStackTrace();
 				response.sendRedirect("ToError");
 			}
 		}
-	}
-	
-	/**
-	 * Process GET requests
-	 */
-	public void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// call doPost() to process request
-		this.doPost(request, response);
 	}
 
 }

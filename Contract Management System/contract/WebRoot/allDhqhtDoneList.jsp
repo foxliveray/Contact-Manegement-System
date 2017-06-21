@@ -98,7 +98,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <ul class="nav nav-second-level">
                     
                                 <li><a href="ToPermissionListServlet">权限配置</a></li>
-								<li><a href="http://localhost:8080/contract/ToUserListServlet">用户管理</a></li>
+								<li><a href="ToUserListServlet">用户管理</a></li>
+								<li><a href="ToRoleListServlet">角色管理</a></li>
                             </ul>
                             </li>
                             
